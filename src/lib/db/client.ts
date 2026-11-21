@@ -16,10 +16,17 @@ export function getDb() {
   }
 
   try {
+    // Optimized for Serverless environments (Vercel):
+    // - max: 2 prevents concurrent lambda instances from exhausting Supabase pool
+    // - idle_timeout: 5 quickly closes idle connections to prevent connection leaks
+    // - connect_timeout: 6 fails fast instead of hanging the user's browser
+    // - prepare: false is required for Supabase transaction poolers & PgBouncer
     sqlClient = postgres(connectionString, {
-      max: 10,
-      idle_timeout: 20,
-      connect_timeout: 10,
+      max: 2,
+      idle_timeout: 5,
+      connect_timeout: 6,
+      max_lifetime: 60 * 15,
+      prepare: false,
       ssl: connectionString.includes("supabase.co") ? { rejectUnauthorized: false } : undefined,
     });
     drizzleDb = drizzle(sqlClient, { schema });

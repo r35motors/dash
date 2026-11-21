@@ -1,4 +1,5 @@
 import { getDb, schema, drizzleDb } from "./client";
+import { dbCache } from "./cache";
 import { eq, desc, and, or, like, sql } from "drizzle-orm";
 import {
   calculateLifetimeAnalytics,
@@ -21,32 +22,39 @@ export const dealershipDb = {
 
   vehicles: {
     async getAll(filters?: { status?: string; search?: string }) {
-      try {
-        const db = getDb();
-        let conditions = [];
-        if (filters?.status && filters.status !== "all") {
-          conditions.push(eq(schema.vehicles.status, filters.status));
-        }
-        if (filters?.search) {
-          const q = `%${filters.search.trim()}%`;
-          conditions.push(
-            or(
-              like(schema.vehicles.vehicle_name, q),
-              like(schema.vehicles.registration_number, q),
-              like(schema.vehicles.owner_name, q)
-            )
-          );
-        }
+      const cacheKey = `vehicles_${filters?.status || "all"}_${filters?.search || ""}`;
+      return dbCache.getOrSet(
+        cacheKey,
+        async () => {
+          try {
+            const db = getDb();
+            let conditions = [];
+            if (filters?.status && filters.status !== "all") {
+              conditions.push(eq(schema.vehicles.status, filters.status));
+            }
+            if (filters?.search) {
+              const q = `%${filters.search.trim()}%`;
+              conditions.push(
+                or(
+                  like(schema.vehicles.vehicle_name, q),
+                  like(schema.vehicles.registration_number, q),
+                  like(schema.vehicles.owner_name, q)
+                )
+              );
+            }
 
-        const query = db.select().from(schema.vehicles);
-        if (conditions.length > 0) {
-          query.where(and(...conditions));
-        }
-        return await query.orderBy(desc(schema.vehicles.created_at));
-      } catch (err) {
-        console.warn("[DB] Failed to fetch vehicles during query/build:", err);
-        return [];
-      }
+            const query = db.select().from(schema.vehicles);
+            if (conditions.length > 0) {
+              query.where(and(...conditions));
+            }
+            return await query.orderBy(desc(schema.vehicles.created_at));
+          } catch (err) {
+            console.warn("[DB] Failed to fetch vehicles during query/build:", err);
+            return [];
+          }
+        },
+        15
+      );
     },
 
     async getById(id: string) {
@@ -119,6 +127,8 @@ export const dealershipDb = {
             status: data.status || "Available",
           })
           .returning();
+        dbCache.invalidate("vehicles");
+        dbCache.invalidate("analytics");
         return rows[0];
       } catch (error: any) {
         if (
@@ -161,52 +171,62 @@ export const dealershipDb = {
         .set(updateValues)
         .where(eq(schema.vehicles.id, id))
         .returning();
+      dbCache.invalidate("vehicles");
+      dbCache.invalidate("analytics");
       return rows[0] || null;
     },
 
     async delete(id: string) {
       const db = getDb();
       await db.delete(schema.vehicles).where(eq(schema.vehicles.id, id));
+      dbCache.invalidate("vehicles");
+      dbCache.invalidate("analytics");
       return true;
     },
   },
 
   sales: {
     async getAll() {
-      try {
-        const db = getDb();
-        const rows = await db
-          .select({
-            id: schema.sales.id,
-            vehicle_id: schema.sales.vehicle_id,
-            buyer_name: schema.sales.buyer_name,
-            sale_date: schema.sales.sale_date,
-            selling_price: schema.sales.selling_price,
-            created_at: schema.sales.created_at,
-            vehicle: schema.vehicles,
-          })
-          .from(schema.sales)
-          .leftJoin(schema.vehicles, eq(schema.sales.vehicle_id, schema.vehicles.id))
-          .orderBy(desc(schema.sales.sale_date));
+      return dbCache.getOrSet(
+        "sales_all",
+        async () => {
+          try {
+            const db = getDb();
+            const rows = await db
+              .select({
+                id: schema.sales.id,
+                vehicle_id: schema.sales.vehicle_id,
+                buyer_name: schema.sales.buyer_name,
+                sale_date: schema.sales.sale_date,
+                selling_price: schema.sales.selling_price,
+                created_at: schema.sales.created_at,
+                vehicle: schema.vehicles,
+              })
+              .from(schema.sales)
+              .leftJoin(schema.vehicles, eq(schema.sales.vehicle_id, schema.vehicles.id))
+              .orderBy(desc(schema.sales.sale_date));
 
-        return rows.map((r) => {
-          const purchase = parseFloat(r.vehicle?.purchase_price || "0") || 0;
-          const selling = parseFloat(r.selling_price) || 0;
-          return {
-            id: r.id,
-            vehicle_id: r.vehicle_id,
-            buyer_name: r.buyer_name,
-            sale_date: r.sale_date.toISOString(),
-            selling_price: r.selling_price,
-            created_at: r.created_at.toISOString(),
-            vehicle: r.vehicle,
-            profit: selling - purchase,
-          };
-        });
-      } catch (err) {
-        console.warn("[DB] Failed to fetch sales during query/build:", err);
-        return [];
-      }
+            return rows.map((r) => {
+              const purchase = parseFloat(r.vehicle?.purchase_price || "0") || 0;
+              const selling = parseFloat(r.selling_price) || 0;
+              return {
+                id: r.id,
+                vehicle_id: r.vehicle_id,
+                buyer_name: r.buyer_name,
+                sale_date: r.sale_date.toISOString(),
+                selling_price: r.selling_price,
+                created_at: r.created_at.toISOString(),
+                vehicle: r.vehicle,
+                profit: selling - purchase,
+              };
+            });
+          } catch (err) {
+            console.warn("[DB] Failed to fetch sales during query/build:", err);
+            return [];
+          }
+        },
+        15
+      );
     },
 
     async getById(id: string) {
@@ -314,6 +334,10 @@ export const dealershipDb = {
         const purchasePrice = parseFloat(vehicle.purchase_price) || 0;
         const profit = priceNum - purchasePrice;
 
+        dbCache.invalidate("sales");
+        dbCache.invalidate("vehicles");
+        dbCache.invalidate("analytics");
+
         return {
           ...result,
           vehicle: {
@@ -338,45 +362,54 @@ export const dealershipDb = {
       if (!isValidUuid(id)) return false;
       const db = getDb();
       await db.delete(schema.sales).where(eq(schema.sales.id, id));
+      dbCache.invalidate("sales");
+      dbCache.invalidate("vehicles");
+      dbCache.invalidate("analytics");
       return true;
     },
   },
 
   invoices: {
     async getAll() {
-      try {
-        const db = getDb();
-        const rows = await db
-          .select({
-            id: schema.invoices.id,
-            invoice_number: schema.invoices.invoice_number,
-            vehicle_id: schema.invoices.vehicle_id,
-            sale_id: schema.invoices.sale_id,
-            invoice_date: schema.invoices.invoice_date,
-            invoice_total: schema.invoices.invoice_total,
-            invoice_snapshot: schema.invoices.invoice_snapshot,
-            created_at: schema.invoices.created_at,
-            vehicle: schema.vehicles,
-          })
-          .from(schema.invoices)
-          .leftJoin(schema.vehicles, eq(schema.invoices.vehicle_id, schema.vehicles.id))
-          .orderBy(desc(schema.invoices.created_at));
+      return dbCache.getOrSet(
+        "invoices_all",
+        async () => {
+          try {
+            const db = getDb();
+            const rows = await db
+              .select({
+                id: schema.invoices.id,
+                invoice_number: schema.invoices.invoice_number,
+                vehicle_id: schema.invoices.vehicle_id,
+                sale_id: schema.invoices.sale_id,
+                invoice_date: schema.invoices.invoice_date,
+                invoice_total: schema.invoices.invoice_total,
+                invoice_snapshot: schema.invoices.invoice_snapshot,
+                created_at: schema.invoices.created_at,
+                vehicle: schema.vehicles,
+              })
+              .from(schema.invoices)
+              .leftJoin(schema.vehicles, eq(schema.invoices.vehicle_id, schema.vehicles.id))
+              .orderBy(desc(schema.invoices.created_at));
 
-        return rows.map((r) => ({
-          id: r.id,
-          invoice_number: r.invoice_number,
-          vehicle_id: r.vehicle_id,
-          sale_id: r.sale_id,
-          invoice_date: r.invoice_date.toISOString(),
-          invoice_total: r.invoice_total,
-          invoice_snapshot: r.invoice_snapshot,
-          created_at: r.created_at.toISOString(),
-          vehicle: r.vehicle,
-        }));
-      } catch (err) {
-        console.warn("[DB] Failed to fetch invoices during query/build:", err);
-        return [];
-      }
+            return rows.map((r) => ({
+              id: r.id,
+              invoice_number: r.invoice_number,
+              vehicle_id: r.vehicle_id,
+              sale_id: r.sale_id,
+              invoice_date: r.invoice_date.toISOString(),
+              invoice_total: r.invoice_total,
+              invoice_snapshot: r.invoice_snapshot,
+              created_at: r.created_at.toISOString(),
+              vehicle: r.vehicle,
+            }));
+          } catch (err) {
+            console.warn("[DB] Failed to fetch invoices during query/build:", err);
+            return [];
+          }
+        },
+        15
+      );
     },
 
     async getById(id: string) {
@@ -514,6 +547,9 @@ export const dealershipDb = {
             .returning();
         }
 
+        dbCache.invalidate("invoices");
+        dbCache.invalidate("analytics");
+
         return {
           ...createdInvoice,
           items: createdItems,
@@ -535,42 +571,50 @@ export const dealershipDb = {
       const db = getDb();
       await db.delete(schema.invoiceItems).where(eq(schema.invoiceItems.invoice_id, id));
       await db.delete(schema.invoices).where(eq(schema.invoices.id, id));
+      dbCache.invalidate("invoices");
+      dbCache.invalidate("analytics");
       return true;
     },
   },
 
   settings: {
     async get() {
-      try {
-        const db = getDb();
-        const rows = await db.select().from(schema.businessSettings).limit(1);
-        if (rows[0]) return rows[0];
+      return dbCache.getOrSet(
+        "settings_data",
+        async () => {
+          try {
+            const db = getDb();
+            const rows = await db.select().from(schema.businessSettings).limit(1);
+            if (rows[0]) return rows[0];
 
-        // Insert default if empty
-        const inserted = await db
-          .insert(schema.businessSettings)
-          .values({
-            business_name: "Royal Motors Luxury Dealership",
-            logo_path: "/dealership-logo.png",
-            address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
-            contact_number_1: "+91 98765 43210",
-            contact_number_2: "+91 98765 43211",
-            invoice_prefix: "ROYAL",
-          })
-          .returning();
-        return inserted[0];
-      } catch (err) {
-        console.warn("[DB] Could not fetch settings from DB (using defaults):", err);
-        return {
-          id: "00000000-0000-0000-0000-000000000001",
-          business_name: "Royal Motors Luxury Dealership",
-          logo_path: "/dealership-logo.png",
-          address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
-          contact_number_1: "+91 98765 43210",
-          contact_number_2: "+91 98765 43211",
-          invoice_prefix: "ROYAL",
-        };
-      }
+            // Insert default if empty
+            const inserted = await db
+              .insert(schema.businessSettings)
+              .values({
+                business_name: "Royal Motors Luxury Dealership",
+                logo_path: "/dealership-logo.png",
+                address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
+                contact_number_1: "+91 98765 43210",
+                contact_number_2: "+91 98765 43211",
+                invoice_prefix: "ROYAL",
+              })
+              .returning();
+            return inserted[0];
+          } catch (err) {
+            console.warn("[DB] Could not fetch settings from DB (using defaults):", err);
+            return {
+              id: "00000000-0000-0000-0000-000000000001",
+              business_name: "Royal Motors Luxury Dealership",
+              logo_path: "/dealership-logo.png",
+              address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
+              contact_number_1: "+91 98765 43210",
+              contact_number_2: "+91 98765 43211",
+              invoice_prefix: "ROYAL",
+            };
+          }
+        },
+        60
+      );
     },
 
     async update(data: {
@@ -583,13 +627,14 @@ export const dealershipDb = {
     }) {
       const db = getDb();
       const rows = await db.select().from(schema.businessSettings).limit(1);
+      let res;
       if (rows[0]) {
         const updated = await db
           .update(schema.businessSettings)
           .set(data)
           .where(eq(schema.businessSettings.id, rows[0].id))
           .returning();
-        return updated[0];
+        res = updated[0];
       } else {
         const inserted = await db
           .insert(schema.businessSettings)
@@ -602,61 +647,70 @@ export const dealershipDb = {
             invoice_prefix: data.invoice_prefix || "ROYAL",
           })
           .returning();
-        return inserted[0];
+        res = inserted[0];
       }
+      dbCache.invalidate("settings");
+      return res;
     },
   },
 
   analytics: {
     async getOverview(year?: number, month?: number) {
-      const [vehicles, sales, invoices] = await Promise.all([
-        dealershipDb.vehicles.getAll(),
-        dealershipDb.sales.getAll(),
-        dealershipDb.invoices.getAll(),
-      ]);
-      const currentYear = year || new Date().getFullYear();
-      const currentMonth = month || new Date().getMonth() + 1;
+      const cacheKey = `analytics_${year || "cur"}_${month || "cur"}`;
+      return dbCache.getOrSet(
+        cacheKey,
+        async () => {
+          const [vehicles, sales, invoices] = await Promise.all([
+            dealershipDb.vehicles.getAll(),
+            dealershipDb.sales.getAll(),
+            dealershipDb.invoices.getAll(),
+          ]);
+          const currentYear = year || new Date().getFullYear();
+          const currentMonth = month || new Date().getMonth() + 1;
 
-      const lifetime = calculateLifetimeAnalytics(
-        vehicles as any,
-        sales as any,
-        invoices as any
-      );
-      const monthly = calculateMonthlyAnalytics(
-        vehicles as any,
-        sales as any,
-        invoices as any,
-        currentYear,
-        currentMonth
-      );
-      const yearlyComparison = calculateYearlyComparison(
-        vehicles as any,
-        sales as any,
-        invoices as any,
-        currentYear
-      );
-      const availableYears = getAvailableYears(vehicles as any, sales as any);
+          const lifetime = calculateLifetimeAnalytics(
+            vehicles as any,
+            sales as any,
+            invoices as any
+          );
+          const monthly = calculateMonthlyAnalytics(
+            vehicles as any,
+            sales as any,
+            invoices as any,
+            currentYear,
+            currentMonth
+          );
+          const yearlyComparison = calculateYearlyComparison(
+            vehicles as any,
+            sales as any,
+            invoices as any,
+            currentYear
+          );
+          const availableYears = getAvailableYears(vehicles as any, sales as any);
 
-      return {
-        lifetime,
-        monthly,
-        yearlyComparison,
-        availableYears,
-        currentYear,
-        currentMonth,
-        totalVehicles: lifetime.totalVehicles,
-        availableVehicles: lifetime.availableVehicles,
-        soldVehicles: lifetime.soldVehicles,
-        totalRevenue: lifetime.totalSalesValue,
-        totalInventoryValue: lifetime.totalPurchaseValue,
-        totalProfit: lifetime.totalProfit,
-        recentSales: sales.slice(0, 5),
-        monthlyData: yearlyComparison.map((y) => ({
-          month: y.month,
-          sales: y.vehiclesSold,
-          revenue: y.sales,
-        })),
-      };
+          return {
+            lifetime,
+            monthly,
+            yearlyComparison,
+            availableYears,
+            currentYear,
+            currentMonth,
+            totalVehicles: lifetime.totalVehicles,
+            availableVehicles: lifetime.availableVehicles,
+            soldVehicles: lifetime.soldVehicles,
+            totalRevenue: lifetime.totalSalesValue,
+            totalInventoryValue: lifetime.totalPurchaseValue,
+            totalProfit: lifetime.totalProfit,
+            recentSales: sales.slice(0, 5),
+            monthlyData: yearlyComparison.map((y) => ({
+              month: y.month,
+              sales: y.vehiclesSold,
+              revenue: y.sales,
+            })),
+          };
+        },
+        15
+      );
     },
 
     async getLifetime() {
