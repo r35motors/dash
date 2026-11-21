@@ -44,60 +44,79 @@ export interface InvoicePdfData {
   invoice_snapshot?: any;
 }
 
-// Executive A4 PDF Stylesheet with Navy Blue primary accents, clean typography, light grey borders
+// Executive A4 PDF Stylesheet matching the specified template:
+// - Top thick color bar removed
+// - Deep Navy #14213D headers and accents
+// - Gold #8A6D1F brand tag
+// - Muted #566074 metadata & #8A93A5 labels
+// - Paid in full green #1E7A4D badge
+// - Clean dividers #DFE3EA and item borders #E6E9EF
 const styles = StyleSheet.create({
   page: {
     size: "A4",
     backgroundColor: "#FFFFFF",
     paddingTop: 36,
-    paddingBottom: 40,
+    paddingBottom: 36,
     paddingHorizontal: 40,
     fontFamily: "Helvetica",
-    fontSize: 9,
-    color: "#0F172A",
+    fontSize: 9.5,
+    color: "#1A1F2B",
     lineHeight: 1.45,
-  },
-  topAccentBar: {
-    height: 4,
-    backgroundColor: "#1E3A8A", // Deep Royal Navy Accent
-    marginBottom: 20,
-    borderRadius: 2,
+    position: "relative",
   },
   // Dealership Header
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    paddingBottom: 18,
-    borderBottomWidth: 1.5,
-    borderBottomColor: "#E2E8F0",
-    marginBottom: 18,
+    marginBottom: 16,
   },
-  headerLeft: {
+  brandLeft: {
+    maxWidth: "58%",
+  },
+  brandRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    maxWidth: "58%",
+    marginBottom: 8,
   },
-  dealershipName: {
-    fontSize: 16,
-    fontFamily: "Helvetica-Bold",
-    color: "#0F172A",
-    letterSpacing: 0.3,
-    marginBottom: 3,
+  // Logo block with black spade background and logo/initials overlay
+  logoBlock: {
+    width: 44,
+    height: 44,
+    borderRadius: 8,
+    backgroundColor: "#0B1329",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  dealershipTagline: {
-    fontSize: 8,
+  logoOverlayText: {
+    position: "absolute",
+    color: "#F8FAFC",
     fontFamily: "Helvetica-Bold",
-    color: "#1E3A8A",
+    fontSize: 14,
+    letterSpacing: 0.5,
+    textAlign: "center",
+  },
+  brandTitle: {
+    fontSize: 15,
+    fontFamily: "Helvetica-Bold",
+    color: "#14213D",
+    letterSpacing: -0.2,
+  },
+  brandTag: {
+    fontSize: 7.5,
+    fontFamily: "Helvetica-Bold",
+    color: "#8A6D1F",
+    letterSpacing: 1.8,
+    marginTop: 2,
     textTransform: "uppercase",
-    letterSpacing: 0.8,
-    marginBottom: 4,
   },
-  dealershipMeta: {
+  brandMeta: {
     fontSize: 8.5,
-    color: "#475569",
-    lineHeight: 1.35,
+    color: "#566074",
+    lineHeight: 1.45,
+    marginTop: 4,
   },
   headerRight: {
     alignItems: "flex-end",
@@ -105,267 +124,240 @@ const styles = StyleSheet.create({
   },
   invoiceTitle: {
     fontSize: 22,
-    fontFamily: "Helvetica-Bold",
-    color: "#1E3A8A",
-    letterSpacing: 0.5,
+    fontFamily: "Helvetica",
+    color: "#14213D",
+    letterSpacing: 3,
   },
-  invoiceSubtitle: {
-    fontSize: 8,
+  invoiceCopy: {
+    fontSize: 7.5,
     fontFamily: "Helvetica-Bold",
-    color: "#64748B",
+    color: "#566074",
     marginTop: 2,
-    letterSpacing: 0.8,
+    letterSpacing: 1.4,
     textTransform: "uppercase",
   },
-  statusBadge: {
-    marginTop: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    backgroundColor: "#ECFDF5",
-    borderWidth: 1,
-    borderColor: "#A7F3D0",
-    borderRadius: 4,
+  paidBadge: {
+    marginTop: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 3.5,
+    borderWidth: 1.4,
+    borderColor: "#1E7A4D",
+    borderRadius: 2,
+    backgroundColor: "#F0FDF4",
   },
-  statusBadgeText: {
-    fontSize: 8,
-    fontFamily: "Helvetica-Bold",
-    color: "#065F46",
-    letterSpacing: 0.5,
-  },
-  // Customer & Meta Info Section
-  infoSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-    backgroundColor: "#F8FAFC",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-    borderRadius: 6,
-    padding: 14,
-  },
-  infoColLeft: {
-    width: "52%",
-  },
-  infoColRight: {
-    width: "44%",
-    borderLeftWidth: 1,
-    borderLeftColor: "#E2E8F0",
-    paddingLeft: 14,
-  },
-  sectionTitle: {
-    fontSize: 8,
-    fontFamily: "Helvetica-Bold",
-    color: "#1E3A8A",
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
-    marginBottom: 4,
-  },
-  buyerName: {
-    fontSize: 13,
-    fontFamily: "Helvetica-Bold",
-    color: "#0F172A",
-    marginBottom: 2,
-  },
-  buyerSub: {
+  paidBadgeText: {
     fontSize: 8.5,
-    color: "#64748B",
+    fontFamily: "Helvetica-Bold",
+    color: "#1E7A4D",
+    letterSpacing: 1.8,
   },
-  metaRow: {
+  // Thin Clean Divider
+  divider: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#DFE3EA",
+    marginVertical: 14,
+  },
+  // Meta Info Section
+  metaSection: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 2,
+    alignItems: "flex-start",
+    marginBottom: 16,
+  },
+  customerBox: {
+    width: "55%",
   },
   metaLabel: {
-    fontSize: 8.5,
-    color: "#64748B",
+    fontSize: 7.5,
+    fontFamily: "Helvetica-Bold",
+    color: "#8A93A5",
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    marginBottom: 4,
   },
-  metaValue: {
+  customerName: {
+    fontSize: 12,
+    fontFamily: "Helvetica-Bold",
+    color: "#14213D",
+    marginBottom: 2,
+  },
+  customerRole: {
+    fontSize: 8.5,
+    color: "#566074",
+  },
+  kvTable: {
+    width: "40%",
+    alignItems: "flex-end",
+  },
+  kvRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingVertical: 2,
+  },
+  kvKey: {
+    fontSize: 8.5,
+    color: "#8A93A5",
+  },
+  kvValue: {
     fontSize: 9,
     fontFamily: "Helvetica-Bold",
-    color: "#0F172A",
+    color: "#14213D",
+    textAlign: "right",
   },
-  // Itemized Table
-  tableContainer: {
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-    borderRadius: 6,
-    overflow: "hidden",
+  // Items Table
+  table: {
+    width: "100%",
+    marginTop: 10,
     marginBottom: 18,
   },
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#0F172A", // Deep Navy Header
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    backgroundColor: "#14213D",
+    paddingVertical: 7,
+    paddingHorizontal: 8,
   },
-  tableHeaderIndex: {
+  thIndex: {
     width: "8%",
     color: "#FFFFFF",
-    fontSize: 8,
+    fontSize: 7.5,
     fontFamily: "Helvetica-Bold",
     textAlign: "center",
-    letterSpacing: 0.5,
+    letterSpacing: 1.2,
   },
-  tableHeaderDesc: {
-    width: "64%",
+  thDesc: {
+    width: "66%",
     color: "#FFFFFF",
-    fontSize: 8,
+    fontSize: 7.5,
     fontFamily: "Helvetica-Bold",
     textAlign: "left",
-    letterSpacing: 0.5,
+    letterSpacing: 1.2,
   },
-  tableHeaderAmount: {
-    width: "28%",
+  thAmount: {
+    width: "26%",
     color: "#FFFFFF",
-    fontSize: 8,
+    fontSize: 7.5,
     fontFamily: "Helvetica-Bold",
     textAlign: "right",
-    letterSpacing: 0.5,
+    letterSpacing: 1.2,
   },
   tableRow: {
     flexDirection: "row",
     paddingVertical: 9,
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: "#F1F5F9",
+    borderBottomColor: "#E6E9EF",
     alignItems: "center",
   },
-  tableRowAlt: {
-    backgroundColor: "#F8FAFC",
-  },
-  tableColIndex: {
+  tdIndex: {
     width: "8%",
-    fontSize: 9,
-    color: "#64748B",
+    fontSize: 8.5,
+    color: "#8A93A5",
     textAlign: "center",
   },
-  tableColDesc: {
-    width: "64%",
+  tdDesc: {
+    width: "66%",
+    fontSize: 9,
+    fontFamily: "Helvetica",
+    color: "#1A1F2B",
+  },
+  tdAmount: {
+    width: "26%",
     fontSize: 9,
     fontFamily: "Helvetica-Bold",
-    color: "#1E293B",
-  },
-  tableColAmount: {
-    width: "28%",
-    fontSize: 9.5,
-    fontFamily: "Helvetica-Bold",
-    color: "#0F172A",
+    color: "#14213D",
     textAlign: "right",
   },
-  // Financial Summary Section
-  financialSection: {
+  // Bottom Financial Summary
+  bottomSection: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    marginBottom: 24,
+    marginTop: 12,
   },
   wordsBox: {
-    width: "54%",
-    padding: 12,
-    backgroundColor: "#F8FAFC",
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-    borderRadius: 6,
-  },
-  wordsBoxTitle: {
-    fontSize: 7.5,
-    fontFamily: "Helvetica-Bold",
-    color: "#1E3A8A",
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
-    marginBottom: 4,
+    width: "55%",
   },
   wordsText: {
-    fontSize: 9,
+    fontSize: 9.5,
     fontFamily: "Helvetica-Bold",
-    color: "#0F172A",
-    lineHeight: 1.4,
-  },
-  paymentNote: {
-    fontSize: 7.5,
-    color: "#64748B",
-    marginTop: 8,
-    lineHeight: 1.3,
+    color: "#14213D",
+    lineHeight: 1.45,
   },
   totalsBox: {
-    width: "42%",
+    width: "40%",
   },
-  totalSummaryRow: {
+  totalsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 3.5,
-    paddingHorizontal: 6,
+    paddingVertical: 3,
+    fontSize: 9,
+    color: "#566074",
   },
-  totalSummaryFinal: {
+  totalsRowBold: {
+    fontFamily: "Helvetica-Bold",
+    color: "#14213D",
+  },
+  grandTotalBox: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#14213D",
+    color: "#FFFFFF",
     paddingVertical: 8,
     paddingHorizontal: 10,
-    backgroundColor: "#1E3A8A",
-    borderRadius: 5,
     marginTop: 6,
+    borderRadius: 2,
   },
-  totalSummaryFinalLabel: {
-    fontSize: 10,
+  grandTotalLabel: {
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
     color: "#FFFFFF",
-    letterSpacing: 0.3,
+    letterSpacing: 1.4,
   },
-  totalSummaryFinalAmount: {
-    fontSize: 13,
+  grandTotalAmount: {
+    fontSize: 12,
     fontFamily: "Helvetica-Bold",
     color: "#FFFFFF",
   },
-  // Clean Corporate Signatory Block
-  signatorySection: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 10,
-    paddingTop: 12,
-  },
-  signatoryCard: {
-    width: "45%",
+  // Signature Block
+  signatureBox: {
+    position: "absolute",
+    right: 40,
+    bottom: 50,
+    width: 140,
     alignItems: "center",
   },
   signatureLine: {
-    width: "80%",
-    height: 1,
-    backgroundColor: "#94A3B8",
-    marginBottom: 6,
-  },
-  signatoryTitle: {
-    fontSize: 8.5,
-    fontFamily: "Helvetica-Bold",
-    color: "#0F172A",
-  },
-  signatorySub: {
-    fontSize: 7.5,
-    color: "#64748B",
-    marginTop: 1,
-  },
-  // Clean Professional Footer Rule
-  footer: {
-    position: "absolute",
-    bottom: 24,
-    left: 40,
-    right: 40,
+    width: "100%",
     borderTopWidth: 1,
-    borderTopColor: "#E2E8F0",
-    paddingTop: 8,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    borderTopColor: "#14213D",
+    paddingTop: 4,
     alignItems: "center",
   },
-  footerLeft: {
-    fontSize: 7.5,
-    color: "#94A3B8",
-  },
-  footerRight: {
-    fontSize: 7.5,
+  signatureTitle: {
+    fontSize: 8.5,
     fontFamily: "Helvetica-Bold",
-    color: "#64748B",
+    color: "#14213D",
+  },
+  signatureFor: {
+    fontSize: 7.5,
+    color: "#566074",
+    marginTop: 2,
+  },
+  // Footer
+  footer: {
+    position: "absolute",
+    left: 40,
+    right: 40,
+    bottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#DFE3EA",
+    paddingTop: 6,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    fontSize: 7.5,
+    color: "#8A93A5",
   },
 });
 
@@ -378,60 +370,70 @@ function formatInr(val: number | string | undefined | null): string {
   }).format(num);
 }
 
-function formatDateDisplay(d: string | Date | undefined | null): string {
-  if (!d) return "-";
-  const dateObj = typeof d === "string" ? new Date(d) : d;
-  if (isNaN(dateObj.getTime())) return "-";
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(dateObj);
+function formatDateDisplay(dateStr: string | undefined): string {
+  if (!dateStr) return new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+  try {
+    const d = new Date(dateStr);
+    return isNaN(d.getTime())
+      ? dateStr
+      : d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+  } catch {
+    return dateStr;
+  }
 }
 
 export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
-  // CRITICAL: Extract from snapshot if available to ensure 100% frozen historical preservation
-  const snapshot = data.invoice_snapshot || null;
+  const snapshot = data.invoice_snapshot;
 
-  const dealership = snapshot?.dealership || data.dealership || {
-    business_name: snapshot?.dealership_name || "Royal Motors Luxury Dealership",
-    address: snapshot?.dealership_address || "",
-    contact_number_1: snapshot?.dealership_contact_1 || "",
-    contact_number_2: snapshot?.dealership_contact_2 || null,
+  const dealership = {
+    business_name:
+      snapshot?.dealership?.business_name ||
+      snapshot?.dealership_name ||
+      data.dealership?.business_name ||
+      "Royal Motors Luxury Dealership",
+    logo_path: snapshot?.dealership?.logo_path || data.dealership?.logo_path || null,
+    address:
+      snapshot?.dealership?.address ||
+      snapshot?.dealership_address ||
+      data.dealership?.address ||
+      "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
+    contact_number_1:
+      snapshot?.dealership?.contact_number_1 ||
+      snapshot?.dealership_contact_1 ||
+      data.dealership?.contact_number_1 ||
+      "+91 98765 43210",
+    contact_number_2:
+      snapshot?.dealership?.contact_number_2 ||
+      snapshot?.dealership_contact_2 ||
+      data.dealership?.contact_number_2 ||
+      null,
   };
 
-  const buyerName = snapshot?.buyer?.name || snapshot?.buyer_name || data.buyer?.name || "Valued Customer";
+  const buyerName =
+    snapshot?.buyer?.name ||
+    snapshot?.buyer_name ||
+    data.buyer?.name ||
+    "Valued Customer";
 
-  const vehicle = snapshot?.vehicle || data.vehicle || {
-    vehicle_name: snapshot?.vehicle_name || "Vehicle",
-    registration_number: snapshot?.registration_number || "-",
-    owner_name: snapshot?.owner_name || "-",
-  };
+  const vehicle = snapshot?.vehicle || data.vehicle;
 
   // Line items
-  const items: Array<{ description: string; amount: string | number }> =
-    snapshot?.items ||
-    data.items ||
-    (snapshot?.base_price !== undefined
-      ? [
-          {
-            description: `Vehicle: ${vehicle.vehicle_name} (${vehicle.registration_number})`,
-            amount: snapshot.base_price,
-          },
-          ...(snapshot.handling_fee
-            ? [{ description: "Documentation & Handling Charges", amount: snapshot.handling_fee }]
-            : []),
-        ]
-      : [
-          {
-            description: `Vehicle: ${vehicle.vehicle_name} (${vehicle.registration_number})`,
-            amount: data.invoice_total || 0,
-          },
-        ]);
+  let items: Array<{ description: string; amount: string | number }> = [];
+  if (snapshot?.items && snapshot.items.length > 0) {
+    items = snapshot.items;
+  } else if (data.items && data.items.length > 0) {
+    items = data.items;
+  } else if (vehicle) {
+    items = [
+      {
+        description: `Vehicle: ${vehicle.vehicle_name} (${vehicle.registration_number})`,
+        amount: data.invoice_total || vehicle.selling_price || 0,
+      },
+    ];
+  }
 
   // Total
   const totalAmount =
-    snapshot?.total_amount ??
     snapshot?.invoice_total ??
     data.invoice_total ??
     items.reduce((acc, it) => acc + (parseFloat(String(it.amount)) || 0), 0);
@@ -444,139 +446,139 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
     data.amount_in_words ||
     numberToIndianWords(totalNum);
 
-  const invoiceNumber = data.invoice_number || snapshot?.invoice_number || "INV-0001";
+  const invoiceNumber = data.invoice_number || snapshot?.invoice_number || "INV-1001";
   const invoiceDate = data.invoice_date || snapshot?.invoice_date || new Date().toISOString();
+
+  const initials = dealership.business_name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w: string) => w[0]?.toUpperCase() || "")
+    .join("") || "RM";
 
   return (
     <Document title={`Invoice-${invoiceNumber}`} author={dealership.business_name}>
       <Page size="A4" style={styles.page}>
-        {/* Navy Blue Top Accent Bar */}
-        <View style={styles.topAccentBar} />
+        {/* Top thick color border completely removed */}
 
-        {/* 1. Executive Dealership Header */}
+        {/* 1. Brand & Title Header */}
         <View style={styles.headerContainer}>
-          <View style={styles.headerLeft}>
-            {/* Luxury Automotive Emblem SVG */}
-            <Svg width="40" height="40" viewBox="0 0 36 36">
-              <Rect width="36" height="36" rx="6" fill="#0F172A" />
-              <Path
-                d="M 18 7 L 23 13 L 29 10 L 26 21 L 10 21 L 7 10 L 13 13 Z"
-                fill="#F8FAFC"
-              />
-              <Rect x="10" y="23" width="16" height="2" fill="#F8FAFC" rx="1" />
-              <Rect x="12" y="26.5" width="12" height="1.5" fill="#38BDF8" rx="0.75" />
-            </Svg>
+          <View style={styles.brandLeft}>
+            <View style={styles.brandRow}>
+              {/* Logo block with black spade background and logo overlay */}
+              <View style={styles.logoBlock}>
+                <Svg width="44" height="44" viewBox="0 0 36 36">
+                  {/* Black spade silhouette with gold rim */}
+                  <Path
+                    d="M 18 2 C 14.5 7.5 6 13.5 6 20 C 6 24.5 9.5 27.5 13.5 27.5 C 16 27.5 17.5 26.2 18 24.5 C 18.5 26.2 20 27.5 22.5 27.5 C 26.5 27.5 30 24.5 30 20 C 30 13.5 21.5 7.5 18 2 Z"
+                    fill="#000000"
+                    stroke="#C9A227"
+                    strokeWidth="0.8"
+                  />
+                  <Path
+                    d="M 16 26 L 20 26 L 21 33 L 15 33 Z"
+                    fill="#000000"
+                    stroke="#C9A227"
+                    strokeWidth="0.8"
+                  />
+                </Svg>
+                {/* Center logo / initials overlay */}
+                <Text style={styles.logoOverlayText}>{initials}</Text>
+              </View>
 
-            <View>
-              <Text style={styles.dealershipName}>{dealership.business_name}</Text>
-              <Text style={styles.dealershipTagline}>Pre-Owned Luxury Automobiles</Text>
-              {dealership.address ? (
-                <Text style={styles.dealershipMeta}>{dealership.address}</Text>
-              ) : null}
-              <Text style={styles.dealershipMeta}>
-                Phone: {dealership.contact_number_1 || "N/A"}
-                {dealership.contact_number_2 ? ` | ${dealership.contact_number_2}` : ""}
-              </Text>
+              <View>
+                <Text style={styles.brandTitle}>{dealership.business_name}</Text>
+                <Text style={styles.brandTag}>Pre-Owned Luxury Automobiles</Text>
+              </View>
             </View>
+
+            <Text style={styles.brandMeta}>
+              {dealership.address}
+              {"\n"}
+              Phone: {dealership.contact_number_1}
+              {dealership.contact_number_2 ? ` | ${dealership.contact_number_2}` : ""}
+            </Text>
           </View>
 
           <View style={styles.headerRight}>
-            <Text style={styles.invoiceTitle}>TAX INVOICE</Text>
-            <Text style={styles.invoiceSubtitle}>Original for Recipient</Text>
-            <View style={styles.statusBadge}>
-              <Text style={styles.statusBadgeText}>PAID IN FULL</Text>
+            <Text style={styles.invoiceTitle}>INVOICE</Text>
+            <Text style={styles.invoiceCopy}>Original for Recipient</Text>
+            <View style={styles.paidBadge}>
+              <Text style={styles.paidBadgeText}>PAID IN FULL</Text>
             </View>
           </View>
         </View>
 
-        {/* 2. Customer & Transaction Details Section */}
-        <View style={styles.infoSection}>
-          <View style={styles.infoColLeft}>
-            <Text style={styles.sectionTitle}>Billed To (Customer)</Text>
-            <Text style={styles.buyerName}>{buyerName}</Text>
-            <Text style={styles.buyerSub}>Authorized Vehicle Purchaser</Text>
+        {/* Thin Divider */}
+        <View style={styles.divider} />
+
+        {/* 2. Customer & Transaction Meta */}
+        <View style={styles.metaSection}>
+          <View style={styles.customerBox}>
+            <Text style={styles.metaLabel}>Billed To (Customer)</Text>
+            <Text style={styles.customerName}>{buyerName}</Text>
+            <Text style={styles.customerRole}>Authorized Vehicle Purchaser</Text>
           </View>
 
-          <View style={styles.infoColRight}>
-            <View style={styles.metaRow}>
-              <Text style={styles.metaLabel}>Invoice Number:</Text>
-              <Text style={styles.metaValue}>{invoiceNumber}</Text>
+          <View style={styles.kvTable}>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Invoice Number</Text>
+              <Text style={styles.kvValue}>{invoiceNumber}</Text>
             </View>
-            <View style={styles.metaRow}>
-              <Text style={styles.metaLabel}>Date of Issue:</Text>
-              <Text style={styles.metaValue}>{formatDateDisplay(invoiceDate)}</Text>
-            </View>
-            <View style={styles.metaRow}>
-              <Text style={styles.metaLabel}>Payment Status:</Text>
-              <Text style={[styles.metaValue, { color: "#16A34A" }]}>Full Settlement</Text>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Date of Issue</Text>
+              <Text style={styles.kvValue}>{formatDateDisplay(invoiceDate)}</Text>
             </View>
           </View>
         </View>
 
-        {/* 3. Itemized Charges Table */}
-        <View style={styles.tableContainer}>
+        {/* 3. Items Table */}
+        <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={styles.tableHeaderIndex}>#</Text>
-            <Text style={styles.tableHeaderDesc}>Description</Text>
-            <Text style={styles.tableHeaderAmount}>Amount (₹)</Text>
+            <Text style={styles.thIndex}>#</Text>
+            <Text style={styles.thDesc}>DESCRIPTION</Text>
+            <Text style={styles.thAmount}>AMOUNT (₹)</Text>
           </View>
 
           {items.map((item, index) => (
-            <View
-              key={index}
-              style={[
-                styles.tableRow,
-                index % 2 === 1 ? styles.tableRowAlt : {},
-              ]}
-            >
-              <Text style={styles.tableColIndex}>{index + 1}</Text>
-              <Text style={styles.tableColDesc}>{item.description}</Text>
-              <Text style={styles.tableColAmount}>₹ {formatInr(item.amount)}</Text>
+            <View key={index} style={styles.tableRow}>
+              <Text style={styles.tdIndex}>{index + 1}</Text>
+              <Text style={styles.tdDesc}>{item.description}</Text>
+              <Text style={styles.tdAmount}>₹ {formatInr(item.amount)}</Text>
             </View>
           ))}
         </View>
 
-        {/* 4. Financial Summary & Amount in Words */}
-        <View style={styles.financialSection}>
+        {/* 4. Bottom Financial Summary */}
+        <View style={styles.bottomSection}>
           <View style={styles.wordsBox}>
-            <Text style={styles.wordsBoxTitle}>Amount in Words (INR)</Text>
+            <Text style={styles.metaLabel}>Amount in Words (INR)</Text>
             <Text style={styles.wordsText}>{amountInWords}</Text>
-            <Text style={styles.paymentNote}>
-              This document serves as an official confirmation of receipt for the vehicle and associated services listed above.
-            </Text>
           </View>
 
           <View style={styles.totalsBox}>
-            <View style={styles.totalSummaryRow}>
-              <Text style={styles.metaLabel}>Subtotal:</Text>
-              <Text style={styles.metaValue}>₹ {formatInr(totalNum)}</Text>
+            <View style={styles.totalsRow}>
+              <Text style={styles.kvKey}>Subtotal</Text>
+              <Text style={styles.totalsRowBold}>₹ {formatInr(totalNum)}</Text>
             </View>
-            <View style={styles.totalSummaryRow}>
-              <Text style={styles.metaLabel}>Taxes & Fees:</Text>
-              <Text style={styles.metaValue}>Inclusive</Text>
-            </View>
-            <View style={styles.totalSummaryFinal}>
-              <Text style={styles.totalSummaryFinalLabel}>Invoice Total</Text>
-              <Text style={styles.totalSummaryFinalAmount}>₹ {formatInr(totalNum)}</Text>
+            <View style={styles.grandTotalBox}>
+              <Text style={styles.grandTotalLabel}>INVOICE TOTAL</Text>
+              <Text style={styles.grandTotalAmount}>₹ {formatInr(totalNum)}</Text>
             </View>
           </View>
         </View>
 
-        {/* 5. Clean Corporate Signatory Block */}
-        <View style={styles.signatorySection}>
-          <View style={styles.signatoryCard}>
-            <View style={styles.signatureLine} />
-            <Text style={styles.signatoryTitle}>Authorized Signatory</Text>
-            <Text style={styles.signatorySub}>For {dealership.business_name}</Text>
+        {/* 5. Authorized Signatory */}
+        <View style={styles.signatureBox}>
+          <View style={styles.signatureLine}>
+            <Text style={styles.signatureTitle}>Authorized Signatory</Text>
+            <Text style={styles.signatureFor}>For {dealership.business_name}</Text>
           </View>
         </View>
 
-        {/* 6. Professional Footer Rule */}
+        {/* 6. Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerLeft}>
-            {dealership.business_name} • {dealership.address}
-          </Text>
-          <Text style={styles.footerRight}>Tax Invoice</Text>
+          <Text>{dealership.business_name} • {dealership.address}</Text>
+          <Text>Invoice</Text>
         </View>
       </Page>
     </Document>

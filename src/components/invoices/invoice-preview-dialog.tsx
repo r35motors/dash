@@ -3,8 +3,9 @@
 import * as React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download, Printer, Loader2, FileText, CheckCircle2, ExternalLink } from "lucide-react";
+import { Download, Printer, Loader2, FileText } from "lucide-react";
 import { InvoicePdfData } from "./invoice-pdf-document";
+import { generateInvoiceHtml } from "@/lib/invoice-html-template";
 
 interface InvoicePreviewDialogProps {
   open: boolean;
@@ -20,6 +21,12 @@ export function InvoicePreviewDialog({
   const [pdfUrl, setPdfUrl] = React.useState<string | null>(null);
   const [isGenerating, setIsGenerating] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
+
+  // Generate HTML preview content
+  const htmlContent = React.useMemo(() => {
+    if (!invoiceData) return "";
+    return generateInvoiceHtml(invoiceData);
+  }, [invoiceData]);
 
   React.useEffect(() => {
     if (!open || !invoiceData) {
@@ -49,9 +56,9 @@ export function InvoicePreviewDialog({
           setPdfUrl(createdUrl);
         }
       } catch (err: any) {
-        console.error("Failed to render PDF preview:", err);
+        console.error("Failed to render PDF document binary:", err);
         if (isMounted) {
-          setError(err?.message || "Could not generate PDF preview.");
+          setError(err?.message || "Could not generate PDF binary.");
         }
       } finally {
         if (isMounted) {
@@ -74,18 +81,21 @@ export function InvoicePreviewDialog({
   const filename = `${invoiceNumber}.pdf`;
 
   const handleDownload = () => {
-    if (!pdfUrl) return;
-    const a = document.createElement("a");
-    a.href = pdfUrl;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    if (pdfUrl) {
+      const a = document.createElement("a");
+      a.href = pdfUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      // Direct print-to-pdf fallback
+      handlePrint();
+    }
   };
 
   const handlePrint = () => {
-    if (!pdfUrl) return;
-    // Create an invisible iframe to trigger the native browser print dialog
+    if (!htmlContent) return;
     const iframe = document.createElement("iframe");
     iframe.style.position = "fixed";
     iframe.style.right = "0";
@@ -93,34 +103,36 @@ export function InvoicePreviewDialog({
     iframe.style.width = "0";
     iframe.style.height = "0";
     iframe.style.border = "0";
-    iframe.src = pdfUrl;
     document.body.appendChild(iframe);
 
-    iframe.onload = () => {
-      setTimeout(() => {
-        try {
-          iframe.focus();
-          iframe.contentWindow?.print();
-        } catch (e) {
-          // Fallback to opening in new tab
-          window.open(pdfUrl, "_blank");
-        } finally {
-          setTimeout(() => {
+    iframe.contentWindow?.document.open();
+    iframe.contentWindow?.document.write(htmlContent);
+    iframe.contentWindow?.document.close();
+
+    setTimeout(() => {
+      try {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+      } catch (e) {
+        console.error("Print error:", e);
+      } finally {
+        setTimeout(() => {
+          if (document.body.contains(iframe)) {
             document.body.removeChild(iframe);
-          }, 60000);
-        }
-      }, 300);
-    };
+          }
+        }, 60000);
+      }
+    }, 300);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl w-[95vw] h-[90vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100">
+      <DialogContent className="max-w-4xl w-[95vw] h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100">
         {/* Modal Header */}
         <div className="p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
           <div>
-            <DialogTitle className="text-lg font-bold text-[#0F172A] flex items-center gap-2">
-              <FileText className="w-5 h-5 text-[#1E3A8A]" />
+            <DialogTitle className="text-lg font-bold text-[#14213D] flex items-center gap-2">
+              <FileText className="w-5 h-5 text-[#14213D]" />
               <span>Invoice Preview: {invoiceNumber}</span>
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500 mt-0.5">
@@ -133,8 +145,7 @@ export function InvoicePreviewDialog({
               variant="outline"
               size="sm"
               onClick={handlePrint}
-              disabled={!pdfUrl || isGenerating}
-              className="gap-1.5 text-xs font-semibold h-8 border-slate-300"
+              className="gap-1.5 text-xs font-semibold h-8 border-slate-300 hover:bg-slate-50"
             >
               <Printer className="w-3.5 h-3.5 text-slate-700" />
               <span>Print PDF</span>
@@ -143,44 +154,31 @@ export function InvoicePreviewDialog({
             <Button
               size="sm"
               onClick={handleDownload}
-              disabled={!pdfUrl || isGenerating}
-              className="gap-1.5 text-xs font-semibold h-8 bg-[#1E3A8A] hover:bg-[#1E293B] text-white"
+              className="gap-1.5 text-xs font-semibold h-8 bg-[#14213D] hover:bg-[#1E293B] text-white"
             >
-              <Download className="w-3.5 h-3.5" />
+              {isGenerating ? (
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                <Download className="w-3.5 h-3.5" />
+              )}
               <span>Download PDF</span>
             </Button>
           </div>
         </div>
 
-        {/* Modal Body / PDF Frame */}
-        <div className="flex-1 w-full h-full relative overflow-hidden bg-slate-200 flex items-center justify-center p-2 sm:p-4">
-          {isGenerating && (
-            <div className="flex flex-col items-center justify-center gap-2 text-slate-600">
-              <Loader2 className="w-8 h-8 animate-spin text-[#1E3A8A]" />
-              <p className="text-xs font-medium">Generating professional A4 PDF...</p>
-            </div>
-          )}
-
-          {error && !isGenerating && (
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-red-200 max-w-md text-center space-y-3">
-              <p className="text-xs text-red-600 font-semibold">{error}</p>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onOpenChange(false)}
-                className="text-xs"
-              >
-                Close
-              </Button>
-            </div>
-          )}
-
-          {pdfUrl && !isGenerating && (
+        {/* Modal Body / Instant HTML Preview Frame */}
+        <div className="flex-1 w-full h-full relative overflow-auto bg-slate-200 flex items-center justify-center p-2 sm:p-4">
+          {htmlContent ? (
             <iframe
-              src={pdfUrl}
+              srcDoc={htmlContent}
               title={`Invoice Preview - ${invoiceNumber}`}
-              className="w-full h-full rounded-md shadow-md border border-slate-300 bg-white"
+              className="w-full h-full max-w-[215mm] min-h-[297mm] rounded-sm shadow-xl border border-slate-300 bg-white"
             />
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-2 text-slate-600">
+              <Loader2 className="w-8 h-8 animate-spin text-[#14213D]" />
+              <p className="text-xs font-medium">Preparing document preview...</p>
+            </div>
           )}
         </div>
       </DialogContent>
