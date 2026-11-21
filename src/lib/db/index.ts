@@ -21,27 +21,32 @@ export const dealershipDb = {
 
   vehicles: {
     async getAll(filters?: { status?: string; search?: string }) {
-      const db = getDb();
-      let conditions = [];
-      if (filters?.status && filters.status !== "all") {
-        conditions.push(eq(schema.vehicles.status, filters.status));
-      }
-      if (filters?.search) {
-        const q = `%${filters.search.trim()}%`;
-        conditions.push(
-          or(
-            like(schema.vehicles.vehicle_name, q),
-            like(schema.vehicles.registration_number, q),
-            like(schema.vehicles.owner_name, q)
-          )
-        );
-      }
+      try {
+        const db = getDb();
+        let conditions = [];
+        if (filters?.status && filters.status !== "all") {
+          conditions.push(eq(schema.vehicles.status, filters.status));
+        }
+        if (filters?.search) {
+          const q = `%${filters.search.trim()}%`;
+          conditions.push(
+            or(
+              like(schema.vehicles.vehicle_name, q),
+              like(schema.vehicles.registration_number, q),
+              like(schema.vehicles.owner_name, q)
+            )
+          );
+        }
 
-      const query = db.select().from(schema.vehicles);
-      if (conditions.length > 0) {
-        query.where(and(...conditions));
+        const query = db.select().from(schema.vehicles);
+        if (conditions.length > 0) {
+          query.where(and(...conditions));
+        }
+        return await query.orderBy(desc(schema.vehicles.created_at));
+      } catch (err) {
+        console.warn("[DB] Failed to fetch vehicles during query/build:", err);
+        return [];
       }
-      return await query.orderBy(desc(schema.vehicles.created_at));
     },
 
     async getById(id: string) {
@@ -168,35 +173,40 @@ export const dealershipDb = {
 
   sales: {
     async getAll() {
-      const db = getDb();
-      const rows = await db
-        .select({
-          id: schema.sales.id,
-          vehicle_id: schema.sales.vehicle_id,
-          buyer_name: schema.sales.buyer_name,
-          sale_date: schema.sales.sale_date,
-          selling_price: schema.sales.selling_price,
-          created_at: schema.sales.created_at,
-          vehicle: schema.vehicles,
-        })
-        .from(schema.sales)
-        .leftJoin(schema.vehicles, eq(schema.sales.vehicle_id, schema.vehicles.id))
-        .orderBy(desc(schema.sales.sale_date));
+      try {
+        const db = getDb();
+        const rows = await db
+          .select({
+            id: schema.sales.id,
+            vehicle_id: schema.sales.vehicle_id,
+            buyer_name: schema.sales.buyer_name,
+            sale_date: schema.sales.sale_date,
+            selling_price: schema.sales.selling_price,
+            created_at: schema.sales.created_at,
+            vehicle: schema.vehicles,
+          })
+          .from(schema.sales)
+          .leftJoin(schema.vehicles, eq(schema.sales.vehicle_id, schema.vehicles.id))
+          .orderBy(desc(schema.sales.sale_date));
 
-      return rows.map((r) => {
-        const purchase = parseFloat(r.vehicle?.purchase_price || "0") || 0;
-        const selling = parseFloat(r.selling_price) || 0;
-        return {
-          id: r.id,
-          vehicle_id: r.vehicle_id,
-          buyer_name: r.buyer_name,
-          sale_date: r.sale_date.toISOString(),
-          selling_price: r.selling_price,
-          created_at: r.created_at.toISOString(),
-          vehicle: r.vehicle,
-          profit: selling - purchase,
-        };
-      });
+        return rows.map((r) => {
+          const purchase = parseFloat(r.vehicle?.purchase_price || "0") || 0;
+          const selling = parseFloat(r.selling_price) || 0;
+          return {
+            id: r.id,
+            vehicle_id: r.vehicle_id,
+            buyer_name: r.buyer_name,
+            sale_date: r.sale_date.toISOString(),
+            selling_price: r.selling_price,
+            created_at: r.created_at.toISOString(),
+            vehicle: r.vehicle,
+            profit: selling - purchase,
+          };
+        });
+      } catch (err) {
+        console.warn("[DB] Failed to fetch sales during query/build:", err);
+        return [];
+      }
     },
 
     async getById(id: string) {
@@ -334,34 +344,39 @@ export const dealershipDb = {
 
   invoices: {
     async getAll() {
-      const db = getDb();
-      const rows = await db
-        .select({
-          id: schema.invoices.id,
-          invoice_number: schema.invoices.invoice_number,
-          vehicle_id: schema.invoices.vehicle_id,
-          sale_id: schema.invoices.sale_id,
-          invoice_date: schema.invoices.invoice_date,
-          invoice_total: schema.invoices.invoice_total,
-          invoice_snapshot: schema.invoices.invoice_snapshot,
-          created_at: schema.invoices.created_at,
-          vehicle: schema.vehicles,
-        })
-        .from(schema.invoices)
-        .leftJoin(schema.vehicles, eq(schema.invoices.vehicle_id, schema.vehicles.id))
-        .orderBy(desc(schema.invoices.created_at));
+      try {
+        const db = getDb();
+        const rows = await db
+          .select({
+            id: schema.invoices.id,
+            invoice_number: schema.invoices.invoice_number,
+            vehicle_id: schema.invoices.vehicle_id,
+            sale_id: schema.invoices.sale_id,
+            invoice_date: schema.invoices.invoice_date,
+            invoice_total: schema.invoices.invoice_total,
+            invoice_snapshot: schema.invoices.invoice_snapshot,
+            created_at: schema.invoices.created_at,
+            vehicle: schema.vehicles,
+          })
+          .from(schema.invoices)
+          .leftJoin(schema.vehicles, eq(schema.invoices.vehicle_id, schema.vehicles.id))
+          .orderBy(desc(schema.invoices.created_at));
 
-      return rows.map((r) => ({
-        id: r.id,
-        invoice_number: r.invoice_number,
-        vehicle_id: r.vehicle_id,
-        sale_id: r.sale_id,
-        invoice_date: r.invoice_date.toISOString(),
-        invoice_total: r.invoice_total,
-        invoice_snapshot: r.invoice_snapshot,
-        created_at: r.created_at.toISOString(),
-        vehicle: r.vehicle,
-      }));
+        return rows.map((r) => ({
+          id: r.id,
+          invoice_number: r.invoice_number,
+          vehicle_id: r.vehicle_id,
+          sale_id: r.sale_id,
+          invoice_date: r.invoice_date.toISOString(),
+          invoice_total: r.invoice_total,
+          invoice_snapshot: r.invoice_snapshot,
+          created_at: r.created_at.toISOString(),
+          vehicle: r.vehicle,
+        }));
+      } catch (err) {
+        console.warn("[DB] Failed to fetch invoices during query/build:", err);
+        return [];
+      }
     },
 
     async getById(id: string) {
@@ -526,23 +541,36 @@ export const dealershipDb = {
 
   settings: {
     async get() {
-      const db = getDb();
-      const rows = await db.select().from(schema.businessSettings).limit(1);
-      if (rows[0]) return rows[0];
+      try {
+        const db = getDb();
+        const rows = await db.select().from(schema.businessSettings).limit(1);
+        if (rows[0]) return rows[0];
 
-      // Insert default if empty
-      const inserted = await db
-        .insert(schema.businessSettings)
-        .values({
+        // Insert default if empty
+        const inserted = await db
+          .insert(schema.businessSettings)
+          .values({
+            business_name: "Royal Motors Luxury Dealership",
+            logo_path: "/dealership-logo.png",
+            address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
+            contact_number_1: "+91 98765 43210",
+            contact_number_2: "+91 98765 43211",
+            invoice_prefix: "ROYAL",
+          })
+          .returning();
+        return inserted[0];
+      } catch (err) {
+        console.warn("[DB] Could not fetch settings from DB (using defaults):", err);
+        return {
+          id: "00000000-0000-0000-0000-000000000001",
           business_name: "Royal Motors Luxury Dealership",
           logo_path: "/dealership-logo.png",
           address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
           contact_number_1: "+91 98765 43210",
           contact_number_2: "+91 98765 43211",
           invoice_prefix: "ROYAL",
-        })
-        .returning();
-      return inserted[0];
+        };
+      }
     },
 
     async update(data: {
