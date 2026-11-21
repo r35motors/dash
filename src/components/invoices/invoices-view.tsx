@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { CreateInvoiceDialog } from "./create-invoice-dialog";
 import { InvoicePreviewDialog } from "./invoice-preview-dialog";
-import { InvoicePdfData } from "./invoice-pdf-document";
+import type { InvoicePdfData } from "@/types/invoice";
 
 export interface InvoiceListItem {
   id: string;

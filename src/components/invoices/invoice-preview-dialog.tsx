@@ -4,7 +4,7 @@ import * as React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Download, Printer, Loader2, FileText } from "lucide-react";
-import { InvoicePdfData } from "./invoice-pdf-document";
+import type { InvoicePdfData } from "@/types/invoice";
 import { generateInvoiceHtml } from "@/lib/invoice-html-template";
 
 interface InvoicePreviewDialogProps {

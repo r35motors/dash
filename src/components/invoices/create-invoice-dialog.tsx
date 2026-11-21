@@ -31,7 +31,7 @@ import {
   FileCheck,
 } from "lucide-react";
 import { InvoicePreviewDialog } from "./invoice-preview-dialog";
-import { InvoicePdfData } from "./invoice-pdf-document";
+import type { InvoicePdfData } from "@/types/invoice";
 
 export interface CustomLineItem {
   id: string;
