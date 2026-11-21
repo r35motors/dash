@@ -6,21 +6,46 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node -e \"const fs=require('fs');const p='node_modules/@react-pdf/hyphenate/package.json';if(fs.existsSync(p)){try{const j=JSON.parse(fs.readFileSync(p,'utf8'));j.exports['.']={types:'./lib/index.d.ts',import:'./lib/index.js',require:'./lib/index.js',default:'./lib/index.js'};j.exports['./*']={types:'./lib/*.d.ts',import:'./lib/*.js',require:'./lib/*.js',default:'./lib/*.js'};fs.writeFileSync(p,JSON.stringify(j,null,2));}catch(e){}}\"",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "test:vehicles": "tsx scripts/verify-all-vehicles.ts",
+    "test:sales": "tsx scripts/verify-sales.ts",
+    "test:invoices": "tsx scripts/verify-invoices.ts",
+    "test:dashboard": "tsx scripts/verify-dashboard-analytics-settings.ts",
+    "test:e2e": "tsx scripts/verify-e2e-all.ts",
+    "test": "tsx scripts/verify-all-vehicles.ts && tsx scripts/verify-sales.ts && tsx scripts/verify-invoices.ts && tsx scripts/verify-dashboard-analytics-settings.ts && tsx scripts/verify-e2e-all.ts"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.3.1",
+    "@radix-ui/react-slot": "^1.5.0",
+    "@react-pdf/renderer": "^4.9.0",
+    "@supabase/supabase-js": "^2.119.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.4",
+    "lucide-react": "^1.77.0",
     "next": "16.4.6",
+    "postgres": "^4.1.1",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "recharts": "^3.11.0",
+    "tailwind-merge": "^3.7.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "dotenv": "^18.0.10",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
