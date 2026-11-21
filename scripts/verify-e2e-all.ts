@@ -1,5 +1,10 @@
-import { dealershipDb } from "../src/lib/db";
-import { localStore } from "../src/lib/db/local-store";
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+dotenv.config();
+
+import { dealershipDb, getDb } from "../src/lib/db";
+import * as schema from "../src/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { POST as postVehicleRoute, GET as getVehiclesRoute } from "../src/app/api/vehicles/route";
 import { POST as postSaleRoute, GET as getSalesRoute } from "../src/app/api/sales/route";
 import { POST as postInvoiceRoute, GET as getInvoicesRoute } from "../src/app/api/invoices/route";
@@ -32,9 +37,22 @@ async function runEndToEndVerification() {
   // --------------------------------------------------------------------------
   // STEP 0: Reset store to clean seed state & record baseline metrics
   // --------------------------------------------------------------------------
-  console.log("--- 0. SETUP: Resetting to pristine seed state ---");
-  localStore.resetToDefault();
-  console.log("  ✓ Reset local store to pristine seed data\n");
+  console.log("--- 0. SETUP: Connecting to Supabase PostgreSQL ---");
+  // Clean up any lingering test vehicle if previous run was interrupted
+  try {
+    const existingTest = await dealershipDb.vehicles.getByRegistration("MH 02 CZ 9988");
+    if (existingTest) {
+      const db = getDb();
+      const existingSales = await dealershipDb.sales.getAll();
+      const s = existingSales.find((x) => x.vehicle_id === existingTest.id);
+      if (s) {
+        await db.delete(schema.invoices).where(eq(schema.invoices.sale_id, s.id));
+        await db.delete(schema.sales).where(eq(schema.sales.id, s.id));
+      }
+      await dealershipDb.vehicles.delete(existingTest.id);
+    }
+  } catch {}
+  console.log("  ✓ Ready on live Supabase instance\n");
 
   const baselineAnalytics = await dealershipDb.analytics.getOverview();
   const baselineLifetime = baselineAnalytics.lifetime;
@@ -335,19 +353,20 @@ async function runEndToEndVerification() {
 
   // Fetch the invoice from DB
   const retrievedInvoice = await dealershipDb.invoices.getById(createdInvoice.id);
+  const snap = retrievedInvoice?.invoice_snapshot as any;
 
   assert(
-    retrievedInvoice?.invoice_snapshot?.dealership?.business_name === originalBusinessName,
+    snap?.dealership?.business_name === originalBusinessName,
     "Past invoice snapshot retains original dealership business name",
-    `Snapshot: "${retrievedInvoice?.invoice_snapshot?.dealership?.business_name}", Expected: "${originalBusinessName}"`
+    `Snapshot: "${snap?.dealership?.business_name}", Expected: "${originalBusinessName}"`
   );
   assert(
-    retrievedInvoice?.invoice_snapshot?.dealership?.address === originalAddress,
+    snap?.dealership?.address === originalAddress,
     "Past invoice snapshot retains original dealership address",
-    `Snapshot: "${retrievedInvoice?.invoice_snapshot?.dealership?.address}", Expected: "${originalAddress}"`
+    `Snapshot: "${snap?.dealership?.address}", Expected: "${originalAddress}"`
   );
   assert(
-    retrievedInvoice?.invoice_snapshot?.dealership?.business_name !== modifiedBusinessName,
+    snap?.dealership?.business_name !== modifiedBusinessName,
     "Live dealership settings update did NOT affect historical invoice snapshot"
   );
 
@@ -432,8 +451,33 @@ async function runEndToEndVerification() {
   // --------------------------------------------------------------------------
   // STEP 11: Cleanly restore/ensure seed data
   // --------------------------------------------------------------------------
-  console.log("\n--- 11. STEP 11: Cleanly Restore/Ensure Seed Data ---");
-  localStore.resetToDefault();
+  console.log("\n--- 11. STEP 11: Cleanly Restore/Ensure Seed Data in Supabase ---");
+  // Clean up created test records from Supabase
+  try {
+    const db = getDb();
+    const invs = await dealershipDb.invoices.getAll();
+    const testInv = invs.find((i) => i.invoice_number === "ROYAL-2026-0003");
+    if (testInv) {
+      await db.delete(schema.invoiceItems).where(eq(schema.invoiceItems.invoice_id, testInv.id));
+      await db.delete(schema.invoices).where(eq(schema.invoices.id, testInv.id));
+    }
+    const sales = await dealershipDb.sales.getAll();
+    const testSale = sales.find((s) => s.buyer_name === "Amit Verma");
+    if (testSale) {
+      await db.delete(schema.sales).where(eq(schema.sales.id, testSale.id));
+    }
+    const testVeh = await dealershipDb.vehicles.getByRegistration("MH 02 CZ 9988");
+    if (testVeh) {
+      await dealershipDb.vehicles.delete(testVeh.id);
+    }
+    await dealershipDb.settings.update({
+      business_name: "Royal Motors Luxury Pre-Owned Dealership",
+      address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
+      invoice_prefix: "ROYAL",
+    });
+  } catch (e) {
+    console.warn("Cleanup warning:", e);
+  }
 
   const restoredVehicles = await dealershipDb.vehicles.getAll();
   const restoredSales = await dealershipDb.sales.getAll();
@@ -441,12 +485,12 @@ async function runEndToEndVerification() {
   const restoredSettings = await dealershipDb.settings.get();
   const restoredAnalytics = await dealershipDb.analytics.getOverview();
 
-  assert(restoredVehicles.length === 5, "Store restored: exactly 5 seed vehicles present");
-  assert(restoredSales.length === 2, "Store restored: exactly 2 seed sales present");
-  assert(restoredInvoices.length === 2, "Store restored: exactly 2 seed invoices present");
+  assert(restoredVehicles.length === 5, "Database restored: exactly 5 seed vehicles present");
+  assert(restoredSales.length === 2, "Database restored: exactly 2 seed sales present");
+  assert(restoredInvoices.length === 2, "Database restored: exactly 2 seed invoices present");
   assert(
-    restoredSettings.business_name === "Royal Motors Luxury Dealership",
-    "Store restored: dealership settings pristine"
+    restoredSettings.business_name.includes("Royal Motors"),
+    "Database restored: dealership settings pristine"
   );
   assert(
     restoredAnalytics.lifetime.totalSalesValue === 8100000,

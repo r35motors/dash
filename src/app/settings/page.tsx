@@ -2,12 +2,10 @@ import { Suspense } from "react";
 import { dealershipDb } from "@/lib/db";
 import { SettingsForm } from "@/components/settings/settings-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Settings, Database, CheckCircle2, Shield } from "lucide-react";
+import { Settings, Database } from "lucide-react";
 
-
-export default async function SettingsPage() {
+async function SettingsContent() {
   const settings = await dealershipDb.settings.get();
-  const isPostgres = dealershipDb.isPostgresConnected();
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
@@ -34,11 +32,11 @@ export default async function SettingsPage() {
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-200">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>{isPostgres ? "Supabase PostgreSQL Active" : "Resilient Local Store Active"}</span>
+              <span>Supabase PostgreSQL Active</span>
             </div>
           </div>
           <CardDescription>
-            Seamless dual-mode database layer: reads/writes to Supabase PostgreSQL when DATABASE_URL is set, with automatic fallback to persistent local store.
+            All application data is stored exclusively in Supabase PostgreSQL via Drizzle ORM.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 pt-0">
@@ -46,15 +44,15 @@ export default async function SettingsPage() {
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Database Driver:</span>
               <span className="font-mono text-slate-800 font-semibold">
-                {isPostgres ? "Drizzle ORM (postgres.js)" : "Drizzle Schema + Resilient Store"}
+                Drizzle ORM (postgres.js)
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-500">DDL Script:</span>
+              <span className="text-slate-500">DDL Migration:</span>
               <span className="font-mono text-slate-800">supabase-schema.sql</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-500">Seed Script:</span>
+              <span className="text-slate-500">Seed Command:</span>
               <span className="font-mono text-slate-800">npm run db:seed</span>
             </div>
           </div>
@@ -62,9 +60,25 @@ export default async function SettingsPage() {
       </Card>
 
       {/* Dealership Info Form */}
-      <Suspense fallback={<div className="p-8 text-center text-slate-400 text-xs">Loading settings...</div>}>
-        <SettingsForm initialSettings={settings} />
-      </Suspense>
+      <SettingsForm initialSettings={settings} />
     </div>
+  );
+}
+
+function SettingsSkeleton() {
+  return (
+    <div className="space-y-6 max-w-4xl mx-auto py-6">
+      <div className="h-8 w-48 bg-slate-200 animate-pulse rounded" />
+      <div className="h-32 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
+      <div className="h-96 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
+    </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense fallback={<SettingsSkeleton />}>
+      <SettingsContent />
+    </Suspense>
   );
 }

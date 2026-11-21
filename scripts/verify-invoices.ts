@@ -1,5 +1,8 @@
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+dotenv.config();
+
 import { dealershipDb } from "../src/lib/db";
-import { localStore } from "../src/lib/db/local-store";
 import { numberToIndianWords } from "../src/lib/utils";
 import React from "react";
 import { pdf } from "@react-pdf/renderer";
@@ -29,6 +32,15 @@ async function runVerification() {
   // TEST 1: Indian Numbering System Amount in Words
   // --------------------------------------------------------------------------
   console.log("--- 1. Testing Indian Numbering System (numberToIndianWords) ---");
+
+  try {
+    const existingInvoices = await dealershipDb.invoices.getAll();
+    for (const inv of existingInvoices) {
+      if (inv.invoice_number === "INV-2026-TEST01") {
+        await dealershipDb.invoices.delete(inv.id);
+      }
+    }
+  } catch {}
 
   const wordTest1 = numberToIndianWords(431500);
   assert(
@@ -191,11 +203,12 @@ async function runVerification() {
     `Item count: ${createdInvoice.items?.length}`
   );
 
+  const createdSnap = createdInvoice.invoice_snapshot as any;
   assert(
-    createdInvoice.invoice_snapshot?.amount_in_words ===
+    createdSnap?.amount_in_words ===
       "Rupees Three Lakh Eighty-Five Thousand Five Hundred Only",
     "Invoice snapshot stores correct amount in words",
-    `Snapshot amount in words: ${createdInvoice.invoice_snapshot?.amount_in_words}`
+    `Snapshot amount in words: ${createdSnap?.amount_in_words}`
   );
 
   // --------------------------------------------------------------------------
@@ -205,7 +218,7 @@ async function runVerification() {
 
   // Record original dealership name in snapshot
   const originalSnapshotBusinessName =
-    createdInvoice.invoice_snapshot.dealership.business_name;
+    createdSnap?.dealership?.business_name;
 
   // Now, modify business settings in the database
   const alteredBusinessName = "ALTERED NAME FOR TESTING SNAPSHOTS " + Date.now();
@@ -216,6 +229,7 @@ async function runVerification() {
 
   // Re-fetch the previously created invoice from DB
   const retrievedInvoice = await dealershipDb.invoices.getById(createdInvoice.id);
+  const retrievedSnap = retrievedInvoice?.invoice_snapshot as any;
 
   assert(
     retrievedInvoice !== null,
@@ -223,14 +237,14 @@ async function runVerification() {
   );
 
   assert(
-    retrievedInvoice?.invoice_snapshot?.dealership?.business_name ===
+    retrievedSnap?.dealership?.business_name ===
       originalSnapshotBusinessName,
     "Past invoice snapshot remains 100% frozen despite live business settings update",
-    `Snapshot business name: "${retrievedInvoice?.invoice_snapshot?.dealership?.business_name}", Expected: "${originalSnapshotBusinessName}"`
+    `Snapshot business name: "${retrievedSnap?.dealership?.business_name}", Expected: "${originalSnapshotBusinessName}"`
   );
 
   assert(
-    retrievedInvoice?.invoice_snapshot?.dealership?.business_name !== alteredBusinessName,
+    retrievedSnap?.dealership?.business_name !== alteredBusinessName,
     "Live settings alteration did NOT overwrite historical invoice snapshot",
     `Current DB Name: "${alteredBusinessName}"`
   );
@@ -269,6 +283,16 @@ async function runVerification() {
     "PDF Blob MIME type is 'application/pdf'",
     `Received MIME type: ${pdfBlob.type}`
   );
+
+  // Cleanup test invoice
+  try {
+    if (createdInvoice?.id) {
+      await dealershipDb.invoices.delete(createdInvoice.id);
+      console.log(`  ✓ Cleaned up test invoice ${createdInvoice.id}`);
+    }
+  } catch (err) {
+    console.error("Cleanup error in verify-invoices:", err);
+  }
 
   console.log("\n==========================================================");
   console.log(`  ALL ${passedTests}/${totalTests} TESTS PASSED SUCCESSFULLY! 🚀`);

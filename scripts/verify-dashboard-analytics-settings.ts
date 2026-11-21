@@ -1,5 +1,8 @@
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+dotenv.config();
+
 import { dealershipDb } from "../src/lib/db";
-import { localStore } from "../src/lib/db/local-store";
 import { GET as getSettingsRoute, PUT as putSettingsRoute } from "../src/app/api/settings/route";
 import { GET as getAnalyticsRoute } from "../src/app/api/analytics/route";
 import {
@@ -29,9 +32,7 @@ async function runVerification() {
     }
   }
 
-  // Step 0: Reset local store to pristine seed data
-  localStore.resetToDefault();
-  console.log("[Setup] Reset local store to pristine seed data.\n");
+  console.log("[Setup] Connecting directly to Supabase PostgreSQL.\n");
 
   // ============================================================================
   // SECTION 1: DASHBOARD VERIFICATION (Section 1, `/`)
@@ -161,11 +162,10 @@ async function runVerification() {
   const oldTotal = parseFloat(String(testInvoice.invoice_total));
   const newTotalWithAccessory = oldTotal + 75000; // Added ₹75,000 ceramic coating / warranty
 
-  // Temporarily update invoice total in localStore to verify dynamic analytics calculation
-  const store = localStore.getAnalyticsOverview();
-  const localData = (localStore as any).getAnalytics();
+  // Verify dynamic analytics calculation
+  const store = await dealershipDb.analytics.getOverview();
   assert(
-    localData.lifetime.totalSalesValue === 8100000,
+    store.lifetime.totalSalesValue === 8100000,
     "Analytics dynamically calculates from store invoices"
   );
 
@@ -420,8 +420,15 @@ async function runVerification() {
     `API honors query param year: ${currentYear}`
   );
 
-  // Reset store back to clean state
-  localStore.resetToDefault();
+  // Reset dealership settings back to clean state
+  await dealershipDb.settings.update({
+    business_name: initialSettings.business_name,
+    logo_path: initialSettings.logo_path,
+    address: initialSettings.address,
+    contact_number_1: initialSettings.contact_number_1,
+    contact_number_2: initialSettings.contact_number_2,
+    invoice_prefix: initialSettings.invoice_prefix,
+  });
 
   console.log("\n================================================================================");
   console.log(`  ALL ${totalTests} VERIFICATION CHECKS PASSED SUCCESSFULLY! (${passedTests}/${totalTests})`);

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import {
   Car,
@@ -11,6 +12,7 @@ import {
   Tag,
   User,
   Hash,
+  Loader2,
 } from "lucide-react";
 import { dealershipDb } from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
@@ -18,7 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-export default async function DashboardPage() {
+async function DashboardContent() {
   const [vehicles, rawSales, settings] = await Promise.all([
     dealershipDb.vehicles.getAll(),
     dealershipDb.sales.getAll(),
@@ -366,5 +368,30 @@ export default async function DashboardPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-8 max-w-7xl mx-auto py-8">
+      <div className="h-10 w-48 bg-slate-200 animate-pulse rounded" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="h-28 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="h-64 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
+        <div className="h-64 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
+      </div>
+    </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      <DashboardContent />
+    </Suspense>
   );
 }

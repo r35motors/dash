@@ -1,5 +1,8 @@
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+dotenv.config();
+
 import { dealershipDb } from "../src/lib/db";
-import { localStore } from "../src/lib/db/local-store";
 import { GET, POST } from "../src/app/api/vehicles/route";
 import { createVehicleAction } from "../src/app/vehicles/actions";
 import { formatCurrency } from "../src/lib/utils";
@@ -22,9 +25,13 @@ async function runComprehensiveVerification() {
     }
   }
 
-  // Step 0: Reset local store to clean state
-  localStore.resetToDefault();
-  console.log("✓ Reset local store to pristine seed data\n");
+  // Clean up any previous test vehicle
+  try {
+    const existingTest = await dealershipDb.vehicles.getByRegistration("KA-01-MJ-5501-TEST");
+    if (existingTest) await dealershipDb.vehicles.delete(existingTest.id);
+    const existingIoniq = await dealershipDb.vehicles.getByRegistration("DL 01 AB 1234");
+    if (existingIoniq) await dealershipDb.vehicles.delete(existingIoniq.id);
+  } catch {}
 
   console.log("--- 1. SECTION 2: ADD VEHICLE & DUPLICATE VALIDATION ---");
 
@@ -184,6 +191,16 @@ async function runComprehensiveVerification() {
     "Quick action 'Sell this vehicle' link targets /sales?vehicleId=...",
     `Link: "${quickActionLink}"`
   );
+
+  // Cleanup test vehicle so baseline counts remain pristine for subsequent test suites
+  try {
+    if (vehicleId) {
+      await dealershipDb.vehicles.delete(vehicleId);
+      console.log(`  ✓ Cleaned up test vehicle ${vehicleId}`);
+    }
+  } catch (err) {
+    console.error("Cleanup error:", err);
+  }
 
   console.log("\n========================================================");
   console.log(`TOTAL TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);

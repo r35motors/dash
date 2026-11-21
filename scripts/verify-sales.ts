@@ -1,5 +1,8 @@
+import * as dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+dotenv.config();
+
 import { dealershipDb } from "../src/lib/db";
-import { localStore } from "../src/lib/db/local-store";
 import { GET, POST } from "../src/app/api/sales/route";
 import { createSaleAction } from "../src/app/sales/actions";
 import { formatCurrency, formatDate } from "../src/lib/utils";
@@ -23,9 +26,20 @@ async function runSalesVerification() {
     }
   }
 
-  // Step 0: Reset local store to pristine seed data
-  localStore.resetToDefault();
-  console.log("✓ Reset local store to pristine seed data\n");
+  // Clean test setup
+  console.log("✓ Connecting directly to Supabase PostgreSQL database\n");
+
+  try {
+    const existingSales = await dealershipDb.sales.getAll();
+    for (const s of existingSales) {
+      if (s.buyer_name === "Siddharth Malhotra" || s.buyer_name === "Imposter Buyer") {
+        await dealershipDb.sales.delete(s.id);
+        if (s.vehicle_id) {
+          await dealershipDb.vehicles.update(s.vehicle_id, { status: "Available" });
+        }
+      }
+    }
+  } catch {}
 
   console.log("--- 1. SECTION 5: INPUT VALIDATION & AVAILABILITY CHECKS ---");
 
@@ -286,6 +300,17 @@ async function runSalesVerification() {
     Boolean(resolvedPreselected?.registration_number && resolvedPreselected?.owner_name && resolvedPreselected?.purchase_price),
     "Preselected vehicle contains all context fields for auto-filling (Registration, Owner, Purchase Price)"
   );
+
+  // Clean up recorded test sale and restore test vehicle status to 'Available'
+  try {
+    if (recordJson?.id) {
+      await dealershipDb.sales.delete(recordJson.id);
+      await dealershipDb.vehicles.update(testVehicle.id, { status: "Available" });
+      console.log(`  ✓ Cleaned up test sale ${recordJson.id} and restored vehicle status to 'Available'`);
+    }
+  } catch (err) {
+    console.error("Cleanup error in verify-sales:", err);
+  }
 
   console.log("\n========================================================");
   console.log(`TOTAL TEST RESULTS: ${passed} PASSED, ${failed} FAILED`);
