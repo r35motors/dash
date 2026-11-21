@@ -59,7 +59,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  // Handle image file upload (convert to Base64 data URL)
+  // Handle image file upload (auto-downscale via canvas to max 300px to ensure ultra-fast loading)
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -69,16 +69,50 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      setErrorMessage("Image size exceeds 2MB limit. Please choose a smaller image.");
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMessage("Image size exceeds 10MB limit. Please choose a smaller image.");
       return;
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const dataUrl = event.target?.result as string;
-      setFormData((prev) => ({ ...prev, logo_path: dataUrl }));
-      setErrorMessage(null);
+      const img = new Image();
+      img.onload = () => {
+        const maxDim = 300;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL("image/png");
+          setFormData((prev) => ({ ...prev, logo_path: compressedDataUrl }));
+        } else {
+          setFormData((prev) => ({ ...prev, logo_path: dataUrl }));
+        }
+        setErrorMessage(null);
+      };
+      img.onerror = () => {
+        setFormData((prev) => ({ ...prev, logo_path: dataUrl }));
+        setErrorMessage(null);
+      };
+      img.src = dataUrl;
     };
     reader.readAsDataURL(file);
   };
