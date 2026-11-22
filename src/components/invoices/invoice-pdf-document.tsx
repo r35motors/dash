@@ -512,14 +512,14 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
           <View style={styles.tableHeader}>
             <Text style={styles.thIndex}>#</Text>
             <Text style={styles.thDesc}>DESCRIPTION</Text>
-            <Text style={styles.thAmount}>AMOUNT (₹)</Text>
+            <Text style={styles.thAmount}>AMOUNT (INR)</Text>
           </View>
 
           {items.map((item, index) => (
             <View key={index} style={styles.tableRow}>
               <Text style={styles.tdIndex}>{index + 1}</Text>
               <Text style={styles.tdDesc}>{item.description}</Text>
-              <Text style={styles.tdAmount}>₹ {formatInr(item.amount)}</Text>
+              <Text style={styles.tdAmount}>Rs. {formatInr(item.amount)}</Text>
             </View>
           ))}
         </View>
@@ -534,11 +534,11 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
           <View style={styles.totalsBox}>
             <View style={styles.totalsRow}>
               <Text style={styles.kvKey}>Subtotal</Text>
-              <Text style={styles.totalsRowBold}>₹ {formatInr(totalNum)}</Text>
+              <Text style={styles.totalsRowBold}>Rs. {formatInr(totalNum)}</Text>
             </View>
             <View style={styles.grandTotalBox}>
               <Text style={styles.grandTotalLabel}>INVOICE TOTAL</Text>
-              <Text style={styles.grandTotalAmount}>₹ {formatInr(totalNum)}</Text>
+              <Text style={styles.grandTotalAmount}>Rs. {formatInr(totalNum)}</Text>
             </View>
           </View>
         </View>

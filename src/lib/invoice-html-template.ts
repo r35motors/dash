@@ -139,7 +139,7 @@ export function generateInvoiceHtml(data: InvoiceTemplateData): string {
   // Build items rows
   const itemRowsHtml = items
     .map((item, idx) => {
-      return `<tr><td>${idx + 1}</td><td>${item.description}</td><td>₹${formatInr(item.amount)}</td></tr>`;
+      return `<tr><td>${idx + 1}</td><td>${item.description}</td><td>Rs. ${formatInr(item.amount)}</td></tr>`;
     })
     .join("\n");
 
@@ -280,7 +280,7 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
     <tr>
       <th>#</th>
       <th>DESCRIPTION</th>
-      <th>AMOUNT (₹)</th>
+      <th>AMOUNT (INR)</th>
     </tr>
   </thead>
   <tbody>
@@ -293,8 +293,8 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
    <div class="w">${amountInWords}</div>
  </div>
  <div class="tot">
-   <div class="row"><span>Subtotal</span><b>₹${formatInr(totalNum)}</b></div>
-   <div class="grand"><span>INVOICE TOTAL</span><b>₹${formatInr(totalNum)}</b></div>
+   <div class="row"><span>Subtotal</span><b>Rs. ${formatInr(totalNum)}</b></div>
+   <div class="grand"><span>INVOICE TOTAL</span><b>Rs. ${formatInr(totalNum)}</b></div>
  </div>
 </div>
 <div class="foot">
