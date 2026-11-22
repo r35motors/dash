@@ -167,12 +167,12 @@ export function InvoicePreviewDialog({
         </div>
 
         {/* Modal Body / Instant HTML Preview Frame */}
-        <div className="flex-1 w-full h-full relative overflow-auto bg-slate-200 flex items-center justify-center p-2 sm:p-4">
+        <div className="flex-1 w-full relative overflow-y-auto bg-slate-200 flex items-start justify-center p-2 sm:p-4">
           {htmlContent ? (
             <iframe
               srcDoc={htmlContent}
               title={`Invoice Preview - ${invoiceNumber}`}
-              className="w-full h-full max-w-[215mm] min-h-[297mm] rounded-sm shadow-xl border border-slate-300 bg-white"
+              className="w-full max-w-[215mm] h-[297mm] min-h-[297mm] rounded-sm shadow-xl border border-slate-300 bg-white shrink-0 my-2"
             />
           ) : (
             <div className="flex flex-col items-center justify-center gap-2 text-slate-600">
