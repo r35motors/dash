@@ -289,7 +289,6 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
  </div>
  <div class="title">
    <h2>INVOICE</h2>
-   <div class="copy">ORIGINAL FOR RECIPIENT</div>
    <div class="paid">PAID IN FULL</div>
  </div>
 </div>

@@ -508,7 +508,6 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
 
           <View style={styles.headerRight}>
             <Text style={styles.invoiceTitle}>INVOICE</Text>
-            <Text style={styles.invoiceCopy}>Original for Recipient</Text>
             <View style={styles.paidBadge}>
               <Text style={styles.paidBadgeText}>PAID IN FULL</Text>
             </View>
