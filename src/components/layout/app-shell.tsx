@@ -75,8 +75,9 @@ export function AppShell({ children }: AppShellProps) {
       <aside className="hidden md:flex md:w-64 flex-col border-r border-[#E2E8F0] bg-white h-screen sticky top-0 z-30 select-none">
         {/* Dealership Brand Header */}
         <div className="h-16 flex items-center px-6 border-b border-[#E2E8F0] gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#0F172A] flex items-center justify-center text-white shadow-xs">
-            <ShieldCheck className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-lg bg-[#0F172A] flex items-center justify-center p-1.5 shadow-xs">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-white.png" alt="R35 MOTORS" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-bold text-sm tracking-tight text-[#0F172A] truncate">
@@ -147,8 +148,9 @@ export function AppShell({ children }: AppShellProps) {
       {/* Mobile Header */}
       <div className="md:hidden sticky top-0 z-40 bg-white border-b border-[#E2E8F0] px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center text-white">
-            <ShieldCheck className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center p-1 shadow-xs">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-white.png" alt="R35 MOTORS" className="w-full h-full object-contain" />
           </div>
           <span className="font-bold text-sm text-[#0F172A]">R35 MOTORS</span>
         </div>
@@ -167,8 +169,9 @@ export function AppShell({ children }: AppShellProps) {
           <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl flex flex-col p-4">
             <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center text-white">
-                  <ShieldCheck className="w-4 h-4 text-white" />
+                <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center p-1 shadow-xs">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/logo-white.png" alt="R35 MOTORS" className="w-full h-full object-contain" />
                 </div>
                 <span className="font-bold text-sm text-[#0F172A]">R35 MOTORS</span>
               </div>

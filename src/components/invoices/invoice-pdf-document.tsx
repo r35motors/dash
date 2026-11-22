@@ -62,14 +62,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logoBlockHasLogo: {
+    width: 74,
+    height: 44,
     backgroundColor: "#FFFFFF",
     borderWidth: 1.2,
     borderColor: "#E2E8F0",
   },
   logoImage: {
     position: "absolute",
-    width: 44,
-    height: 44,
+    width: 66,
+    height: 38,
     objectFit: "contain",
   },
   logoOverlayText: {

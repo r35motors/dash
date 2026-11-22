@@ -182,9 +182,11 @@ body{
   overflow:hidden;
 }
 .logo-block.has-logo{
+  width:26mm;
+  height:16mm;
   background:#ffffff;
   border:1.5px solid #e2e8f0;
-  box-shadow:0 2px 6px rgba(0,0,0,0.10);
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
 .spade-svg{
   position:absolute;
