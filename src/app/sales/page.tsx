@@ -14,11 +14,11 @@ export default async function SalesPage({ searchParams }: SalesPageProps) {
   const initialSearch = resolvedParams?.search || "";
   const initialOpenAdd = resolvedParams?.add === "true";
 
-  // Fetch sales (with joined vehicle details & calculated profit)
-  const rawSales = await dealershipDb.sales.getAll();
-
-  // Fetch only available vehicles for the "Record New Sale" dropdown
-  const rawAvailable = await dealershipDb.vehicles.getAll({ status: "Available" });
+  // Concurrently fetch sales and available vehicles in parallel for sub-second page loading
+  const [rawSales, rawAvailable] = await Promise.all([
+    dealershipDb.sales.getAll(),
+    dealershipDb.vehicles.getAll({ status: "Available" }),
+  ]);
 
   const serializedSales: SaleRecord[] = rawSales.map((s) => ({
     id: s.id,

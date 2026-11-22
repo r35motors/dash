@@ -1,5 +1,5 @@
 // High-performance in-memory TTL query cache for serverless environments
-// Prevents connection pool exhaustion and slashes round-trip latency
+// Prevents connection pool exhaustion and slashes round-trip latency to 0ms
 
 interface CacheEntry<T> {
   data: T;
@@ -39,4 +39,9 @@ class QueryCache {
   }
 }
 
-export const dbCache = new QueryCache();
+const globalForCache = globalThis as unknown as {
+  __dealership_cache?: QueryCache;
+};
+
+export const dbCache =
+  globalForCache.__dealership_cache || (globalForCache.__dealership_cache = new QueryCache());

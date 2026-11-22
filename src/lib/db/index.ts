@@ -470,15 +470,27 @@ export const dealershipDb = {
       };
     },
 
-    async getNextNumber(): Promise<string> {
-      const db = getDb();
-      const settings = await db.select().from(schema.businessSettings).limit(1);
-      const prefix = settings[0]?.invoice_prefix || "R35";
-      const year = new Date().getFullYear();
-      const allInvoices = await db
-        .select({ invoice_number: schema.invoices.invoice_number })
-        .from(schema.invoices);
+    async getNextNumber(
+      prefetchedInvoices?: Array<{ invoice_number: string }>,
+      prefetchedPrefix?: string
+    ): Promise<string> {
+      let prefix = prefetchedPrefix;
+      let allInvoices = prefetchedInvoices;
 
+      if (!prefix) {
+        const db = getDb();
+        const settings = await db.select().from(schema.businessSettings).limit(1);
+        prefix = settings[0]?.invoice_prefix || "R35";
+      }
+
+      if (!allInvoices) {
+        const db = getDb();
+        allInvoices = await db
+          .select({ invoice_number: schema.invoices.invoice_number })
+          .from(schema.invoices);
+      }
+
+      const year = new Date().getFullYear();
       let maxNum = 0;
       for (const inv of allInvoices) {
         const match = inv.invoice_number.match(/(\d+)$/);

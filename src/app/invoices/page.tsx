@@ -17,13 +17,17 @@ export default async function InvoicesPage({ searchParams }: InvoicesPageProps) 
   const saleId = resolvedParams?.saleId;
   const initialCreateOpen = resolvedParams?.create === "true";
 
-  const [invoices, vehicles, sales, settings, nextInvoiceNumber] = await Promise.all([
+  const [invoices, vehicles, sales, settings] = await Promise.all([
     dealershipDb.invoices.getAll(),
     dealershipDb.vehicles.getAll(),
     dealershipDb.sales.getAll(),
     dealershipDb.settings.get(),
-    dealershipDb.invoices.getNextNumber(),
   ]);
+
+  const nextInvoiceNumber = await dealershipDb.invoices.getNextNumber(
+    invoices as any,
+    (settings as any)?.invoice_prefix
+  );
 
   return (
     <InvoicesView

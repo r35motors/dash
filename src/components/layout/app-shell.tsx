@@ -59,11 +59,26 @@ const navItems = [
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [navigatingTo, setNavigatingTo] = React.useState<string | null>(null);
 
-  // Close mobile menu on route change
+  // Clear navigating state and close mobile menu when pathname updates
   React.useEffect(() => {
+    setNavigatingTo(null);
     setMobileMenuOpen(false);
   }, [pathname]);
+
+  const handleNavClick = (href: string) => {
+    if (href !== pathname) {
+      setNavigatingTo(href);
+    }
+  };
+
+  const isItemActive = (href: string) => {
+    if (navigatingTo) {
+      return href === "/" ? navigatingTo === "/" : navigatingTo.startsWith(href);
+    }
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  };
 
   const currentPage = navItems.find((item) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
@@ -71,6 +86,21 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="min-h-screen bg-white text-[#0F172A] flex flex-col md:flex-row antialiased">
+      {/* Sleek Top Navigation Progress Bar for 0ms Perceived Response */}
+      <div
+        className={cn(
+          "fixed top-0 left-0 right-0 h-[2.5px] z-50 transition-opacity duration-200 pointer-events-none",
+          navigatingTo ? "opacity-100" : "opacity-0"
+        )}
+      >
+        <div
+          className={cn(
+            "h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-400 transition-all duration-300 ease-out",
+            navigatingTo ? "w-3/4 animate-pulse" : "w-full"
+          )}
+        />
+      </div>
+
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex md:w-64 flex-col border-r border-[#E2E8F0] bg-white h-screen sticky top-0 z-30 select-none">
         {/* Dealership Brand Header */}
@@ -95,18 +125,17 @@ export function AppShell({ children }: AppShellProps) {
             Management
           </div>
           {navItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+            const isActive = isItemActive(item.href);
             const Icon = item.icon;
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={true}
+                onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group cursor-pointer",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group cursor-pointer active:scale-[0.98]",
                   isActive
                     ? "bg-[#0F172A] text-white shadow-xs font-semibold"
                     : "text-slate-600 hover:text-[#0F172A] hover:bg-slate-100"
@@ -156,7 +185,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 rounded-md hover:bg-slate-100 text-slate-700"
+          className="p-2 rounded-md hover:bg-slate-100 text-slate-700 active:scale-95 transition-transform"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -191,19 +220,20 @@ export function AppShell({ children }: AppShellProps) {
             </div>
             <nav className="flex-1 py-4 space-y-1">
               {navItems.map((item) => {
-                const isActive =
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href);
+                const isActive = isItemActive(item.href);
                 const Icon = item.icon;
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    prefetch={true}
+                    onClick={() => {
+                      handleNavClick(item.href);
+                      setMobileMenuOpen(false);
+                    }}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
                       isActive
                         ? "bg-[#0F172A] text-white shadow-xs font-semibold"
                         : "text-slate-600 hover:text-[#0F172A] hover:bg-slate-100"
@@ -244,21 +274,20 @@ export function AppShell({ children }: AppShellProps) {
         {/* Mobile Bottom Navigation Bar with iOS safe area and clear active states */}
         <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] flex items-center justify-around px-1 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom,0px))] h-[calc(3.75rem+env(safe-area-inset-bottom,0px))] shadow-lg select-none">
           {navItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+            const isActive = isItemActive(item.href);
             const Icon = item.icon;
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={true}
+                onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "flex flex-col items-center justify-center flex-1 py-1 px-0.5 rounded-lg text-[9.5px] font-medium transition-all relative",
+                  "flex flex-col items-center justify-center flex-1 py-1 px-0.5 rounded-lg text-[9.5px] font-medium transition-all relative active:scale-95",
                   isActive
                     ? "text-[#0F172A] font-bold"
-                    : "text-slate-500 hover:text-slate-900 active:scale-95"
+                    : "text-slate-500 hover:text-slate-900"
                 )}
               >
                 <div

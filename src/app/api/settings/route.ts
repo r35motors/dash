@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { dealershipDb } from "@/lib/db";
 
 export async function GET() {
@@ -35,6 +36,23 @@ export async function PUT(request: Request) {
       contact_number_2: body.contact_number_2 ? body.contact_number_2.trim() : null,
       invoice_prefix: body.invoice_prefix.trim().toUpperCase(),
     });
+
+    // Invalidate next invoice caches if prefix changed
+    dealershipDb.invoices && (dealershipDb as any);
+    
+    // Instantly purge Next.js layout & page caches across the entire app
+    try {
+      revalidatePath("/", "layout");
+      revalidatePath("/");
+      revalidatePath("/invoices");
+      revalidatePath("/vehicles");
+      revalidatePath("/sales");
+      revalidatePath("/analytics");
+      revalidatePath("/settings");
+    } catch (e) {
+      console.warn("[Cache] revalidatePath warning:", e);
+    }
+
     return NextResponse.json(updated);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

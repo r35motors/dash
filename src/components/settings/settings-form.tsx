@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,6 +40,7 @@ interface SettingsFormProps {
 }
 
 export function SettingsForm({ initialSettings }: SettingsFormProps) {
+  const router = useRouter();
   const [formData, setFormData] = React.useState({
     business_name: initialSettings?.business_name || "",
     logo_path: initialSettings?.logo_path || "",
@@ -181,6 +183,9 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
       setSuccessMessage(
         "Dealership profile saved successfully! New invoices will automatically use these settings."
       );
+
+      // Instantly refresh router state to propagate changes across the UI
+      router.refresh();
 
       // Auto-hide success message after 5 seconds
       setTimeout(() => {
