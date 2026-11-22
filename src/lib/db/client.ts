@@ -17,14 +17,14 @@ export function getDb() {
 
   try {
     // Optimized for Serverless environments (Vercel):
-    // - max: 2 prevents concurrent lambda instances from exhausting Supabase pool
-    // - idle_timeout: 5 quickly closes idle connections to prevent connection leaks
-    // - connect_timeout: 6 fails fast instead of hanging the user's browser
+    // - max: 5 allows parallel queries in Promise.all without queueing
+    // - idle_timeout: 4 quickly closes idle connections to prevent connection leaks
+    // - connect_timeout: 10 allows reliable cross-region handshake
     // - prepare: false is required for Supabase transaction poolers & PgBouncer
     sqlClient = postgres(connectionString, {
-      max: 2,
-      idle_timeout: 5,
-      connect_timeout: 6,
+      max: 5,
+      idle_timeout: 4,
+      connect_timeout: 10,
       max_lifetime: 60 * 15,
       prepare: false,
       ssl: connectionString.includes("supabase.co") ? { rejectUnauthorized: false } : undefined,
