@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     color: "#0F172A",
     letterSpacing: 2.5,
     lineHeight: 1.2,
-    marginBottom: 6,
     textAlign: "right",
   },
   invoiceCopy: {
@@ -110,30 +109,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     letterSpacing: 1.4,
     textTransform: "uppercase",
-  },
-  paidBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 3.5,
-    borderRadius: 12,
-    backgroundColor: "#ECFDF5",
-    borderWidth: 1,
-    borderColor: "#A7F3D0",
-    alignSelf: "flex-end",
-  },
-  paidDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: "#059669",
-    marginRight: 4.5,
-  },
-  paidBadgeText: {
-    fontSize: 7.5,
-    fontFamily: "Helvetica-Bold",
-    color: "#047857",
-    letterSpacing: 1.2,
   },
   // Thin Clean Divider
   divider: {
@@ -470,10 +445,6 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
 
           <View style={styles.headerRight}>
             <Text style={styles.invoiceTitle}>INVOICE</Text>
-            <View style={styles.paidBadge}>
-              <View style={styles.paidDot} />
-              <Text style={styles.paidBadgeText}>PAID IN FULL</Text>
-            </View>
           </View>
         </View>
 

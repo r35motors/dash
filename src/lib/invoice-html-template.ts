@@ -206,28 +206,8 @@ body{
 .brand h1{font-size:15pt;font-weight:700;color:#14213d;letter-spacing:-.2px;line-height:1.2}
 .brand p{font-size:9pt;color:#566074;margin-top:4mm;line-height:1.6}
 .title{text-align:right}
-.title h2{font-size:22pt;font-weight:700;letter-spacing:2.5px;color:#0f172a;margin:0 0 2.5mm;line-height:1.2}
+.title h2{font-size:22pt;font-weight:700;letter-spacing:2.5px;color:#0f172a;margin:0;line-height:1.2}
 .title .copy{font-size:8pt;letter-spacing:1.6px;color:#566074;margin-top:1.5mm}
-.paid{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  border:1px solid #a7f3d0;
-  color:#047857;
-  font-weight:700;
-  font-size:7.5pt;
-  letter-spacing:1.2px;
-  padding:1.4mm 3.2mm;
-  border-radius:9999px;
-  background:#ecfdf5;
-}
-.paid-dot{
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:#059669;
-  display:inline-block;
-}
 hr{border:0;border-top:1px solid #dfe3ea;margin:9mm 0 7mm}
 .meta{display:flex;justify-content:space-between}
 .lbl{font-size:8pt;letter-spacing:1.6px;color:#8a93a5;font-weight:600;margin-bottom:2.5mm;text-transform:uppercase}
@@ -276,7 +256,6 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
  </div>
  <div class="title">
    <h2>INVOICE</h2>
-   <div class="paid"><span class="paid-dot"></span>PAID IN FULL</div>
  </div>
 </div>
 <hr>
