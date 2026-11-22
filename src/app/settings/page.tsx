@@ -6,7 +6,7 @@ import { SettingsForm } from "@/components/settings/settings-form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Settings, Database } from "lucide-react";
 
-async function SettingsContent() {
+export default async function SettingsPage() {
   const settings = await dealershipDb.settings.get();
 
   return (
@@ -64,23 +64,5 @@ async function SettingsContent() {
       {/* Dealership Info Form */}
       <SettingsForm initialSettings={settings} />
     </div>
-  );
-}
-
-function SettingsSkeleton() {
-  return (
-    <div className="space-y-6 max-w-4xl mx-auto py-6">
-      <div className="h-8 w-48 bg-slate-200 animate-pulse rounded" />
-      <div className="h-32 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
-      <div className="h-96 bg-slate-100 border border-slate-200 rounded-lg animate-pulse" />
-    </div>
-  );
-}
-
-export default function SettingsPage() {
-  return (
-    <Suspense fallback={<SettingsSkeleton />}>
-      <SettingsContent />
-    </Suspense>
   );
 }

@@ -1,4 +1,5 @@
-import { Suspense } from "react";
+export const dynamic = "force-dynamic";
+
 import { dealershipDb } from "@/lib/db";
 import { SalesView, SaleRecord } from "@/components/sales/sales-view";
 import { AvailableVehicleOption } from "@/components/sales/add-sale-dialog";
@@ -7,11 +8,7 @@ interface SalesPageProps {
   searchParams?: Promise<{ vehicleId?: string; search?: string; add?: string }>;
 }
 
-async function SalesContent({
-  searchParams,
-}: {
-  searchParams?: Promise<{ vehicleId?: string; search?: string; add?: string }>;
-}) {
+export default async function SalesPage({ searchParams }: SalesPageProps) {
   const resolvedParams = searchParams ? await searchParams : undefined;
   const preselectedVehicleId = resolvedParams?.vehicleId;
   const initialSearch = resolvedParams?.search || "";
@@ -60,19 +57,5 @@ async function SalesContent({
       initialSearch={initialSearch}
       initialOpenAdd={initialOpenAdd}
     />
-  );
-}
-
-export default function SalesPage({ searchParams }: SalesPageProps) {
-  return (
-    <Suspense
-      fallback={
-        <div className="p-12 text-center text-slate-400 text-xs">
-          Loading sales operations and sold fleet...
-        </div>
-      }
-    >
-      <SalesContent searchParams={searchParams} />
-    </Suspense>
   );
 }

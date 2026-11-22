@@ -1,4 +1,5 @@
-import { Suspense } from "react";
+export const dynamic = "force-dynamic";
+
 import { dealershipDb } from "@/lib/db";
 import { Car } from "lucide-react";
 import { VehiclesView } from "@/components/vehicles/vehicles-view";
@@ -7,11 +8,7 @@ interface VehiclesPageProps {
   searchParams?: Promise<{ status?: string; search?: string; add?: string }>;
 }
 
-async function VehiclesContent({
-  searchParams,
-}: {
-  searchParams?: Promise<{ status?: string; search?: string; add?: string }>;
-}) {
+export default async function VehiclesPage({ searchParams }: VehiclesPageProps) {
   const resolvedParams = searchParams ? await searchParams : undefined;
   const statusParam = resolvedParams?.status || "Available";
   const searchParam = resolvedParams?.search || "";
@@ -38,17 +35,6 @@ async function VehiclesContent({
   }));
 
   return (
-    <VehiclesView
-      initialVehicles={serializedVehicles}
-      initialStatus={statusParam}
-      initialSearch={searchParam}
-      initialOpenAdd={initialOpenAdd}
-    />
-  );
-}
-
-export default function VehiclesPage({ searchParams }: VehiclesPageProps) {
-  return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
@@ -67,15 +53,12 @@ export default function VehiclesPage({ searchParams }: VehiclesPageProps) {
         </div>
       </div>
 
-      <Suspense
-        fallback={
-          <div className="p-12 text-center text-slate-400 text-xs">
-            Loading vehicle fleet inventory...
-          </div>
-        }
-      >
-        <VehiclesContent searchParams={searchParams} />
-      </Suspense>
+      <VehiclesView
+        initialVehicles={serializedVehicles}
+        initialStatus={statusParam}
+        initialSearch={searchParam}
+        initialOpenAdd={initialOpenAdd}
+      />
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import { Suspense } from "react";
+export const dynamic = "force-dynamic";
+
 import { dealershipDb } from "@/lib/db";
 import { InvoicesView } from "@/components/invoices/invoices-view";
 
@@ -10,11 +11,7 @@ interface InvoicesPageProps {
   }>;
 }
 
-async function InvoicesContent({
-  searchParams,
-}: {
-  searchParams?: Promise<{ vehicleId?: string; saleId?: string; create?: string }>;
-}) {
+export default async function InvoicesPage({ searchParams }: InvoicesPageProps) {
   const resolvedParams = searchParams ? await searchParams : undefined;
   const vehicleId = resolvedParams?.vehicleId;
   const saleId = resolvedParams?.saleId;
@@ -37,19 +34,5 @@ async function InvoicesContent({
       preselectedSaleId={saleId}
       initialCreateOpen={initialCreateOpen}
     />
-  );
-}
-
-export default function InvoicesPage({ searchParams }: InvoicesPageProps) {
-  return (
-    <Suspense
-      fallback={
-        <div className="p-12 text-center text-slate-400 text-xs">
-          Loading dealership invoices & archive...
-        </div>
-      }
-    >
-      <InvoicesContent searchParams={searchParams} />
-    </Suspense>
   );
 }
