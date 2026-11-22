@@ -281,7 +281,6 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
      </div>
      <div>
        <h1>${dealership.business_name}</h1>
-       <div class="tag">PRE-OWNED LUXURY AUTOMOBILES</div>
      </div>
    </div>
    <p>${dealership.address}<br>Phone: ${dealership.contact_number_1}${
@@ -327,10 +326,6 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
    <div class="row"><span>Subtotal</span><b>₹${formatInr(totalNum)}</b></div>
    <div class="grand"><span>INVOICE TOTAL</span><b>₹${formatInr(totalNum)}</b></div>
  </div>
-</div>
-<div class="sign">
-  <div class="line">Authorized Signatory</div>
-  <div class="for">For ${dealership.business_name}</div>
 </div>
 <div class="foot">
   <span>${dealership.business_name} • ${dealership.address}</span>

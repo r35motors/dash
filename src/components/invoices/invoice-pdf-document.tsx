@@ -495,7 +495,6 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
 
               <View>
                 <Text style={styles.brandTitle}>{dealership.business_name}</Text>
-                <Text style={styles.brandTag}>Pre-Owned Luxury Automobiles</Text>
               </View>
             </View>
 
@@ -575,15 +574,7 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
           </View>
         </View>
 
-        {/* 5. Authorized Signatory */}
-        <View style={styles.signatureBox}>
-          <View style={styles.signatureLine}>
-            <Text style={styles.signatureTitle}>Authorized Signatory</Text>
-            <Text style={styles.signatureFor}>For {dealership.business_name}</Text>
-          </View>
-        </View>
-
-        {/* 6. Footer */}
+        {/* Footer */}
         <View style={styles.footer}>
           <Text>{dealership.business_name} • {dealership.address}</Text>
           <Text>Invoice</Text>
