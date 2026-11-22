@@ -69,6 +69,7 @@ interface InvoicesViewProps {
   vehicles: any[];
   sales: any[];
   settings: any;
+  nextInvoiceNumber?: string;
   preselectedVehicleId?: string;
   preselectedSaleId?: string;
   initialCreateOpen?: boolean;
@@ -79,6 +80,7 @@ export function InvoicesView({
   vehicles,
   sales,
   settings,
+  nextInvoiceNumber,
   preselectedVehicleId,
   preselectedSaleId,
   initialCreateOpen = false,
@@ -86,6 +88,30 @@ export function InvoicesView({
   const [invoices, setInvoices] = React.useState<InvoiceListItem[]>(initialInvoices);
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [isCreateOpen, setIsCreateOpen] = React.useState(Boolean(initialCreateOpen));
+  const [currentNextNumber, setCurrentNextNumber] = React.useState<string>(nextInvoiceNumber || "");
+
+  // Refresh latest auto-assigned sequence number
+  const refreshNextNumber = React.useCallback(async () => {
+    try {
+      const res = await fetch("/api/invoices/next-number");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.next_number) setCurrentNextNumber(data.next_number);
+      }
+    } catch {}
+  }, []);
+
+  React.useEffect(() => {
+    if (isCreateOpen) {
+      refreshNextNumber();
+    }
+  }, [isCreateOpen, refreshNextNumber]);
+
+  React.useEffect(() => {
+    if (nextInvoiceNumber) {
+      setCurrentNextNumber(nextInvoiceNumber);
+    }
+  }, [nextInvoiceNumber]);
 
   // Active preview invoice
   const [previewInvoice, setPreviewInvoice] = React.useState<InvoicePdfData | null>(null);
@@ -121,6 +147,7 @@ export function InvoicesView({
   // Handle new invoice added
   const handleInvoiceCreated = (newInvoice: InvoiceListItem) => {
     setInvoices((prev) => [newInvoice, ...prev]);
+    refreshNextNumber();
     // Automatically open preview for the newly generated invoice
     const pdfData = mapInvoiceToPdfData(newInvoice, settings);
     setPreviewInvoice(pdfData);
@@ -672,6 +699,7 @@ export function InvoicesView({
         vehicles={vehicles}
         sales={sales}
         settings={settings}
+        nextInvoiceNumber={currentNextNumber}
         preselectedVehicleId={preselectedVehicleId}
         preselectedSaleId={preselectedSaleId}
         onInvoiceCreated={handleInvoiceCreated}

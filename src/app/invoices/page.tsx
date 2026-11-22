@@ -17,11 +17,12 @@ export default async function InvoicesPage({ searchParams }: InvoicesPageProps) 
   const saleId = resolvedParams?.saleId;
   const initialCreateOpen = resolvedParams?.create === "true";
 
-  const [invoices, vehicles, sales, settings] = await Promise.all([
+  const [invoices, vehicles, sales, settings, nextInvoiceNumber] = await Promise.all([
     dealershipDb.invoices.getAll(),
     dealershipDb.vehicles.getAll(),
     dealershipDb.sales.getAll(),
     dealershipDb.settings.get(),
+    dealershipDb.invoices.getNextNumber(),
   ]);
 
   return (
@@ -30,6 +31,7 @@ export default async function InvoicesPage({ searchParams }: InvoicesPageProps) 
       vehicles={vehicles as any}
       sales={sales as any}
       settings={settings as any}
+      nextInvoiceNumber={nextInvoiceNumber}
       preselectedVehicleId={vehicleId}
       preselectedSaleId={saleId}
       initialCreateOpen={initialCreateOpen}

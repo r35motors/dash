@@ -511,22 +511,29 @@ export const dealershipDb = {
       items?: Array<{ description: string; amount: string | number }>;
     }) {
       const db = getDb();
-      const invoiceNumber = (
-        data.invoice_number || (await this.getNextNumber())
-      ).trim();
+      let invoiceNumber = (data.invoice_number || "").trim();
 
-      // Enforce unique invoice number check
-      const existing = await db
-        .select()
-        .from(schema.invoices)
-        .where(
-          sql`upper(trim(${schema.invoices.invoice_number})) = ${invoiceNumber.toUpperCase()}`
-        )
-        .limit(1);
+      // Enforce auto invoice numbering: if empty or already taken, compute authoritative next sequential number
+      if (!invoiceNumber) {
+        invoiceNumber = await this.getNextNumber();
+      } else {
+        const existing = await db
+          .select({ id: schema.invoices.id })
+          .from(schema.invoices)
+          .where(
+            sql`upper(trim(${schema.invoices.invoice_number})) = ${invoiceNumber.toUpperCase()}`
+          )
+          .limit(1);
 
-      if (existing.length > 0) {
-        throw new Error(`Invoice number "${invoiceNumber}" already exists.`);
+        if (existing.length > 0) {
+          invoiceNumber = await this.getNextNumber();
+        }
       }
+
+      // Ensure snapshot contains the finalized auto invoice number
+      const snapshot = data.invoice_snapshot
+        ? { ...data.invoice_snapshot, invoice_number: invoiceNumber }
+        : data.invoice_snapshot;
 
       try {
         const invoiceRows = await db
@@ -537,7 +544,7 @@ export const dealershipDb = {
             sale_id: data.sale_id || null,
             invoice_date: data.invoice_date ? new Date(data.invoice_date) : new Date(),
             invoice_total: String(data.invoice_total),
-            invoice_snapshot: data.invoice_snapshot,
+            invoice_snapshot: snapshot,
           })
           .returning();
 
