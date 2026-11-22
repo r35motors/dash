@@ -245,14 +245,12 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
 .items td{padding:4.6mm 4mm;border-bottom:1px solid #e6e9ef;font-size:10pt}
 .items td:first-child{color:#8a93a5}
 .items td:last-child{font-weight:500;font-variant-numeric:tabular-nums}
-.bottom{display:flex;justify-content:space-between;margin-top:9mm}
+.bottom{display:flex;justify-content:space-between;align-items:center;margin-top:9mm}
 .words{width:95mm}
-.words .w{text-wrap:balance;font-size:10pt;font-weight:500;color:#14213d;line-height:1.5}
+.words .w{text-wrap:balance;font-size:10pt;font-weight:600;color:#14213d;line-height:1.5}
 .words .note{font-size:9pt;color:#566074;margin-top:6mm;line-height:1.6}
-.tot{width:72mm}
-.tot .row{display:flex;justify-content:space-between;padding:2mm 0;font-size:10pt;color:#566074}
-.tot .row b{color:#14213d;font-weight:600}
-.tot .grand{display:flex;justify-content:space-between;align-items:center;background:#14213d;color:#fff;padding:3.6mm 4mm;margin-top:2mm;border-radius:2px}
+.tot{width:75mm}
+.tot .grand{display:flex;justify-content:space-between;align-items:center;background:#14213d;color:#fff;padding:3.6mm 4.5mm;border-radius:2px}
 .tot .grand span{font-size:8pt;letter-spacing:1.6px;font-weight:600}
 .tot .grand b{font-size:12pt;font-weight:700}
 .sign{position:absolute;right:16mm;bottom:30mm;width:65mm;text-align:center}
@@ -312,7 +310,6 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
    <div class="w">${amountInWords}</div>
  </div>
  <div class="tot">
-   <div class="row"><span>Subtotal</span><b>Rs. ${formatInr(totalNum)}</b></div>
    <div class="grand"><span>INVOICE TOTAL</span><b>Rs. ${formatInr(totalNum)}</b></div>
  </div>
 </div>

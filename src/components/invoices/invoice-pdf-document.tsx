@@ -264,8 +264,8 @@ const styles = StyleSheet.create({
   bottomSection: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginTop: 12,
+    alignItems: "center",
+    marginTop: 14,
   },
   wordsBox: {
     width: "55%",
@@ -279,26 +279,14 @@ const styles = StyleSheet.create({
   totalsBox: {
     width: "40%",
   },
-  totalsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 3,
-    fontSize: 9,
-    color: "#566074",
-  },
-  totalsRowBold: {
-    fontFamily: "Helvetica-Bold",
-    color: "#14213D",
-  },
   grandTotalBox: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#14213D",
     color: "#FFFFFF",
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    marginTop: 6,
+    paddingVertical: 9,
+    paddingHorizontal: 11,
     borderRadius: 2,
   },
   grandTotalLabel: {
@@ -545,10 +533,6 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
           </View>
 
           <View style={styles.totalsBox}>
-            <View style={styles.totalsRow}>
-              <Text style={styles.kvKey}>Subtotal</Text>
-              <Text style={styles.totalsRowBold}>Rs. {formatInr(totalNum)}</Text>
-            </View>
             <View style={styles.grandTotalBox}>
               <Text style={styles.grandTotalLabel}>INVOICE TOTAL</Text>
               <Text style={styles.grandTotalAmount}>Rs. {formatInr(totalNum)}</Text>
