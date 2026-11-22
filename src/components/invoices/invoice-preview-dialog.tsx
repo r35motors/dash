@@ -127,12 +127,12 @@ export function InvoicePreviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl w-[95vw] h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100">
+      <DialogContent className="max-w-4xl w-[96vw] h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 rounded-xl">
         {/* Modal Header */}
-        <div className="p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <div className="p-3.5 sm:p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
           <div>
-            <DialogTitle className="text-lg font-bold text-[#14213D] flex items-center gap-2">
-              <FileText className="w-5 h-5 text-[#14213D]" />
+            <DialogTitle className="text-base sm:text-lg font-bold text-[#14213D] flex items-center gap-2">
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#14213D]" />
               <span>Invoice Preview: {invoiceNumber}</span>
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500 mt-0.5">
@@ -140,12 +140,12 @@ export function InvoicePreviewDialog({
             </DialogDescription>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
             <Button
               variant="outline"
               size="sm"
               onClick={handlePrint}
-              className="gap-1.5 text-xs font-semibold h-8 border-slate-300 hover:bg-slate-50"
+              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 border-slate-300 hover:bg-slate-50 cursor-pointer"
             >
               <Printer className="w-3.5 h-3.5 text-slate-700" />
               <span>Print PDF</span>
@@ -154,7 +154,7 @@ export function InvoicePreviewDialog({
             <Button
               size="sm"
               onClick={handleDownload}
-              className="gap-1.5 text-xs font-semibold h-8 bg-[#14213D] hover:bg-[#1E293B] text-white"
+              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 bg-[#14213D] hover:bg-[#1E293B] text-white cursor-pointer"
             >
               {isGenerating ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -166,8 +166,8 @@ export function InvoicePreviewDialog({
           </div>
         </div>
 
-        {/* Modal Body / Instant HTML Preview Frame */}
-        <div className="flex-1 w-full relative overflow-y-auto bg-slate-200 flex items-start justify-center p-2 sm:p-4">
+        {/* Modal Body / Instant HTML Preview Frame with touch & dual-axis scroll */}
+        <div className="flex-1 w-full relative overflow-auto touch-pan-x touch-pan-y bg-slate-200 flex items-start justify-center p-2 sm:p-4">
           {htmlContent ? (
             <iframe
               srcDoc={htmlContent}

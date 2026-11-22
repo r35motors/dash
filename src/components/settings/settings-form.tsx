@@ -449,15 +449,15 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
           </div>
         </CardContent>
 
-        <CardFooter className="flex justify-between items-center border-t border-[#E2E8F0] pt-4">
-          <span className="text-xs text-slate-400">
+        <CardFooter className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3 border-t border-[#E2E8F0] pt-4">
+          <span className="text-xs text-slate-400 text-center sm:text-left">
             Changes persist to database and propagate to invoices instantly.
           </span>
 
           <Button
             type="submit"
             disabled={saving}
-            className="bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 shadow-xs"
+            className="w-full sm:w-auto bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 shadow-xs cursor-pointer h-10 sm:h-9"
           >
             {saving ? (
               <Loader2 className="w-4 h-4 animate-spin" />

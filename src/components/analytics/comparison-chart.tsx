@@ -45,13 +45,14 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
   };
 
   return (
-    <div className="w-full h-80 pt-2">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={data}
-          margin={{ top: 12, right: 16, left: 10, bottom: 6 }}
-          barGap={4}
-        >
+    <div className="w-full overflow-x-auto pb-2">
+      <div className="min-w-[540px] sm:min-w-full h-80 pt-2">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={data}
+            margin={{ top: 12, right: 16, left: 10, bottom: 6 }}
+            barGap={4}
+          >
           <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
           <XAxis
             dataKey="month"
@@ -128,5 +129,6 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
         </BarChart>
       </ResponsiveContainer>
     </div>
+  </div>
   );
 }

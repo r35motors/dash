@@ -56,26 +56,26 @@ export default async function DashboardPage() {
         </div>
 
         {/* Top Action Bar with Shortcuts */}
-        <div className="flex flex-wrap items-center gap-2.5">
-          <Link href="/vehicles?add=true">
-            <Button className="gap-2 bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs">
+        <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2 w-full lg:w-auto">
+          <Link href="/vehicles?add=true" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto gap-2 bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs cursor-pointer h-9">
               <Plus className="w-4 h-4" />
               <span>Add Vehicle</span>
             </Button>
           </Link>
-          <Link href="/sales?add=true">
+          <Link href="/sales?add=true" className="w-full sm:w-auto">
             <Button
               variant="outline"
-              className="gap-2 border-slate-300 hover:bg-slate-100 text-[#0F172A]"
+              className="w-full sm:w-auto gap-2 border-slate-300 hover:bg-slate-100 text-[#0F172A] cursor-pointer h-9"
             >
               <BadgeDollarSign className="w-4 h-4 text-emerald-600" />
               <span>Record Sale</span>
             </Button>
           </Link>
-          <Link href="/invoices?create=true">
+          <Link href="/invoices?create=true" className="w-full sm:w-auto">
             <Button
               variant="outline"
-              className="gap-2 border-slate-300 hover:bg-slate-100 text-[#0F172A]"
+              className="w-full sm:w-auto gap-2 border-slate-300 hover:bg-slate-100 text-[#0F172A] cursor-pointer h-9"
             >
               <FileText className="w-4 h-4 text-[#1E3A8A]" />
               <span>Create Invoice</span>

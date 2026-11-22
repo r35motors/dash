@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   title: "R35 MOTORS | Luxury Pre-Owned Dealership ERP",
   description:
     "Next.js Car Dealership Management System for inventory, sales, invoicing, and analytics.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0F172A",
 };
 
 export default function RootLayout({

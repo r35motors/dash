@@ -651,25 +651,25 @@ export function CreateInvoiceDialog({
           </div>
 
           {/* Modal Footer Controls */}
-          <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3 shrink-0">
+          <div className="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => onOpenChange(false)}
-              className="text-xs"
+              className="text-xs w-full sm:w-auto h-9 cursor-pointer"
             >
               Cancel
             </Button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => setPreviewOpen(true)}
                 disabled={!selectedVehicleId || invoiceTotal <= 0}
-                className="gap-1.5 text-xs font-semibold h-9 border-slate-300 text-slate-800 hover:bg-slate-100"
+                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 border-slate-300 text-slate-800 hover:bg-slate-100 cursor-pointer"
               >
                 <Eye className="w-4 h-4 text-[#1E3A8A]" />
                 <span>Preview PDF</span>
@@ -680,14 +680,14 @@ export function CreateInvoiceDialog({
                 size="sm"
                 onClick={handleSaveInvoice}
                 disabled={isSubmitting || !selectedVehicleId || invoiceTotal <= 0}
-                className="gap-1.5 text-xs font-semibold h-9 bg-[#1E3A8A] hover:bg-[#1E293B] text-white"
+                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 bg-[#1E3A8A] hover:bg-[#1E293B] text-white cursor-pointer"
               >
                 {isSubmitting ? (
                   <span>Saving...</span>
                 ) : (
                   <>
                     <FileCheck className="w-4 h-4" />
-                    <span>Save & Generate Invoice</span>
+                    <span>Save & Generate</span>
                   </>
                 )}
               </Button>

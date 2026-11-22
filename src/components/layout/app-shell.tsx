@@ -165,8 +165,14 @@ export function AppShell({ children }: AppShellProps) {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-xs">
-          <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl flex flex-col p-4">
+        <div
+          className="md:hidden fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-xs"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div
+            className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl flex flex-col p-4 animate-in slide-in-from-left duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center p-1 shadow-xs">
@@ -178,6 +184,7 @@ export function AppShell({ children }: AppShellProps) {
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-1 rounded-md hover:bg-slate-100 text-slate-500"
+                aria-label="Close menu"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -241,9 +248,38 @@ export function AppShell({ children }: AppShellProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 md:p-8 bg-[#FFFFFF] overflow-y-auto">
+        <main className="flex-1 p-3.5 sm:p-4 md:p-8 bg-[#FFFFFF] overflow-y-auto pb-20 md:pb-8">
           {children}
         </main>
+
+        {/* Mobile Bottom Navigation Bar */}
+        <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] flex items-center justify-around px-1 py-1 h-14 shadow-lg">
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
+            const Icon = item.icon;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-md text-[10px] font-medium transition-colors",
+                  isActive
+                    ? "text-[#0F172A] font-bold"
+                    : "text-slate-500 hover:text-slate-900"
+                )}
+              >
+                <div className={cn("p-1 rounded-md", isActive ? "bg-slate-100 text-[#0F172A]" : "")}>
+                  <Icon className={cn("w-4 h-4", isActive ? "text-[#0F172A]" : "text-slate-500")} />
+                </div>
+                <span className="truncate text-[10px] tracking-tight">{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
       </div>
     </div>
   );
