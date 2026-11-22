@@ -92,14 +92,15 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     alignItems: "flex-end",
-    maxWidth: "42%",
+    maxWidth: "48%",
   },
   invoiceTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: "Helvetica-Bold",
     color: "#0F172A",
-    letterSpacing: 2.5,
-    lineHeight: 1.2,
+    letterSpacing: 2,
+    lineHeight: 1.1,
+    marginBottom: 4,
     textAlign: "right",
   },
   invoiceCopy: {
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   customerBox: {
-    width: "55%",
+    width: "48%",
   },
   metaLabel: {
     fontSize: 7.5,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   customerName: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: "Helvetica-Bold",
     color: "#14213D",
     marginBottom: 2,
@@ -144,22 +145,41 @@ const styles = StyleSheet.create({
     fontSize: 8.5,
     color: "#566074",
   },
-  kvTable: {
-    width: "40%",
+  vehicleBox: {
+    width: "48%",
     alignItems: "flex-end",
+  },
+  vehicleName: {
+    fontSize: 11,
+    fontFamily: "Helvetica-Bold",
+    color: "#14213D",
+    marginBottom: 2,
+    textAlign: "right",
+  },
+  vehicleReg: {
+    fontSize: 8.5,
+    color: "#566074",
+    textAlign: "right",
+  },
+  kvTable: {
+    minWidth: 160,
+    alignItems: "flex-end",
+    marginTop: 2,
   },
   kvRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    paddingVertical: 2,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingVertical: 1.5,
   },
   kvKey: {
     fontSize: 8.5,
     color: "#8A93A5",
+    marginRight: 12,
+    textAlign: "right",
   },
   kvValue: {
-    fontSize: 9,
+    fontSize: 8.5,
     fontFamily: "Helvetica-Bold",
     color: "#14213D",
     textAlign: "right",
@@ -445,13 +465,23 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
 
           <View style={styles.headerRight}>
             <Text style={styles.invoiceTitle}>INVOICE</Text>
+            <View style={styles.kvTable}>
+              <View style={styles.kvRow}>
+                <Text style={styles.kvKey}>Invoice Number</Text>
+                <Text style={styles.kvValue}>{invoiceNumber}</Text>
+              </View>
+              <View style={styles.kvRow}>
+                <Text style={styles.kvKey}>Date of Issue</Text>
+                <Text style={styles.kvValue}>{formatDateDisplay(invoiceDate)}</Text>
+              </View>
+            </View>
           </View>
         </View>
 
         {/* Thin Divider */}
         <View style={styles.divider} />
 
-        {/* 2. Customer & Transaction Meta */}
+        {/* 2. Customer & Vehicle Meta */}
         <View style={styles.metaSection}>
           <View style={styles.customerBox}>
             <Text style={styles.metaLabel}>Billed To (Customer)</Text>
@@ -459,16 +489,13 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
             <Text style={styles.customerRole}>Authorized Vehicle Purchaser</Text>
           </View>
 
-          <View style={styles.kvTable}>
-            <View style={styles.kvRow}>
-              <Text style={styles.kvKey}>Invoice Number</Text>
-              <Text style={styles.kvValue}>{invoiceNumber}</Text>
+          {vehicle && (
+            <View style={styles.vehicleBox}>
+              <Text style={styles.metaLabel}>Vehicle Details</Text>
+              <Text style={styles.vehicleName}>{vehicle.vehicle_name}</Text>
+              <Text style={styles.vehicleReg}>Registration: {vehicle.registration_number}</Text>
             </View>
-            <View style={styles.kvRow}>
-              <Text style={styles.kvKey}>Date of Issue</Text>
-              <Text style={styles.kvValue}>{formatDateDisplay(invoiceDate)}</Text>
-            </View>
-          </View>
+          )}
         </View>
 
         {/* 3. Items Table */}

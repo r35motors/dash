@@ -206,16 +206,16 @@ body{
 .brand h1{font-size:15pt;font-weight:700;color:#14213d;letter-spacing:-.2px;line-height:1.2}
 .brand p{font-size:9pt;color:#566074;margin-top:4mm;line-height:1.6}
 .title{text-align:right}
-.title h2{font-size:22pt;font-weight:700;letter-spacing:2.5px;color:#0f172a;margin:0;line-height:1.2}
+.title h2{font-size:20pt;font-weight:700;letter-spacing:2px;color:#0f172a;margin:0 0 2.5mm;line-height:1.1}
 .title .copy{font-size:8pt;letter-spacing:1.6px;color:#566074;margin-top:1.5mm}
-hr{border:0;border-top:1px solid #dfe3ea;margin:9mm 0 7mm}
-.meta{display:flex;justify-content:space-between}
+hr{border:0;border-top:1px solid #dfe3ea;margin:8mm 0 6mm}
+.meta{display:flex;justify-content:space-between;align-items:flex-start}
 .lbl{font-size:8pt;letter-spacing:1.6px;color:#8a93a5;font-weight:600;margin-bottom:2.5mm;text-transform:uppercase}
-.cust .n{font-size:12pt;font-weight:600;color:#14213d}
+.cust .n{font-size:11pt;font-weight:600;color:#14213d}
 .cust .r{font-size:9pt;color:#566074;margin-top:1mm}
-table.kv{border-collapse:collapse}
-table.kv td{padding:1.4mm 0;font-size:10pt}
-table.kv td:first-child{color:#8a93a5;padding-right:10mm}
+table.kv{border-collapse:collapse;margin-left:auto}
+table.kv td{padding:1.2mm 0;font-size:9.5pt}
+table.kv td:first-child{color:#8a93a5;padding-right:8mm;text-align:left}
 table.kv td:last-child{text-align:right;font-weight:600;color:#14213d}
 table.items{width:100%;border-collapse:collapse;margin-top:11mm}
 .items th{background:#14213d;color:#fff;font-size:8pt;letter-spacing:1.6px;font-weight:600;text-align:left;padding:3.2mm 4mm}
@@ -256,6 +256,10 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
  </div>
  <div class="title">
    <h2>INVOICE</h2>
+   <table class="kv">
+     <tr><td>Invoice Number</td><td>${invoiceNumber}</td></tr>
+     <tr><td>Date of Issue</td><td>${dateFormatted}</td></tr>
+   </table>
  </div>
 </div>
 <hr>
@@ -265,10 +269,15 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
    <div class="n">${buyerName}</div>
    <div class="r">Authorized Vehicle Purchaser</div>
  </div>
- <table class="kv">
-   <tr><td>Invoice Number</td><td>${invoiceNumber}</td></tr>
-   <tr><td>Date of Issue</td><td>${dateFormatted}</td></tr>
- </table>
+ ${
+   vehicle
+     ? `<div class="cust" style="text-align:right">
+   <div class="lbl">VEHICLE DETAILS</div>
+   <div class="n">${vehicle.vehicle_name}</div>
+   <div class="r">Registration: ${vehicle.registration_number}</div>
+ </div>`
+     : ""
+ }
 </div>
 <table class="items">
   <thead>
