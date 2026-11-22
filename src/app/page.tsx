@@ -158,12 +158,12 @@ export default async function DashboardPage() {
               <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl md:text-3xl font-bold text-[#0F172A] tracking-tight truncate">
+          <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0">
+            <div className="text-[17px] sm:text-2xl md:text-3xl font-bold text-[#0F172A] tracking-tight leading-tight">
               {formatCurrency(totalVehicleValue)}
             </div>
-            <p className="text-xs text-slate-500 mt-1.5">
-              Combined acquisition value (including sold)
+            <p className="text-[11px] sm:text-xs text-slate-500 mt-1 sm:mt-1.5 truncate">
+              Combined acquisition value
             </p>
           </CardContent>
         </Card>
