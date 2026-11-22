@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Suspense } from "react";
 import { dealershipDb } from "@/lib/db";
 import { SettingsForm } from "@/components/settings/settings-form";

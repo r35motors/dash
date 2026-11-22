@@ -209,13 +209,19 @@ export const dealershipDb = {
             return rows.map((r) => {
               const purchase = parseFloat(r.vehicle?.purchase_price || "0") || 0;
               const selling = parseFloat(r.selling_price) || 0;
+              const saleDate = r.sale_date instanceof Date && !isNaN(r.sale_date.getTime())
+                ? r.sale_date.toISOString()
+                : new Date().toISOString();
+              const createdAt = r.created_at instanceof Date && !isNaN(r.created_at.getTime())
+                ? r.created_at.toISOString()
+                : new Date().toISOString();
               return {
                 id: r.id,
                 vehicle_id: r.vehicle_id,
                 buyer_name: r.buyer_name,
-                sale_date: r.sale_date.toISOString(),
+                sale_date: saleDate,
                 selling_price: r.selling_price,
-                created_at: r.created_at.toISOString(),
+                created_at: createdAt,
                 vehicle: r.vehicle,
                 profit: selling - purchase,
               };
@@ -397,10 +403,14 @@ export const dealershipDb = {
               invoice_number: r.invoice_number,
               vehicle_id: r.vehicle_id,
               sale_id: r.sale_id,
-              invoice_date: r.invoice_date.toISOString(),
+              invoice_date: r.invoice_date instanceof Date && !isNaN(r.invoice_date.getTime())
+                ? r.invoice_date.toISOString()
+                : new Date().toISOString(),
               invoice_total: r.invoice_total,
               invoice_snapshot: r.invoice_snapshot,
-              created_at: r.created_at.toISOString(),
+              created_at: r.created_at instanceof Date && !isNaN(r.created_at.getTime())
+                ? r.created_at.toISOString()
+                : new Date().toISOString(),
               vehicle: r.vehicle,
             }));
           } catch (err) {
