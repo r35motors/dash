@@ -254,7 +254,7 @@ export function VehiclesView({
             <p className="text-xs text-slate-500 max-w-sm mt-1 mb-4">
               {searchQuery
                 ? "Try searching by a different vehicle model or registration number."
-                : "Register a pre-owned vehicle to start managing pricing, inventory, and customer sales."}
+                : "Register a vehicle to start managing pricing, inventory, and customer sales."}
             </p>
             {searchQuery ? (
               <Button

@@ -204,7 +204,6 @@ body{
 }
 
 .brand h1{font-size:15pt;font-weight:700;color:#14213d;letter-spacing:-.2px;line-height:1.2}
-.brand .tag{font-size:8pt;letter-spacing:2.2px;color:#8a6d1f;font-weight:600;margin-top:2mm}
 .brand p{font-size:9pt;color:#566074;margin-top:4mm;line-height:1.6}
 .title{text-align:right}
 .title h2{font-size:22pt;font-weight:700;letter-spacing:2.5px;color:#0f172a;margin:0 0 2.5mm;line-height:1.2}

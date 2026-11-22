@@ -84,14 +84,6 @@ const styles = StyleSheet.create({
     color: "#14213D",
     letterSpacing: -0.2,
   },
-  brandTag: {
-    fontSize: 7.5,
-    fontFamily: "Helvetica-Bold",
-    color: "#8A6D1F",
-    letterSpacing: 1.8,
-    marginTop: 2,
-    textTransform: "uppercase",
-  },
   brandMeta: {
     fontSize: 8.5,
     color: "#566074",

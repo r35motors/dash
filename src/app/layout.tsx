@@ -14,9 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "R35 MOTORS | Luxury Pre-Owned Dealership ERP",
-  description:
-    "Next.js Car Dealership Management System for inventory, sales, invoicing, and analytics.",
+  title: "R35 MOTORS",
+  description: "R35 MOTORS Dealership Management System",
 };
 
 export const viewport: Viewport = {
