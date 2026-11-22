@@ -151,7 +151,7 @@ body{
 .head{display:flex;justify-content:space-between;align-items:flex-start;margin-top:2mm}
 .brandrow{display:flex;gap:5mm;align-items:center}
 
-/* Logo block with deep black spade badge and high-contrast overlay */
+/* Logo block — dark spade badge fallback; white background when logo is uploaded */
 .logo-block{
   width:18mm;
   height:18mm;
@@ -165,6 +165,11 @@ body{
   box-shadow:0 3px 8px rgba(0,0,0,0.22);
   border:1px solid rgba(255,255,255,0.1);
   overflow:hidden;
+}
+.logo-block.has-logo{
+  background:#ffffff;
+  border:1.5px solid #e2e8f0;
+  box-shadow:0 2px 6px rgba(0,0,0,0.10);
 }
 .spade-svg{
   position:absolute;
@@ -196,11 +201,10 @@ body{
   text-shadow:0 2px 4px rgba(0,0,0,0.9), 0 0 2px #000;
 }
 .logo-overlay img{
-  max-width:85%;
-  max-height:85%;
+  max-width:92%;
+  max-height:92%;
   object-fit:contain;
   border-radius:2mm;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.8));
 }
 
 .brand h1{font-size:15pt;font-weight:700;color:#14213d;letter-spacing:-.2px;line-height:1.2}
@@ -247,21 +251,18 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
 <div class="head">
  <div class="brand">
    <div class="brandrow">
-     <div class="logo-block">
-       <!-- High contrast black spade backdrop -->
+     <div class="logo-block${dealership.logo_path && dealership.logo_path.startsWith("data:image") ? " has-logo" : ""}">
+       ${
+         dealership.logo_path && dealership.logo_path.startsWith("data:image")
+           ? `<!-- Uploaded logo -->
+       <div class="logo-overlay"><img src="${dealership.logo_path}" alt="Logo" /></div>`
+           : `<!-- Fallback: spade badge with initials -->
        <svg class="spade-svg" viewBox="0 0 36 36">
-         <!-- Outer spade silhouette with soft luxury gold rim -->
          <path d="M 18 2 C 14.5 7.5 6 13.5 6 20 C 6 24.5 9.5 27.5 13.5 27.5 C 16 27.5 17.5 26.2 18 24.5 C 18.5 26.2 20 27.5 22.5 27.5 C 26.5 27.5 30 24.5 30 20 C 30 13.5 21.5 7.5 18 2 Z" fill="#000000" stroke="#c9a227" stroke-width="0.8" />
          <path d="M 16 26 L 20 26 L 21 33 L 15 33 Z" fill="#000000" stroke="#c9a227" stroke-width="0.8" />
        </svg>
-       <!-- Center high-visibility overlay -->
-       <div class="logo-overlay">
-         ${
-           dealership.logo_path && dealership.logo_path.startsWith("data:image")
-             ? `<img src="${dealership.logo_path}" alt="Logo" />`
-             : `<span class="initials">${initials}</span>`
-         }
-       </div>
+       <div class="logo-overlay"><span class="initials">${initials}</span></div>`
+       }
      </div>
      <div>
        <h1>${dealership.business_name}</h1>

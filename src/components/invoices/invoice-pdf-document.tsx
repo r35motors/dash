@@ -8,6 +8,7 @@ import {
   Svg,
   Path,
   Rect,
+  Image,
 } from "@react-pdf/renderer";
 import { numberToIndianWords } from "@/lib/utils";
 import type { InvoicePdfData } from "@/types/invoice";
@@ -52,13 +53,19 @@ const styles = StyleSheet.create({
   },
   // Logo block with black spade background and logo/initials overlay
   logoBlock: {
-    width: 44,
-    height: 44,
+    width: 54,
+    height: 54,
     borderRadius: 8,
     backgroundColor: "#0B1329",
     position: "relative",
     alignItems: "center",
     justifyContent: "center",
+  },
+  logoImage: {
+    position: "absolute",
+    width: 44,
+    height: 44,
+    objectFit: "contain",
   },
   logoOverlayText: {
     position: "absolute",
@@ -434,25 +441,36 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
         <View style={styles.headerContainer}>
           <View style={styles.brandLeft}>
             <View style={styles.brandRow}>
-              {/* Logo block with black spade background and logo overlay */}
+              {/* Logo block: show uploaded logo if set, else spade + initials */}
               <View style={styles.logoBlock}>
-                <Svg width="44" height="44" viewBox="0 0 36 36">
-                  {/* Black spade silhouette with gold rim */}
-                  <Path
-                    d="M 18 2 C 14.5 7.5 6 13.5 6 20 C 6 24.5 9.5 27.5 13.5 27.5 C 16 27.5 17.5 26.2 18 24.5 C 18.5 26.2 20 27.5 22.5 27.5 C 26.5 27.5 30 24.5 30 20 C 30 13.5 21.5 7.5 18 2 Z"
-                    fill="#000000"
-                    stroke="#C9A227"
-                    strokeWidth="0.8"
+                {dealership.logo_path && dealership.logo_path.startsWith("data:image") ? (
+                  /* Uploaded logo — render directly, fills the block */
+                  <Image
+                    src={dealership.logo_path}
+                    style={styles.logoImage}
                   />
-                  <Path
-                    d="M 16 26 L 20 26 L 21 33 L 15 33 Z"
-                    fill="#000000"
-                    stroke="#C9A227"
-                    strokeWidth="0.8"
-                  />
-                </Svg>
-                {/* Center logo / initials overlay */}
-                <Text style={styles.logoOverlayText}>{initials}</Text>
+                ) : (
+                  /* Fallback: black spade badge with initials */
+                  <>
+                    <Svg width="54" height="54" viewBox="0 0 36 36">
+                      {/* Black spade silhouette with gold rim */}
+                      <Path
+                        d="M 18 2 C 14.5 7.5 6 13.5 6 20 C 6 24.5 9.5 27.5 13.5 27.5 C 16 27.5 17.5 26.2 18 24.5 C 18.5 26.2 20 27.5 22.5 27.5 C 26.5 27.5 30 24.5 30 20 C 30 13.5 21.5 7.5 18 2 Z"
+                        fill="#000000"
+                        stroke="#C9A227"
+                        strokeWidth="0.8"
+                      />
+                      <Path
+                        d="M 16 26 L 20 26 L 21 33 L 15 33 Z"
+                        fill="#000000"
+                        stroke="#C9A227"
+                        strokeWidth="0.8"
+                      />
+                    </Svg>
+                    {/* Center initials overlay */}
+                    <Text style={styles.logoOverlayText}>{initials}</Text>
+                  </>
+                )}
               </View>
 
               <View>
