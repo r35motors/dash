@@ -54,13 +54,22 @@ function formatDate(dateStr: string | undefined): string {
 
 export function generateInvoiceHtml(data: InvoiceTemplateData): string {
   const snapshot = data.invoice_snapshot;
+  const rawLogo =
+    (snapshot?.dealership?.logo_path && snapshot.dealership.logo_path !== "/dealership-logo.png"
+      ? snapshot.dealership.logo_path
+      : null) ||
+    (data.dealership?.logo_path && data.dealership.logo_path !== "/dealership-logo.png"
+      ? data.dealership.logo_path
+      : null) ||
+    null;
+
   const dealership = {
     business_name:
       snapshot?.dealership?.business_name ||
       snapshot?.dealership_name ||
       data.dealership?.business_name ||
       "Royal Motors Luxury Dealership",
-    logo_path: snapshot?.dealership?.logo_path || data.dealership?.logo_path || null,
+    logo_path: rawLogo,
     address:
       snapshot?.dealership?.address ||
       snapshot?.dealership_address ||
@@ -129,6 +138,12 @@ export function generateInvoiceHtml(data: InvoiceTemplateData): string {
       return `<tr><td>${idx + 1}</td><td>${item.description}</td><td>₹${formatInr(item.amount)}</td></tr>`;
     })
     .join("\n");
+
+  const hasLogo = Boolean(
+    dealership.logo_path &&
+    dealership.logo_path.trim() !== "" &&
+    dealership.logo_path !== "/dealership-logo.png"
+  );
 
   return `<!doctype html><html><head><meta charset="utf-8">
 <title>Invoice - ${invoiceNumber}</title>
@@ -251,10 +266,10 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
 <div class="head">
  <div class="brand">
    <div class="brandrow">
-     <div class="logo-block${dealership.logo_path && dealership.logo_path.startsWith("data:image") ? " has-logo" : ""}">
+     <div class="logo-block${hasLogo ? " has-logo" : ""}">
        ${
-         dealership.logo_path && dealership.logo_path.startsWith("data:image")
-           ? `<!-- Uploaded logo -->
+         hasLogo
+           ? `<!-- Dealership logo -->
        <div class="logo-overlay"><img src="${dealership.logo_path}" alt="Logo" /></div>`
            : `<!-- Fallback: spade badge with initials -->
        <svg class="spade-svg" viewBox="0 0 36 36">

@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  logoBlockHasLogo: {
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1.2,
+    borderColor: "#E2E8F0",
+  },
   logoImage: {
     position: "absolute",
     width: 44,
@@ -362,13 +367,22 @@ function formatDateDisplay(dateStr: string | undefined): string {
 export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
   const snapshot = data.invoice_snapshot;
 
+  const rawLogo =
+    (snapshot?.dealership?.logo_path && snapshot.dealership.logo_path !== "/dealership-logo.png"
+      ? snapshot.dealership.logo_path
+      : null) ||
+    (data.dealership?.logo_path && data.dealership.logo_path !== "/dealership-logo.png"
+      ? data.dealership.logo_path
+      : null) ||
+    null;
+
   const dealership = {
     business_name:
       snapshot?.dealership?.business_name ||
       snapshot?.dealership_name ||
       data.dealership?.business_name ||
       "Royal Motors Luxury Dealership",
-    logo_path: snapshot?.dealership?.logo_path || data.dealership?.logo_path || null,
+    logo_path: rawLogo,
     address:
       snapshot?.dealership?.address ||
       snapshot?.dealership_address ||
@@ -432,6 +446,12 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
     .map((w: string) => w[0]?.toUpperCase() || "")
     .join("") || "RM";
 
+  const hasLogo = Boolean(
+    dealership.logo_path &&
+    dealership.logo_path.trim() !== "" &&
+    dealership.logo_path !== "/dealership-logo.png"
+  );
+
   return (
     <Document title={`Invoice-${invoiceNumber}`} author={dealership.business_name}>
       <Page size="A4" style={styles.page}>
@@ -442,11 +462,11 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
           <View style={styles.brandLeft}>
             <View style={styles.brandRow}>
               {/* Logo block: show uploaded logo if set, else spade + initials */}
-              <View style={styles.logoBlock}>
-                {dealership.logo_path && dealership.logo_path.startsWith("data:image") ? (
+              <View style={[styles.logoBlock, ...(hasLogo ? [styles.logoBlockHasLogo] : [])]}>
+                {hasLogo ? (
                   /* Uploaded logo — render directly, fills the block */
                   <Image
-                    src={dealership.logo_path}
+                    src={dealership.logo_path!}
                     style={styles.logoImage}
                   />
                 ) : (

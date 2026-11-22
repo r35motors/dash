@@ -126,17 +126,27 @@ export function InvoicesView({
     setIsPreviewOpen(true);
   };
 
-  // Convert an invoice record (with frozen snapshot priority) to InvoicePdfData
+  // Convert an invoice record (with frozen snapshot priority and fallback to settings) to InvoicePdfData
   const mapInvoiceToPdfData = (inv: InvoiceListItem, currentSettings: any): InvoicePdfData => {
     // CRITICAL: If invoice_snapshot is present, it contains the frozen state!
     const snapshot = inv.invoice_snapshot;
     if (snapshot && typeof snapshot === "object") {
+      const snapDealership = snapshot.dealership || {};
+      const activeLogo =
+        snapDealership.logo_path && snapDealership.logo_path !== "/dealership-logo.png"
+          ? snapDealership.logo_path
+          : currentSettings?.logo_path;
+
       return {
         id: inv.id,
         invoice_number: inv.invoice_number,
         invoice_date: inv.invoice_date,
         invoice_snapshot: snapshot,
-        dealership: snapshot.dealership || currentSettings,
+        dealership: {
+          ...currentSettings,
+          ...snapDealership,
+          logo_path: activeLogo,
+        },
         buyer: snapshot.buyer || {
           name: snapshot.buyer_name || inv.sale?.buyer_name || "Customer",
         },

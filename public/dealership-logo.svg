@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14213D"/>
+      <stop offset="100%" stop-color="#0B1329"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C05B"/>
+      <stop offset="50%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#8A6D1F"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer Shield Badge -->
+  <path d="M 60 8 C 88 8 108 24 108 52 C 108 86 60 112 60 112 C 60 112 12 86 12 52 C 12 24 32 8 60 8 Z" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="3"/>
+  <!-- Inner Border Line -->
+  <path d="M 60 16 C 82 16 98 29 98 52 C 98 80 60 102 60 102 C 60 102 22 80 22 52 C 22 29 38 16 60 16 Z" fill="none" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Gold Emblem Monogram -->
+  <text x="60" y="58" font-family="'Inter', system-ui, sans-serif" font-weight="900" font-size="28" fill="url(#goldGrad)" text-anchor="middle" letter-spacing="1">R35</text>
+  <text x="60" y="76" font-family="'Inter', system-ui, sans-serif" font-weight="700" font-size="9" fill="#F8FAFC" text-anchor="middle" letter-spacing="3">MOTORS</text>
+  <!-- Crown / Star accent -->
+  <polygon points="60,26 63,33 70,33 64,37 66,44 60,40 54,44 56,37 50,33 57,33" fill="url(#goldGrad)"/>
+</svg>
