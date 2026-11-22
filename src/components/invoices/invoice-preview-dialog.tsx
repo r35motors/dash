@@ -127,16 +127,16 @@ export function InvoicePreviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl w-[96vw] h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 rounded-xl">
+      <DialogContent className="w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[95dvh] sm:h-[92vh] max-h-[96dvh] sm:max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 rounded-xl">
         {/* Modal Header */}
-        <div className="p-3.5 sm:p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
-          <div>
-            <DialogTitle className="text-base sm:text-lg font-bold text-[#14213D] flex items-center gap-2">
-              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#14213D]" />
-              <span>Invoice Preview: {invoiceNumber}</span>
+        <div className="p-3 sm:p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+          <div className="pr-6 sm:pr-0">
+            <DialogTitle className="text-sm sm:text-lg font-bold text-[#14213D] flex items-center gap-1.5 sm:gap-2">
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#14213D] shrink-0" />
+              <span className="truncate">Invoice Preview: {invoiceNumber}</span>
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-500 mt-0.5">
-              Review document layout, line items, and totals before downloading or printing.
+            <DialogDescription className="text-[11px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1 sm:line-clamp-none">
+              Review document layout, line items, and totals.
             </DialogDescription>
           </div>
 
@@ -166,16 +166,16 @@ export function InvoicePreviewDialog({
           </div>
         </div>
 
-        {/* Modal Body / Instant HTML Preview Frame with touch & dual-axis scroll */}
-        <div className="flex-1 w-full relative overflow-auto touch-pan-x touch-pan-y bg-slate-200 flex items-start justify-center p-2 sm:p-4">
+        {/* Modal Body / Instant Responsive HTML Preview Frame */}
+        <div className="flex-1 w-full relative overflow-y-auto overflow-x-hidden bg-slate-100 flex items-start justify-center p-0 sm:p-4">
           {htmlContent ? (
             <iframe
               srcDoc={htmlContent}
               title={`Invoice Preview - ${invoiceNumber}`}
-              className="w-full max-w-[215mm] h-[297mm] min-h-[297mm] rounded-sm shadow-xl border border-slate-300 bg-white shrink-0 my-2"
+              className="w-full sm:max-w-[215mm] min-h-[500px] sm:h-[297mm] sm:min-h-[297mm] rounded-none sm:rounded-sm sm:shadow-xl sm:border border-slate-300 bg-white shrink-0 sm:my-2"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center gap-2 text-slate-600">
+            <div className="flex flex-col items-center justify-center gap-2 text-slate-600 p-8">
               <Loader2 className="w-8 h-8 animate-spin text-[#14213D]" />
               <p className="text-xs font-medium">Preparing document preview...</p>
             </div>

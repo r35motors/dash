@@ -236,8 +236,95 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
 .sign .line{border-top:1px solid #14213d;padding-top:2mm;font-size:9pt;font-weight:600;color:#14213d}
 .sign .for{font-size:8pt;color:#566074;margin-top:1mm}
 .foot{position:absolute;left:16mm;right:16mm;bottom:10mm;border-top:1px solid #dfe3ea;padding-top:3mm;display:flex;justify-content:space-between;font-size:8pt;color:#8a93a5}
+@media screen and (max-width: 680px) {
+  body {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: auto !important;
+    padding: 16px 14px 20px !important;
+  }
+  .head {
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+  .brandrow {
+    gap: 3.5mm !important;
+  }
+  .title {
+    text-align: left !important;
+    width: 100% !important;
+  }
+  .title h2 {
+    font-size: 17pt !important;
+    margin-bottom: 2mm !important;
+  }
+  table.kv {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  table.kv td {
+    padding: 1.2mm 0 !important;
+  }
+  table.kv td:first-child {
+    text-align: left !important;
+    padding-right: 6mm !important;
+  }
+  table.kv td:last-child {
+    text-align: right !important;
+  }
+  .meta {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .meta .cust {
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .items th, .items td {
+    padding: 2.8mm 2mm !important;
+    font-size: 9pt !important;
+  }
+  .bottom {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+  }
+  .words {
+    width: 100% !important;
+  }
+  .tot {
+    width: 100% !important;
+  }
+  .sign {
+    position: static !important;
+    margin-top: 24px !important;
+    margin-left: auto !important;
+    width: 160px !important;
+  }
+  .foot {
+    position: static !important;
+    margin-top: 24px !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    text-align: center !important;
+    font-size: 7.5pt !important;
+  }
+}
 @media print{
-  body{padding:14mm 14mm 10mm}
+  body{
+    width:210mm !important;
+    min-height:297mm !important;
+    padding:14mm 14mm 10mm !important;
+  }
+  .head{flex-direction:row !important;}
+  .title{text-align:right !important;}
+  table.kv{margin-left:auto !important;}
+  .meta{flex-direction:row !important;}
+  .bottom{flex-direction:row !important;}
+  .words{width:95mm !important;}
+  .tot{width:75mm !important;}
+  .sign{position:absolute !important;right:16mm !important;bottom:30mm !important;width:65mm !important;}
+  .foot{position:absolute !important;left:16mm !important;right:16mm !important;bottom:10mm !important;flex-direction:row !important;}
 }
 </style></head><body>
 <div class="head">

@@ -391,14 +391,14 @@ export function InvoicesView({
       </div>
 
       {/* Search & Filter */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
         <div className="relative flex-1 sm:max-w-md">
           <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by invoice number, vehicle, registration, or buyer..."
+            placeholder="Search invoice #, vehicle, buyer..."
             className="w-full pl-9 pr-8 py-2 rounded-lg border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F172A] bg-white transition-all placeholder:text-slate-400"
           />
           {searchQuery && (
@@ -623,8 +623,8 @@ export function InvoicesView({
                         {formatDate(inv.invoice_date)}
                       </span>
                     </div>
-                    <Badge variant="available" className="text-[10px] bg-emerald-50 text-emerald-700 border-emerald-200">
-                      Paid in Full
+                    <Badge variant="available" className="text-[10px] bg-slate-100 text-slate-700 border-slate-200">
+                      Issued
                     </Badge>
                   </div>
 

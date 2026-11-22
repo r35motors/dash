@@ -192,7 +192,7 @@ export function VehiclesView({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search vehicle name or registration..."
+              placeholder="Search fleet or reg..."
               className="w-full pl-9 pr-8 py-1.5 rounded-lg border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F172A] bg-white transition-all placeholder:text-slate-400"
             />
             {/* Clear Search Button */}

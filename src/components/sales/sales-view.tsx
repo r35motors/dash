@@ -166,7 +166,7 @@ export function SalesView({
       </div>
 
       {/* KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {/* Total Units Sold */}
         <Card className="border border-[#E2E8F0] shadow-xs hover:border-slate-300 transition-all">
           <CardHeader className="pb-2">
@@ -247,7 +247,7 @@ export function SalesView({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by vehicle name, registration, or buyer name..."
+            placeholder="Search vehicle, reg, or buyer..."
             className="w-full pl-9 pr-8 py-2 rounded-lg border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F172A] bg-white transition-all placeholder:text-slate-400"
           />
           {searchQuery && (

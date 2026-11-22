@@ -237,12 +237,12 @@ export function AppShell({ children }: AppShellProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-3.5 sm:p-4 md:p-8 bg-[#FFFFFF] overflow-y-auto pb-20 md:pb-8">
+        <main className="flex-1 p-3.5 sm:p-4 md:p-8 bg-[#FFFFFF] overflow-y-auto pb-24 md:pb-8">
           {children}
         </main>
 
-        {/* Mobile Bottom Navigation Bar */}
-        <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] flex items-center justify-around px-1 py-1 h-14 shadow-lg">
+        {/* Mobile Bottom Navigation Bar with iOS safe area and clear active states */}
+        <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-[#E2E8F0] flex items-center justify-around px-1 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom,0px))] h-[calc(3.75rem+env(safe-area-inset-bottom,0px))] shadow-lg select-none">
           {navItems.map((item) => {
             const isActive =
               item.href === "/"
@@ -255,16 +255,25 @@ export function AppShell({ children }: AppShellProps) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center justify-center flex-1 py-1 px-1 rounded-md text-[10px] font-medium transition-colors",
+                  "flex flex-col items-center justify-center flex-1 py-1 px-0.5 rounded-lg text-[9.5px] font-medium transition-all relative",
                   isActive
                     ? "text-[#0F172A] font-bold"
-                    : "text-slate-500 hover:text-slate-900"
+                    : "text-slate-500 hover:text-slate-900 active:scale-95"
                 )}
               >
-                <div className={cn("p-1 rounded-md", isActive ? "bg-slate-100 text-[#0F172A]" : "")}>
-                  <Icon className={cn("w-4 h-4", isActive ? "text-[#0F172A]" : "text-slate-500")} />
+                <div
+                  className={cn(
+                    "px-2.5 py-1 rounded-full transition-all flex items-center justify-center",
+                    isActive
+                      ? "bg-slate-900 text-white shadow-2xs"
+                      : "text-slate-500 hover:bg-slate-100"
+                  )}
+                >
+                  <Icon className={cn("w-4 h-4", isActive ? "text-white" : "text-slate-500")} />
                 </div>
-                <span className="truncate text-[10px] tracking-tight">{item.name}</span>
+                <span className={cn("truncate tracking-tight mt-0.5", isActive ? "font-bold text-slate-900" : "text-slate-500")}>
+                  {item.name}
+                </span>
               </Link>
             );
           })}

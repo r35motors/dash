@@ -590,36 +590,38 @@ export function CreateInvoiceDialog({
 
                   {/* Custom Added Items */}
                   {customItems.map((item, index) => (
-                    <div key={item.id} className="p-3 grid grid-cols-12 gap-2 items-center">
-                      <span className="col-span-1 text-center text-xs font-semibold text-slate-400">
-                        {index + 2}
-                      </span>
-                      <div className="col-span-7">
+                    <div
+                      key={item.id}
+                      className="p-2.5 sm:p-3 flex flex-col sm:grid sm:grid-cols-12 gap-2 items-stretch sm:items-center bg-slate-50/50 sm:bg-transparent rounded-lg sm:rounded-none"
+                    >
+                      <div className="flex items-center gap-2 sm:col-span-8">
+                        <span className="text-center text-xs font-semibold text-slate-400 w-5 shrink-0 sm:w-auto">
+                          {index + 2}
+                        </span>
                         <Input
                           value={item.description}
                           onChange={(e) => handleUpdateItem(item.id, "description", e.target.value)}
                           placeholder="e.g. Painting, Repair work, RTO fee..."
-                          className="text-xs h-8"
+                          className="text-xs h-8 flex-1"
                         />
                       </div>
-                      <div className="col-span-3">
+                      <div className="flex items-center gap-2 sm:col-span-4 pl-7 sm:pl-0">
                         <Input
                           type="number"
                           min="0"
                           step="500"
                           value={item.amount}
                           onChange={(e) => handleUpdateItem(item.id, "amount", e.target.value)}
-                          placeholder="Amount"
-                          className="text-right text-xs font-semibold h-8"
+                          placeholder="Amount (₹)"
+                          className="text-right text-xs font-semibold h-8 flex-1"
                         />
-                      </div>
-                      <div className="col-span-1 text-right">
                         <Button
                           type="button"
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDeleteItem(item.id)}
-                          className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 cursor-pointer"
+                          className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 cursor-pointer shrink-0"
+                          title="Delete item"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </Button>
