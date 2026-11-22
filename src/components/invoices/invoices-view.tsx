@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { CreateInvoiceDialog } from "./create-invoice-dialog";
 import { InvoicePreviewDialog } from "./invoice-preview-dialog";
+import { DEFAULT_DEALERSHIP_LOGO } from "@/lib/constants/branding";
 import type { InvoicePdfData } from "@/types/invoice";
 
 export interface InvoiceListItem {
@@ -133,9 +134,9 @@ export function InvoicesView({
     if (snapshot && typeof snapshot === "object") {
       const snapDealership = snapshot.dealership || {};
       const activeLogo =
-        snapDealership.logo_path && snapDealership.logo_path !== "/dealership-logo.png"
-          ? snapDealership.logo_path
-          : currentSettings?.logo_path;
+        snapDealership.logo_path ||
+        currentSettings?.logo_path ||
+        DEFAULT_DEALERSHIP_LOGO;
 
       return {
         id: inv.id,

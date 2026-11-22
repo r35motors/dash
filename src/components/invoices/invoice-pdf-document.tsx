@@ -11,6 +11,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import { numberToIndianWords } from "@/lib/utils";
+import { DEFAULT_DEALERSHIP_LOGO, DEFAULT_DEALERSHIP_NAME } from "@/lib/constants/branding";
 import type { InvoicePdfData } from "@/types/invoice";
 
 export type { InvoicePdfData };
@@ -51,27 +52,22 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 8,
   },
-  // Logo block with black spade background and logo/initials overlay
+  // Logo block — R35 Motors official emblem
   logoBlock: {
-    width: 54,
-    height: 54,
-    borderRadius: 8,
-    backgroundColor: "#0B1329",
+    width: 80,
+    height: 36,
     position: "relative",
     alignItems: "center",
     justifyContent: "center",
   },
   logoBlockHasLogo: {
-    width: 74,
-    height: 44,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1.2,
-    borderColor: "#E2E8F0",
+    width: 80,
+    height: 36,
+    backgroundColor: "transparent",
   },
   logoImage: {
-    position: "absolute",
-    width: 66,
-    height: 38,
+    width: 76,
+    height: 32,
     objectFit: "contain",
   },
   logoOverlayText: {
@@ -370,21 +366,23 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
   const snapshot = data.invoice_snapshot;
 
   const rawLogo =
-    (snapshot?.dealership?.logo_path && snapshot.dealership.logo_path !== "/dealership-logo.png"
-      ? snapshot.dealership.logo_path
-      : null) ||
-    (data.dealership?.logo_path && data.dealership.logo_path !== "/dealership-logo.png"
-      ? data.dealership.logo_path
-      : null) ||
+    snapshot?.dealership?.logo_path ||
+    snapshot?.logo_path ||
+    data.dealership?.logo_path ||
     null;
+
+  const effectiveLogo =
+    rawLogo && rawLogo.trim() !== "" && rawLogo !== "/dealership-logo.svg"
+      ? (rawLogo === "/dealership-logo.png" || rawLogo === "/logo.png" ? DEFAULT_DEALERSHIP_LOGO : rawLogo)
+      : DEFAULT_DEALERSHIP_LOGO;
 
   const dealership = {
     business_name:
       snapshot?.dealership?.business_name ||
       snapshot?.dealership_name ||
       data.dealership?.business_name ||
-      "R35 MOTORS",
-    logo_path: rawLogo,
+      DEFAULT_DEALERSHIP_NAME,
+    logo_path: effectiveLogo,
     address:
       snapshot?.dealership?.address ||
       snapshot?.dealership_address ||
@@ -448,12 +446,6 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
     .map((w: string) => w[0]?.toUpperCase() || "")
     .join("") || "RM";
 
-  const hasLogo = Boolean(
-    dealership.logo_path &&
-    dealership.logo_path.trim() !== "" &&
-    dealership.logo_path !== "/dealership-logo.png"
-  );
-
   return (
     <Document title={`Invoice-${invoiceNumber}`} author={dealership.business_name}>
       <Page size="A4" style={styles.page}>
@@ -463,36 +455,12 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
         <View style={styles.headerContainer}>
           <View style={styles.brandLeft}>
             <View style={styles.brandRow}>
-              {/* Logo block: show uploaded logo if set, else spade + initials */}
-              <View style={[styles.logoBlock, ...(hasLogo ? [styles.logoBlockHasLogo] : [])]}>
-                {hasLogo ? (
-                  /* Uploaded logo — render directly, fills the block */
-                  <Image
-                    src={dealership.logo_path!}
-                    style={styles.logoImage}
-                  />
-                ) : (
-                  /* Fallback: black spade badge with initials */
-                  <>
-                    <Svg width="54" height="54" viewBox="0 0 36 36">
-                      {/* Black spade silhouette with gold rim */}
-                      <Path
-                        d="M 18 2 C 14.5 7.5 6 13.5 6 20 C 6 24.5 9.5 27.5 13.5 27.5 C 16 27.5 17.5 26.2 18 24.5 C 18.5 26.2 20 27.5 22.5 27.5 C 26.5 27.5 30 24.5 30 20 C 30 13.5 21.5 7.5 18 2 Z"
-                        fill="#000000"
-                        stroke="#C9A227"
-                        strokeWidth="0.8"
-                      />
-                      <Path
-                        d="M 16 26 L 20 26 L 21 33 L 15 33 Z"
-                        fill="#000000"
-                        stroke="#C9A227"
-                        strokeWidth="0.8"
-                      />
-                    </Svg>
-                    {/* Center initials overlay */}
-                    <Text style={styles.logoOverlayText}>{initials}</Text>
-                  </>
-                )}
+              {/* Logo block: R35 Motors official emblem */}
+              <View style={[styles.logoBlock, styles.logoBlockHasLogo]}>
+                <Image
+                  src={dealership.logo_path || DEFAULT_DEALERSHIP_LOGO}
+                  style={styles.logoImage}
+                />
               </View>
 
               <View>

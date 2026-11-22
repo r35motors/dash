@@ -1,4 +1,5 @@
 import { numberToIndianWords } from "@/lib/utils";
+import { DEFAULT_DEALERSHIP_LOGO, DEFAULT_DEALERSHIP_NAME } from "@/lib/constants/branding";
 
 export interface InvoiceTemplateData {
   invoice_number: string;
@@ -55,21 +56,24 @@ function formatDate(dateStr: string | undefined): string {
 export function generateInvoiceHtml(data: InvoiceTemplateData): string {
   const snapshot = data.invoice_snapshot;
   const rawLogo =
-    (snapshot?.dealership?.logo_path && snapshot.dealership.logo_path !== "/dealership-logo.png"
-      ? snapshot.dealership.logo_path
-      : null) ||
-    (data.dealership?.logo_path && data.dealership.logo_path !== "/dealership-logo.png"
-      ? data.dealership.logo_path
-      : null) ||
+    snapshot?.dealership?.logo_path ||
+    snapshot?.logo_path ||
+    data.dealership?.logo_path ||
     null;
+
+  // Use the dealership logo or fallback to R35 official emblem
+  const effectiveLogo =
+    rawLogo && rawLogo.trim() !== "" && rawLogo !== "/dealership-logo.svg"
+      ? (rawLogo === "/dealership-logo.png" || rawLogo === "/logo.png" ? DEFAULT_DEALERSHIP_LOGO : rawLogo)
+      : DEFAULT_DEALERSHIP_LOGO;
 
   const dealership = {
     business_name:
       snapshot?.dealership?.business_name ||
       snapshot?.dealership_name ||
       data.dealership?.business_name ||
-      "R35 MOTORS",
-    logo_path: rawLogo,
+      DEFAULT_DEALERSHIP_NAME,
+    logo_path: effectiveLogo,
     address:
       snapshot?.dealership?.address ||
       snapshot?.dealership_address ||
@@ -141,8 +145,7 @@ export function generateInvoiceHtml(data: InvoiceTemplateData): string {
 
   const hasLogo = Boolean(
     dealership.logo_path &&
-    dealership.logo_path.trim() !== "" &&
-    dealership.logo_path !== "/dealership-logo.png"
+    dealership.logo_path.trim() !== ""
   );
 
   return `<!doctype html><html><head><meta charset="utf-8">
@@ -166,62 +169,37 @@ body{
 .head{display:flex;justify-content:space-between;align-items:flex-start;margin-top:2mm}
 .brandrow{display:flex;gap:5mm;align-items:center}
 
-/* Logo block — dark spade badge fallback; white background when logo is uploaded */
+/* Logo block — R35 Motors official emblem */
 .logo-block{
-  width:18mm;
-  height:18mm;
+  width:32mm;
+  height:14mm;
   flex:none;
-  background:#0b1329;
-  border-radius:3.5mm;
   position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 3px 8px rgba(0,0,0,0.22);
-  border:1px solid rgba(255,255,255,0.1);
-  overflow:hidden;
+  background:transparent;
 }
 .logo-block.has-logo{
-  width:26mm;
-  height:16mm;
-  background:#ffffff;
-  border:1.5px solid #e2e8f0;
-  box-shadow:0 2px 6px rgba(0,0,0,0.06);
-}
-.spade-svg{
-  position:absolute;
-  width:88%;
-  height:88%;
-  fill:#000000;
-  filter:drop-shadow(0 0 1px rgba(255,255,255,0.2));
-}
-.spade-bg-icon{
-  position:absolute;
-  font-size:16pt;
-  color:#000000;
-  line-height:1;
+  width:32mm;
+  height:14mm;
+  background:transparent;
+  border:none;
+  box-shadow:none;
 }
 .logo-overlay{
   position:relative;
-  z-index:2;
   display:flex;
   align-items:center;
   justify-content:center;
   width:100%;
   height:100%;
 }
-.logo-overlay .initials{
-  color:#f8fafc;
-  font-weight:800;
-  font-size:14pt;
-  letter-spacing:1px;
-  text-shadow:0 2px 4px rgba(0,0,0,0.9), 0 0 2px #000;
-}
 .logo-overlay img{
-  max-width:92%;
-  max-height:92%;
+  max-width:100%;
+  max-height:100%;
   object-fit:contain;
-  border-radius:2mm;
+  display:block;
 }
 
 .brand h1{font-size:15pt;font-weight:700;color:#14213d;letter-spacing:-.2px;line-height:1.2}
@@ -268,18 +246,8 @@ table.items{width:100%;border-collapse:collapse;margin-top:11mm}
 <div class="head">
  <div class="brand">
    <div class="brandrow">
-     <div class="logo-block${hasLogo ? " has-logo" : ""}">
-       ${
-         hasLogo
-           ? `<!-- Dealership logo -->
-       <div class="logo-overlay"><img src="${dealership.logo_path}" alt="Logo" /></div>`
-           : `<!-- Fallback: spade badge with initials -->
-       <svg class="spade-svg" viewBox="0 0 36 36">
-         <path d="M 18 2 C 14.5 7.5 6 13.5 6 20 C 6 24.5 9.5 27.5 13.5 27.5 C 16 27.5 17.5 26.2 18 24.5 C 18.5 26.2 20 27.5 22.5 27.5 C 26.5 27.5 30 24.5 30 20 C 30 13.5 21.5 7.5 18 2 Z" fill="#000000" stroke="#c9a227" stroke-width="0.8" />
-         <path d="M 16 26 L 20 26 L 21 33 L 15 33 Z" fill="#000000" stroke="#c9a227" stroke-width="0.8" />
-       </svg>
-       <div class="logo-overlay"><span class="initials">${initials}</span></div>`
-       }
+     <div class="logo-block has-logo">
+       <div class="logo-overlay"><img src="${dealership.logo_path || DEFAULT_DEALERSHIP_LOGO}" alt="${dealership.business_name} Logo" /></div>
      </div>
      <div>
        <h1>${dealership.business_name}</h1>
