@@ -234,17 +234,6 @@ export function AppShell({ children }: AppShellProps) {
               {currentPage?.name || "Management"}
             </span>
           </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-[#E2E8F0] text-xs text-slate-600">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span className="font-medium">Active Dealership Instance</span>
-            </div>
-
-            <div className="w-8 h-8 rounded-full bg-[#1E3A8A] text-white font-semibold text-xs flex items-center justify-center shadow-xs">
-              R35
-            </div>
-          </div>
         </header>
 
         {/* Page Content */}
