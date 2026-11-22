@@ -100,13 +100,16 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     alignItems: "flex-end",
-    maxWidth: "40%",
+    maxWidth: "42%",
   },
   invoiceTitle: {
     fontSize: 22,
-    fontFamily: "Helvetica",
-    color: "#14213D",
-    letterSpacing: 3,
+    fontFamily: "Helvetica-Bold",
+    color: "#0F172A",
+    letterSpacing: 2.5,
+    lineHeight: 1.2,
+    marginBottom: 6,
+    textAlign: "right",
   },
   invoiceCopy: {
     fontSize: 7.5,
@@ -117,19 +120,28 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   paidBadge: {
-    marginTop: 8,
-    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 8,
     paddingVertical: 3.5,
-    borderWidth: 1.4,
-    borderColor: "#1E7A4D",
-    borderRadius: 2,
-    backgroundColor: "#F0FDF4",
+    borderRadius: 12,
+    backgroundColor: "#ECFDF5",
+    borderWidth: 1,
+    borderColor: "#A7F3D0",
+    alignSelf: "flex-end",
+  },
+  paidDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: "#059669",
+    marginRight: 4.5,
   },
   paidBadgeText: {
-    fontSize: 8.5,
+    fontSize: 7.5,
     fontFamily: "Helvetica-Bold",
-    color: "#1E7A4D",
-    letterSpacing: 1.8,
+    color: "#047857",
+    letterSpacing: 1.2,
   },
   // Thin Clean Divider
   divider: {
@@ -479,6 +491,7 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
           <View style={styles.headerRight}>
             <Text style={styles.invoiceTitle}>INVOICE</Text>
             <View style={styles.paidBadge}>
+              <View style={styles.paidDot} />
               <Text style={styles.paidBadgeText}>PAID IN FULL</Text>
             </View>
           </View>
