@@ -1,4 +1,4 @@
-# 🚗 Royal Motors - Dealership Management System
+# 🚗 R35 MOTORS - Dealership Management System
 
 A production-ready, full-featured web application engineered for modern automobile dealerships. Manages end-to-end vehicle inventory lifecycles, purchase and sales transactions, profit calculations, dynamic GST/VAT invoicing with custom line items, Indian numbering system currency conversions, immutable historical PDF invoice generation, and comprehensive lifetime & monthly financial analytics.
 
@@ -28,7 +28,7 @@ Built with **Next.js 16 (App Router & Turbopack)**, **React 19**, **Tailwind CSS
    - Detailed sold vehicles table showing acquisition cost, selling price, profit indicator, buyer details, and sale date.
 
 4. **Dynamic Invoicing Engine & PDF Generation (`/invoices`)**
-   - Unique sequential invoice number generation (`ROYAL-YYYY-####`) respecting customizable dealership prefixes.
+   - Unique sequential invoice number generation (`R35-YYYY-####`) respecting customizable dealership prefixes.
    - Support for custom itemized add-ons (e.g., Detailing & Ceramic Coating, RTO Registration Assistance, Extended Warranty, Insurance Transfer).
    - Live invoice total recalculation including vehicle base consideration and custom service items.
    - **Indian Numbering System Amount in Words**: Automatically converts amounts into official words format (e.g., `₹8,46,500` -> *"Rupees Eight Lakh Forty-Six Thousand Five Hundred Only"*).

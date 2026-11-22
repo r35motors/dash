@@ -101,12 +101,12 @@ CREATE TRIGGER trigger_vehicles_updated_at
 INSERT INTO business_settings (id, business_name, logo_path, address, contact_number_1, contact_number_2, invoice_prefix)
 VALUES (
     'a0000000-0000-0000-0000-000000000001',
-    'Royal Motors Luxury Pre-Owned Dealership',
+    'R35 MOTORS',
     '/dealership-logo.png',
     'Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001',
     '+91 98765 43210',
     '+91 98765 43211',
-    'ROYAL'
+    'R35'
 ) ON CONFLICT DO NOTHING;
 
 -- Insert 5 realistic sample vehicles

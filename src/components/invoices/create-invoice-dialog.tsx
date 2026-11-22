@@ -218,7 +218,7 @@ export function CreateInvoiceDialog({
       invoice_number: invoiceNumber.trim() || defaultNumber,
       invoice_date: invoiceDate,
       dealership: {
-        business_name: settings?.business_name || "Royal Motors Dealership",
+        business_name: settings?.business_name || "R35 MOTORS",
         logo_path: settings?.logo_path,
         address: settings?.address || "",
         contact_number_1: settings?.contact_number_1 || "",
@@ -392,7 +392,7 @@ export function CreateInvoiceDialog({
                   id="invoice_number"
                   value={invoiceNumber}
                   onChange={(e) => setInvoiceNumber(e.target.value)}
-                  placeholder="e.g. INV-1003 or ROYAL-2026-0001"
+                  placeholder="e.g. INV-1003 or R35-2026-0001"
                   className="mt-1 font-mono text-xs font-semibold"
                 />
                 <span className="text-[10px] text-slate-400 mt-0.5 block">

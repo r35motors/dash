@@ -80,7 +80,7 @@ export function AppShell({ children }: AppShellProps) {
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-bold text-sm tracking-tight text-[#0F172A] truncate">
-              Royal Motors
+              R35 MOTORS
             </span>
             <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider truncate">
               Dealership ERP
@@ -150,7 +150,7 @@ export function AppShell({ children }: AppShellProps) {
           <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center text-white">
             <ShieldCheck className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-sm text-[#0F172A]">Royal Motors</span>
+          <span className="font-bold text-sm text-[#0F172A]">R35 MOTORS</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -170,7 +170,7 @@ export function AppShell({ children }: AppShellProps) {
                 <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center text-white">
                   <ShieldCheck className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-bold text-sm text-[#0F172A]">Royal Motors</span>
+                <span className="font-bold text-sm text-[#0F172A]">R35 MOTORS</span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -207,7 +207,7 @@ export function AppShell({ children }: AppShellProps) {
             </nav>
             <div className="pt-4 border-t border-[#E2E8F0] text-xs text-slate-500 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>Royal Motors Dealership</span>
+              <span>R35 MOTORS</span>
             </div>
           </div>
         </div>
@@ -218,7 +218,7 @@ export function AppShell({ children }: AppShellProps) {
         {/* Top Header Bar */}
         <header className="hidden md:flex h-16 border-b border-[#E2E8F0] bg-white items-center justify-between px-8 sticky top-0 z-20">
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-slate-400">Royal Motors</span>
+            <span className="text-slate-400">R35 MOTORS</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
             <span className="font-semibold text-[#0F172A]">
               {currentPage?.name || "Management"}
@@ -232,7 +232,7 @@ export function AppShell({ children }: AppShellProps) {
             </div>
 
             <div className="w-8 h-8 rounded-full bg-[#1E3A8A] text-white font-semibold text-xs flex items-center justify-center shadow-xs">
-              RM
+              R35
             </div>
           </div>
         </header>

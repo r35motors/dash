@@ -381,7 +381,7 @@ export function InvoicePdfDocument({ data }: { data: InvoicePdfData }) {
       snapshot?.dealership?.business_name ||
       snapshot?.dealership_name ||
       data.dealership?.business_name ||
-      "Royal Motors Luxury Dealership",
+      "R35 MOTORS",
     logo_path: rawLogo,
     address:
       snapshot?.dealership?.address ||

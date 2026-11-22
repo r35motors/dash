@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Royal Motors | Luxury Pre-Owned Dealership ERP",
+  title: "R35 MOTORS | Luxury Pre-Owned Dealership ERP",
   description:
     "Next.js Car Dealership Management System for inventory, sales, invoicing, and analytics.",
 };

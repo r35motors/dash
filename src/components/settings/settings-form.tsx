@@ -261,7 +261,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               onChange={(e) =>
                 setFormData({ ...formData, business_name: e.target.value })
               }
-              placeholder="e.g. Royal Motors Luxury Dealership"
+              placeholder="e.g. R35 MOTORS"
               required
               className="text-sm"
             />
@@ -439,7 +439,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                   invoice_prefix: e.target.value.toUpperCase(),
                 })
               }
-              placeholder="e.g. ROYAL or INV"
+              placeholder="e.g. R35 or INV"
               required
               className="font-mono uppercase text-sm"
             />

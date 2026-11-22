@@ -47,12 +47,12 @@ export interface DealershipData {
 export const initialDealershipData: DealershipData = {
   business_settings: {
     id: "a0000000-0000-0000-0000-000000000001",
-    business_name: "Royal Motors Luxury Dealership",
+    business_name: "R35 MOTORS",
     logo_path: "/dealership-logo.svg",
     address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
     contact_number_1: "+91 98765 43210",
     contact_number_2: "+91 98765 43211",
-    invoice_prefix: "ROYAL",
+    invoice_prefix: "R35",
   },
   vehicles: [
     {
@@ -133,7 +133,7 @@ export const initialDealershipData: DealershipData = {
       invoice_date: new Date(Date.now() - 5 * 86400000).toISOString(),
       invoice_total: "3350000.00",
       invoice_snapshot: {
-        dealership_name: "Royal Motors Luxury Dealership",
+        dealership_name: "R35 MOTORS",
         buyer_name: "Devendra Patel",
         vehicle_name: "2021 Toyota Fortuner 2.8 4x4 AT",
         registration_number: "KA-05-TF-9900",
@@ -150,7 +150,7 @@ export const initialDealershipData: DealershipData = {
       invoice_date: new Date(Date.now() - 3 * 86400000).toISOString(),
       invoice_total: "4750000.00",
       invoice_snapshot: {
-        dealership_name: "Royal Motors Luxury Dealership",
+        dealership_name: "R35 MOTORS",
         buyer_name: "Kavita Singhania",
         vehicle_name: "2020 Range Rover Evoque R-Dynamic",
         registration_number: "TS-07-RR-7777",

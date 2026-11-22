@@ -473,7 +473,7 @@ export const dealershipDb = {
     async getNextNumber(): Promise<string> {
       const db = getDb();
       const settings = await db.select().from(schema.businessSettings).limit(1);
-      const prefix = settings[0]?.invoice_prefix || "ROYAL";
+      const prefix = settings[0]?.invoice_prefix || "R35";
       const year = new Date().getFullYear();
       const allInvoices = await db
         .select({ invoice_number: schema.invoices.invoice_number })
@@ -601,12 +601,12 @@ export const dealershipDb = {
             const inserted = await db
               .insert(schema.businessSettings)
               .values({
-                business_name: "Royal Motors Luxury Dealership",
+                business_name: "R35 MOTORS",
                 logo_path: "/dealership-logo.png",
                 address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
                 contact_number_1: "+91 98765 43210",
                 contact_number_2: "+91 98765 43211",
-                invoice_prefix: "ROYAL",
+                invoice_prefix: "R35",
               })
               .returning();
             return inserted[0];
@@ -614,12 +614,12 @@ export const dealershipDb = {
             console.warn("[DB] Could not fetch settings from DB (using defaults):", err);
             return {
               id: "00000000-0000-0000-0000-000000000001",
-              business_name: "Royal Motors Luxury Dealership",
+              business_name: "R35 MOTORS",
               logo_path: "/dealership-logo.png",
               address: "Plot 42, Highline Auto Corridor, MG Road, Bangalore 560001",
               contact_number_1: "+91 98765 43210",
               contact_number_2: "+91 98765 43211",
-              invoice_prefix: "ROYAL",
+              invoice_prefix: "R35",
             };
           }
         },
@@ -649,12 +649,12 @@ export const dealershipDb = {
         const inserted = await db
           .insert(schema.businessSettings)
           .values({
-            business_name: data.business_name || "Royal Motors Luxury Dealership",
+            business_name: data.business_name || "R35 MOTORS",
             logo_path: data.logo_path || null,
             address: data.address || "Dealership Address",
             contact_number_1: data.contact_number_1 || "+91 00000 00000",
             contact_number_2: data.contact_number_2 || null,
-            invoice_prefix: data.invoice_prefix || "ROYAL",
+            invoice_prefix: data.invoice_prefix || "R35",
           })
           .returning();
         res = inserted[0];

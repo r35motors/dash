@@ -48,7 +48,7 @@ export default async function DashboardPage() {
             <span>Dealership Operations Center</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0F172A]">
-            {settings?.business_name || "Royal Motors Dealership"}
+            {settings?.business_name || "R35 MOTORS"}
           </h1>
           <p className="text-sm text-slate-500 mt-1">
             Real-time fleet overview, sales activity, and quick operational workflows.
