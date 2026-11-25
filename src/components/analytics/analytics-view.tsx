@@ -108,7 +108,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-slate-900 dark:bg-slate-800 text-white border border-transparent dark:border-slate-700 flex items-center justify-center shadow-xs">
               <BarChart3 className="w-4 h-4" />
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A] dark:text-slate-50">
@@ -123,7 +123,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
         <div className="flex items-center gap-2">
           <Link href="/sales">
             <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
-              <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-600" />
+              <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Sales Ledger</span>
             </Button>
           </Link>
@@ -242,11 +242,11 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Total Gross Profit
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                   <TrendingUp className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-lg xl:text-xl font-bold text-emerald-600 tracking-tight tabular-nums">
+              <div className="text-lg xl:text-xl font-bold text-emerald-600 dark:text-emerald-400 tracking-tight tabular-nums">
                 {formatCurrency(lifetime.totalProfit)}
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
@@ -278,11 +278,11 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Vehicles Sold
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 flex items-center justify-center">
                   <ShoppingBag className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-blue-700 tracking-tight">
+              <div className="text-2xl font-bold text-blue-700 dark:text-blue-400 tracking-tight">
                 {lifetime.vehiclesSold} Units
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
@@ -299,7 +299,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                   <div className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">
                     Lifetime Gross Margin
                   </div>
-                  <div className="text-xl font-bold text-emerald-700 mt-1">
+                  <div className="text-xl font-bold text-emerald-700 dark:text-emerald-400 mt-1">
                     {lifetime.profitMarginPercent.toFixed(2)}%
                   </div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
@@ -415,11 +415,11 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Monthly Gross Profit
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                   <TrendingUp className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-lg xl:text-xl font-bold text-emerald-600 tracking-tight tabular-nums">
+              <div className="text-lg xl:text-xl font-bold text-emerald-600 dark:text-emerald-400 tracking-tight tabular-nums">
                 {formatCurrency(monthly.monthlyProfit)}
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
@@ -451,11 +451,11 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Vehicles Sold
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 flex items-center justify-center">
                   <ShoppingBag className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-blue-700 tracking-tight">
+              <div className="text-2xl font-bold text-blue-700 dark:text-blue-400 tracking-tight">
                 {monthly.vehiclesSold} Units
               </div>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
@@ -519,7 +519,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                           <td className="py-3.5 px-4 text-right font-bold text-slate-900 dark:text-slate-50">
                             {formatCurrency(item.sales_value)}
                           </td>
-                          <td className="py-3.5 px-4 text-right font-bold text-emerald-600">
+                          <td className="py-3.5 px-4 text-right font-bold text-emerald-600 dark:text-emerald-400">
                             +{formatCurrency(item.profit)}
                           </td>
                           <td className="py-3.5 px-4 text-center">
@@ -595,7 +595,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </div>
             <div className="flex items-center justify-between sm:justify-start gap-2">
               <span className="text-slate-500 dark:text-slate-400 font-medium">Year Total Gross Profit:</span>
-              <span className="font-bold text-emerald-700">+{formatCurrency(yearTotalProfit)}</span>
+              <span className="font-bold text-emerald-700 dark:text-emerald-400">+{formatCurrency(yearTotalProfit)}</span>
             </div>
           </div>
         </div>

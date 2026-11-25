@@ -198,16 +198,16 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
       {successMessage && (
         <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-500/20 text-emerald-800 flex items-start justify-between gap-3 shadow-xs animate-in fade-in">
           <div className="flex items-center gap-2.5">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <div>
               <p className="font-semibold text-sm">Settings Saved Successfully</p>
-              <p className="text-xs text-emerald-700 mt-0.5">{successMessage}</p>
+              <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">{successMessage}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="text-emerald-500 hover:text-emerald-700 p-1 rounded-lg"
+            className="text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-300 dark:text-emerald-400 p-1 rounded-lg"
           >
             <X className="w-4 h-4" />
           </button>
@@ -279,8 +279,8 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center pt-1">
-              {/* Live Logo Preview Box */}
-              <div className="w-20 h-20 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-center p-2 shrink-0 overflow-hidden shadow-2xs">
+              {/* Live Logo Preview Box (Keep white backing so dark logos stay visible) */}
+              <div className="w-20 h-20 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white flex items-center justify-center p-2 shrink-0 overflow-hidden shadow-2xs">
                 {formData.logo_path ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -461,7 +461,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
           <Button
             type="submit"
             disabled={saving}
-            className="w-full sm:w-auto bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 shadow-xs cursor-pointer h-9.5 px-5 rounded-xl active:scale-[0.98] transition-all"
+            className="w-full sm:w-auto bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white gap-2 shadow-xs cursor-pointer h-9.5 px-5 rounded-xl active:scale-[0.98] transition-all"
           >
             {saving ? (
               <Loader2 className="w-4 h-4 animate-spin" />

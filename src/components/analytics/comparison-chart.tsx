@@ -117,7 +117,7 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
           <Bar
             dataKey="sales"
             name="sales"
-            fill={theme === "dark" ? "#F8FAFC" : "#0F172A"}
+            fill={theme === "dark" ? "#818CF8" : "#0F172A"}
             radius={[3, 3, 0, 0]}
             maxBarSize={28}
           />

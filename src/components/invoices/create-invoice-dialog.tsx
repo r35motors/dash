@@ -373,9 +373,9 @@ export function CreateInvoiceDialog({
             )}
 
             {/* Dealership Banner Preview */}
-            <div className="p-3.5 rounded-lg bg-blue-50/50 border border-blue-100 flex items-center justify-between text-xs">
+            <div className="p-3.5 rounded-lg bg-blue-50/50 dark:bg-slate-800/70 border border-blue-100 dark:border-blue-800/50 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2.5">
-                <Building2 className="w-4 h-4 text-[#1E3A8A]" />
+                <Building2 className="w-4 h-4 text-[#1E3A8A] dark:text-blue-400" />
                 <div>
                   <span className="font-semibold text-[#0F172A] dark:text-slate-50">
                     {settings?.business_name || "Dealership"}
@@ -385,7 +385,7 @@ export function CreateInvoiceDialog({
                   </span>
                 </div>
               </div>
-              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">
+              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950/70 text-blue-800 dark:text-blue-300 font-bold">
                 Prefix: {prefix}
               </span>
             </div>
@@ -397,7 +397,7 @@ export function CreateInvoiceDialog({
                   <Label htmlFor="invoice_number" className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                     Invoice Number <span className="text-red-500">*</span>
                   </Label>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/60">
                     <Lock className="w-2.5 h-2.5" />
                     Auto Numbering
                   </span>
@@ -436,7 +436,7 @@ export function CreateInvoiceDialog({
 
             {/* Section 2: Vehicle Selection & Buyer Info */}
             <div className="space-y-4 pt-2 border-t border-slate-200 dark:border-slate-800">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A] flex items-center gap-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A] dark:text-blue-400 flex items-center gap-1.5">
                 <Car className="w-3.5 h-3.5" />
                 <span>Vehicle & Client Particulars</span>
               </h4>
@@ -451,7 +451,7 @@ export function CreateInvoiceDialog({
                     id="vehicle_select"
                     value={selectedVehicleId}
                     onChange={(e) => setSelectedVehicleId(e.target.value)}
-                    className="w-full mt-1 h-9 rounded-md border border-slate-300 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0F172A]"
+                    className="w-full mt-1 h-9.5 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0F172A] dark:focus:ring-sky-400/30"
                   >
                     <option value="">-- Choose Vehicle --</option>
                     {vehicles.map((v) => (
@@ -475,7 +475,7 @@ export function CreateInvoiceDialog({
                     className="mt-1 text-xs font-medium"
                   />
                   {matchedSale && (
-                    <span className="text-[10px] text-emerald-600 mt-0.5 block flex items-center gap-1">
+                    <span className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 block flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" /> Auto-filled from recorded sale record
                     </span>
                   )}
@@ -493,7 +493,7 @@ export function CreateInvoiceDialog({
                   </div>
                   <div>
                     <span className="text-slate-400 text-[10px] block uppercase font-medium">Registration</span>
-                    <span className="font-mono font-semibold text-[#1E3A8A]">
+                    <span className="font-mono font-semibold text-[#1E3A8A] dark:text-blue-400">
                       {selectedVehicle.registration_number}
                     </span>
                   </div>
@@ -516,7 +516,7 @@ export function CreateInvoiceDialog({
             {/* Section 3: Itemized Charges & Custom Line Items */}
             <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A] flex items-center gap-1.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A] dark:text-blue-400 flex items-center gap-1.5">
                   <Receipt className="w-3.5 h-3.5" />
                   <span>Itemized Invoice Charges</span>
                 </h4>
@@ -527,7 +527,7 @@ export function CreateInvoiceDialog({
                   <button
                     type="button"
                     onClick={() => handleAddCustomItem("Painting & Body Refurbishment", 15000)}
-                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
                   >
                     <Paintbrush className="w-3 h-3 text-purple-600" />
                     <span>Painting</span>
@@ -535,7 +535,7 @@ export function CreateInvoiceDialog({
                   <button
                     type="button"
                     onClick={() => handleAddCustomItem("Mechanical & Service Repair Work", 12000)}
-                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
                   >
                     <Wrench className="w-3 h-3 text-amber-600" />
                     <span>Repair work</span>
@@ -543,7 +543,7 @@ export function CreateInvoiceDialog({
                   <button
                     type="button"
                     onClick={() => handleAddCustomItem("Comprehensive Insurance Policy Transfer", 18500)}
-                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
                   >
                     <ShieldCheck className="w-3 h-3 text-blue-600" />
                     <span>Insurance transfer</span>
@@ -552,8 +552,8 @@ export function CreateInvoiceDialog({
               </div>
 
               {/* Items Table */}
-              <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
-                <div className="bg-slate-100/75 px-3 py-2 grid grid-cols-12 gap-2 text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase">
+              <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <div className="bg-slate-100/75 dark:bg-slate-800/80 px-3 py-2 grid grid-cols-12 gap-2 text-[11px] font-semibold text-slate-600 dark:text-slate-300 uppercase">
                   <span className="col-span-1 text-center">#</span>
                   <span className="col-span-7">Description</span>
                   <span className="col-span-3 text-right">Amount (INR)</span>
@@ -562,7 +562,7 @@ export function CreateInvoiceDialog({
 
                 <div className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
                   {/* Default First Item: Vehicle Selling Price */}
-                  <div className="p-3 grid grid-cols-12 gap-2 items-center bg-blue-50/20">
+                  <div className="p-3 grid grid-cols-12 gap-2 items-center bg-blue-50/20 dark:bg-slate-800/40">
                     <span className="col-span-1 text-center text-xs font-semibold text-slate-400">1</span>
                     <div className="col-span-7">
                       <span className="text-xs font-semibold text-[#0F172A] dark:text-slate-50 block">
@@ -651,7 +651,7 @@ export function CreateInvoiceDialog({
             </div>
 
             {/* Section 4: Live Invoice Total & Indian Words */}
-            <div className="p-4 bg-slate-900 text-white rounded-xl shadow-xs space-y-3">
+            <div className="p-4 bg-slate-900 dark:bg-slate-800 text-white border border-transparent dark:border-slate-700 rounded-xl shadow-xs space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                 <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
                   Calculated Invoice Total
@@ -702,7 +702,7 @@ export function CreateInvoiceDialog({
                 size="sm"
                 onClick={handleSaveInvoice}
                 disabled={isSubmitting || !selectedVehicleId || invoiceTotal <= 0}
-                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white cursor-pointer active:scale-[0.98]"
+                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 rounded-xl bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white cursor-pointer active:scale-[0.98]"
               >
                 {isSubmitting ? (
                   <span>Saving...</span>

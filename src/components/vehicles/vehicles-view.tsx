@@ -125,15 +125,15 @@ export function VehiclesView({
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "available"
                 ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
             }`}
           >
             <span>Available</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 statusTab.toLowerCase() === "available"
-                  ? "bg-emerald-100 text-emerald-800"
-                  : "bg-slate-200 text-slate-700 dark:text-slate-300"
+                  ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800"
+                  : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
               }`}
             >
               {availableCount}
@@ -146,15 +146,15 @@ export function VehiclesView({
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab === "all"
                 ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
             }`}
           >
             <span>All Fleet</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab === "all"
-                  ? "bg-slate-900 text-white"
-                  : "bg-slate-200 text-slate-700 dark:text-slate-300"
+                  ? "bg-slate-900 dark:bg-slate-800 text-white border border-transparent dark:border-slate-700"
+                  : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
               }`}
             >
               {totalCount}
@@ -167,15 +167,15 @@ export function VehiclesView({
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "sold"
                 ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
             }`}
           >
             <span>Sold</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab.toLowerCase() === "sold"
-                  ? "bg-slate-200 text-slate-800 dark:text-slate-200"
-                  : "bg-slate-200 text-slate-700 dark:text-slate-300"
+                  ? "bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200"
+                  : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
               }`}
             >
               {soldCount}
@@ -271,7 +271,7 @@ export function VehiclesView({
               <Button
                 size="sm"
                 onClick={() => setIsAddOpen(true)}
-                className="text-xs gap-1.5 bg-[#0F172A] hover:bg-[#1E293B]"
+                className="text-xs gap-1.5 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add First Vehicle</span>
@@ -299,7 +299,7 @@ export function VehiclesView({
                   {filteredVehicles.map((vehicle) => {
                     const isAvailable = vehicle.status === "Available";
                     return (
-                      <TableRow key={vehicle.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                      <TableRow key={vehicle.id} className="hover:bg-slate-50/80 dark:bg-slate-800/70 dark:hover:bg-slate-800/60 transition-colors">
                         <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3.5">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-sm">{vehicle.vehicle_name}</span>
@@ -329,7 +329,7 @@ export function VehiclesView({
                             <Button
                               asChild
                               size="sm"
-                              className="h-8 rounded-xl px-3.5 text-xs font-semibold bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs gap-1.5 active:scale-95"
+                              className="h-8 rounded-xl px-3.5 text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
                             >
                               <Link href={`/sales?vehicleId=${vehicle.id}`}>
                                 <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
@@ -375,7 +375,7 @@ export function VehiclesView({
                   </div>
 
                   {/* Meta Info: Owner & Purchase Price */}
-                  <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 text-xs">
+                  <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs">
                     <div>
                       <span className="text-slate-400 text-[11px] block">Previous Owner</span>
                       <span className="font-medium text-slate-700 dark:text-slate-300 truncate block mt-0.5">
@@ -395,7 +395,7 @@ export function VehiclesView({
                     {isAvailable ? (
                       <Button
                         asChild
-                        className="w-full h-8.5 rounded-xl text-xs font-semibold bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs gap-1.5 active:scale-95"
+                        className="w-full h-8.5 rounded-xl text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
                       >
                         <Link href={`/sales?vehicleId=${vehicle.id}`}>
                           <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />

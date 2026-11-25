@@ -154,7 +154,7 @@ export function InvoicePreviewDialog({
             <Button
               size="sm"
               onClick={handleDownload}
-              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white cursor-pointer active:scale-[0.98]"
+              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 rounded-xl bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white cursor-pointer active:scale-[0.98]"
             >
               {isGenerating ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

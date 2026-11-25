@@ -203,7 +203,7 @@ export function AddSaleDialog({
         <DialogTrigger asChild>{trigger}</DialogTrigger>
       ) : (
         <DialogTrigger asChild>
-          <Button className="gap-2 bg-[#0F172A] hover:bg-[#1E293B] shadow-sm">
+          <Button className="gap-2 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 shadow-sm">
             <Plus className="w-4 h-4" />
             <span>Record New Sale</span>
           </Button>
@@ -214,7 +214,7 @@ export function AddSaleDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader className="space-y-2">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
                 <BadgeDollarSign className="w-4 h-4" />
               </div>
               <DialogTitle className="text-xl font-bold text-[#0F172A] dark:text-slate-50">
@@ -236,8 +236,8 @@ export function AddSaleDialog({
 
           {/* Success Alert */}
           {successMessage && (
-            <div className="my-4 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="my-4 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <div className="font-medium">{successMessage}</div>
             </div>
           )}
@@ -285,7 +285,7 @@ export function AddSaleDialog({
               <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-[#E2E8F0] dark:border-slate-800 rounded-xl space-y-3 animate-in fade-in">
                 <div className="flex items-center justify-between border-b border-[#E2E8F0] dark:border-slate-800 pb-2">
                   <div className="flex items-center gap-2">
-                    <Car className="w-4 h-4 text-[#1E3A8A]" />
+                    <Car className="w-4 h-4 text-[#1E3A8A] dark:text-blue-400" />
                     <span className="font-semibold text-xs text-[#0F172A] dark:text-slate-50">
                       {selectedVehicle.vehicle_name}
                     </span>
@@ -363,7 +363,7 @@ export function AddSaleDialog({
                     Selling Price (₹) <span className="text-red-500">*</span>
                   </Label>
                   {formattedSellingPreview && (
-                    <span className="text-[11px] font-semibold text-emerald-700">
+                    <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                       {formattedSellingPreview}
                     </span>
                   )}
@@ -392,7 +392,7 @@ export function AddSaleDialog({
               <div
                 className={`p-3.5 rounded-xl border flex items-center justify-between animate-in fade-in transition-all ${
                   profitStats.isPositive
-                    ? "bg-emerald-50/80 border-emerald-200 text-emerald-900"
+                    ? "bg-emerald-50/80 border-emerald-200 dark:border-emerald-800/60 text-emerald-900"
                     : profitStats.isBreakEven
                     ? "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200"
                     : "bg-red-50/80 border-red-200 text-red-900"
@@ -402,9 +402,9 @@ export function AddSaleDialog({
                   <div
                     className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                       profitStats.isPositive
-                        ? "bg-emerald-100 text-emerald-700"
+                        ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-400"
                         : profitStats.isBreakEven
-                        ? "bg-slate-200 text-slate-700 dark:text-slate-300"
+                        ? "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
                         : "bg-red-100 text-red-700"
                     }`}
                   >
@@ -433,7 +433,7 @@ export function AddSaleDialog({
                       profitStats.isPositive
                         ? "bg-emerald-200/80 text-emerald-800"
                         : profitStats.isBreakEven
-                        ? "bg-slate-200 text-slate-700 dark:text-slate-300"
+                        ? "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
                         : "bg-red-200/80 text-red-800"
                     }`}
                   >
@@ -481,7 +481,7 @@ export function AddSaleDialog({
             <Button
               type="submit"
               disabled={loading || availableVehicles.length === 0}
-              className="text-xs h-9 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 active:scale-[0.98]"
+              className="text-xs h-9 rounded-xl bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white gap-2 active:scale-[0.98]"
             >
               {loading ? (
                 <>

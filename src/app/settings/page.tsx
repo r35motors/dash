@@ -13,7 +13,7 @@ export default async function SettingsPage() {
       {/* Page Header */}
       <div className="pb-4 border-b border-slate-200/80 dark:border-slate-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-slate-900 dark:bg-slate-800 text-white border border-transparent dark:border-slate-700 flex items-center justify-center shadow-xs">
             <Settings className="w-4 h-4" />
           </div>
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A] dark:text-slate-50">
@@ -41,7 +41,7 @@ export default async function SettingsPage() {
               </p>
             </div>
           </div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 text-xs font-semibold border border-emerald-500/20">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 text-xs font-semibold border border-emerald-500/20">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>Supabase Active</span>
           </div>

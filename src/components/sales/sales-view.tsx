@@ -197,9 +197,9 @@ export function SalesView({
         <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition">
           <div className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-wider flex items-center justify-between">
             <span>Realized Margin</span>
-            <TrendingUp className="w-4 h-4 text-emerald-600" />
+            <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-emerald-600 flex items-center gap-1.5 mt-2.5">
+          <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 mt-2.5">
             <span>+{formatCurrency(totalRealizedMargin)}</span>
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
@@ -304,7 +304,7 @@ export function SalesView({
               <Button
                 size="sm"
                 onClick={() => setIsAddOpen(true)}
-                className="text-xs gap-1.5 bg-[#0F172A] hover:bg-[#1E293B]"
+                className="text-xs gap-1.5 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Record First Sale</span>
@@ -320,15 +320,15 @@ export function SalesView({
               <Table>
                 <TableHeader className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800">
                   <TableRow>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Registration</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Client Buyer</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Purchase Cost</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Selling Price</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Profit Realized</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Delivered</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Invoice</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Vehicle</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Registration</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Prev. Owner</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Client Buyer</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Cost</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Sold For</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Profit</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Date</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Invoice</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -345,56 +345,56 @@ export function SalesView({
                         className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors"
                       >
                         {/* 1. Vehicle Name */}
-                        <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3.5 max-w-[200px]">
-                          <div className="truncate font-semibold text-sm" title={sale.vehicle?.vehicle_name || "Vehicle"}>
+                        <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3 px-2.5 max-w-[140px]">
+                          <div className="truncate font-semibold text-xs xl:text-sm" title={sale.vehicle?.vehicle_name || "Vehicle"}>
                             {sale.vehicle?.vehicle_name || "Vehicle"}
                           </div>
                         </TableCell>
 
                         {/* 2. Registration Number (monospace badge) */}
-                        <TableCell className="py-3.5 whitespace-nowrap">
-                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap inline-block">
+                        <TableCell className="py-3 px-2.5 whitespace-nowrap">
+                          <span className="font-mono text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap inline-block">
                             {sale.vehicle?.registration_number || "-"}
                           </span>
                         </TableCell>
 
                         {/* 3. Previous Owner's Name */}
-                        <TableCell className="text-slate-600 dark:text-slate-400 text-xs py-3.5">
-                          <div className="flex items-center gap-1.5">
+                        <TableCell className="text-slate-600 dark:text-slate-400 text-xs py-3 px-2.5">
+                          <div className="flex items-center gap-1">
                             <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                            <span className="truncate max-w-[130px] font-medium text-slate-700 dark:text-slate-300" title={sale.vehicle?.owner_name || "-"}>
+                            <span className="truncate max-w-[100px] font-medium text-slate-700 dark:text-slate-300" title={sale.vehicle?.owner_name || "-"}>
                               {sale.vehicle?.owner_name || "-"}
                             </span>
                           </div>
                         </TableCell>
 
                         {/* 4. Buyer Name */}
-                        <TableCell className="text-slate-900 dark:text-slate-50 font-medium text-xs py-3.5">
+                        <TableCell className="text-slate-900 dark:text-slate-50 font-medium text-xs py-3 px-2.5">
                           <div className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
-                            <span className="truncate max-w-[130px] font-semibold text-slate-900 dark:text-slate-50" title={sale.buyer_name}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>
+                            <span className="truncate max-w-[105px] font-semibold text-slate-900 dark:text-slate-50" title={sale.buyer_name}>
                               {sale.buyer_name}
                             </span>
                           </div>
                         </TableCell>
 
                         {/* 5. Purchase Price (₹ INR formatted) */}
-                        <TableCell className="text-right text-slate-500 dark:text-slate-400 text-xs py-3.5">
+                        <TableCell className="text-right text-slate-500 dark:text-slate-400 text-xs py-3 px-2.5 whitespace-nowrap tabular-nums">
                           {formatCurrency(purchase)}
                         </TableCell>
 
                         {/* 6. Selling Price (₹ INR formatted) */}
-                        <TableCell className="text-right font-bold text-[#0F172A] dark:text-slate-50 text-sm py-3.5">
+                        <TableCell className="text-right font-bold text-[#0F172A] dark:text-slate-50 text-xs xl:text-sm py-3 px-2.5 whitespace-nowrap tabular-nums">
                           {formatCurrency(selling)}
                         </TableCell>
 
                         {/* 7. Profit (₹ INR formatted with green positive indicator) */}
-                        <TableCell className="text-right py-3.5">
+                        <TableCell className="text-right py-3 px-2.5 whitespace-nowrap tabular-nums">
                           <span
-                            className={`inline-flex items-center gap-1 font-bold text-xs px-2.5 py-0.5 rounded-full ${
+                            className={`inline-flex items-center gap-1 font-bold text-[11px] px-2 py-0.5 rounded-full ${
                               isProfitPositive
-                                ? "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 border border-emerald-200/60"
-                                : "bg-rose-50 text-rose-700 border border-rose-200/60"
+                                ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60"
+                                : "bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border border-rose-200/60 dark:border-rose-800/60"
                             }`}
                           >
                             {isProfitPositive ? "+" : ""}
@@ -461,7 +461,7 @@ export function SalesView({
                   </div>
 
                   {/* Parties: Buyer & Previous Owner */}
-                  <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 text-xs">
+                  <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs">
                     <div>
                       <span className="text-slate-400 text-[11px] block">Buyer</span>
                       <span className="font-semibold text-slate-900 dark:text-slate-50 truncate block mt-0.5">
@@ -477,7 +477,7 @@ export function SalesView({
                   </div>
 
                   {/* Financials: Purchase vs Selling Price & Profit */}
-                  <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-slate-100 text-xs items-center bg-slate-50/80 -mx-4 px-4 py-2.5">
+                  <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs items-center bg-slate-50/80 dark:bg-slate-800/70 -mx-4 px-4 py-2.5">
                     <div>
                       <span className="text-slate-400 text-[10px] block font-medium">Cost</span>
                       <span className="font-medium text-slate-600 dark:text-slate-400 block mt-0.5">
@@ -494,7 +494,7 @@ export function SalesView({
                       <span className="text-slate-400 text-[10px] block font-medium">Profit</span>
                       <span
                         className={`font-bold text-xs inline-block mt-0.5 ${
-                          isProfitPositive ? "text-emerald-700" : "text-rose-700"
+                          isProfitPositive ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700"
                         }`}
                       >
                         {isProfitPositive ? "+" : ""}

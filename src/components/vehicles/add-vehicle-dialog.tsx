@@ -149,7 +149,7 @@ export function AddVehicleDialog({
         <DialogTrigger asChild>{trigger}</DialogTrigger>
       ) : (
         <DialogTrigger asChild>
-          <Button className="gap-2 bg-[#0F172A] hover:bg-[#1E293B] shadow-sm">
+          <Button className="gap-2 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 shadow-sm">
             <Plus className="w-4 h-4" />
             <span>Add Vehicle</span>
           </Button>
@@ -160,7 +160,7 @@ export function AddVehicleDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader className="space-y-2">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-[#1E3A8A] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-[#1E3A8A] dark:text-blue-400 flex items-center justify-center">
                 <Car className="w-4 h-4" />
               </div>
               <DialogTitle className="text-xl font-bold text-[#0F172A] dark:text-slate-50">
@@ -182,8 +182,8 @@ export function AddVehicleDialog({
 
           {/* Success Alert */}
           {successMessage && (
-            <div className="my-4 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="my-4 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <div className="font-medium">{successMessage}</div>
             </div>
           )}
@@ -260,7 +260,7 @@ export function AddVehicleDialog({
                     Purchase Price (₹) <span className="text-red-500">*</span>
                   </Label>
                   {formattedPreview && (
-                    <span className="text-[11px] font-semibold text-emerald-700">
+                    <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                       {formattedPreview}
                     </span>
                   )}
@@ -287,7 +287,7 @@ export function AddVehicleDialog({
             {/* Status Indicator */}
             <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-[#E2E8F0] dark:border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
-                <Shield className="w-3.5 h-3.5 text-[#1E3A8A]" />
+                <Shield className="w-3.5 h-3.5 text-[#1E3A8A] dark:text-blue-400" />
                 <span className="font-medium">Initial Fleet Status</span>
               </div>
               <Badge variant="available" className="text-[11px] px-2 py-0.5">
@@ -309,7 +309,7 @@ export function AddVehicleDialog({
             <Button
               type="submit"
               disabled={loading}
-              className="text-xs h-9 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 active:scale-[0.98]"
+              className="text-xs h-9 rounded-xl bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white gap-2 active:scale-[0.98]"
             >
               {loading ? (
                 <>
