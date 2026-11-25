@@ -21,6 +21,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CsvExportControl } from "@/components/ui/csv-export-control";
+import { downloadCsv, isOnOrBeforeDate } from "@/lib/csv";
 import { ComparisonChart } from "./comparison-chart";
 import {
   LifetimeAnalyticsResult,
@@ -90,6 +92,39 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
   const yearTotalSales = yearlyComparison.reduce((s, p) => s + p.sales, 0);
   const yearTotalProfit = yearlyComparison.reduce((s, p) => s + p.profit, 0);
 
+  const handleExportCsv = (tillDate: string) => {
+    const ledgerRows = monthly.salesList
+      .filter((item) => isOnOrBeforeDate(item.sale_date, tillDate))
+      .map((item) => [
+        item.vehicle_name,
+        item.registration_number,
+        item.buyer_name,
+        formatDate(item.sale_date),
+        Number(item.purchase_price || 0),
+        Number(item.sales_value || 0),
+        Number(item.profit || 0),
+      ]);
+
+    const rows: Array<Array<unknown>> = [
+      ["LIFETIME SUMMARY", "", "", "", "", "", ""],
+      ["Total Purchases (INR)", lifetime.totalPurchaseValue, "", "", "", "", ""],
+      ["Total Sales Value (INR)", lifetime.totalSalesValue, "", "", "", "", ""],
+      ["Total Gross Profit (INR)", lifetime.totalProfit, "", "", "", "", ""],
+      ["Vehicles Purchased", lifetime.vehiclesPurchased, "", "", "", "", ""],
+      ["Vehicles Sold", lifetime.vehiclesSold, "", "", "", "", ""],
+      ["", "", "", "", "", "", ""],
+      [`MONTHLY LEDGER (${MONTH_NAMES[selectedMonth - 1]} ${selectedYear} till ${tillDate})`, "", "", "", "", "", ""],
+      ["Vehicle Name", "Registration Number", "Buyer", "Sale Date", "Purchase Price (INR)", "Sales Value (INR)", "Profit (INR)"],
+      ...ledgerRows,
+    ];
+
+    downloadCsv(
+      `r35-analytics-till-${tillDate}.csv`,
+      ["Metric / Vehicle", "Value / Registration", "Buyer", "Sale Date", "Purchase Price (INR)", "Sales Value (INR)", "Profit (INR)"],
+      rows
+    );
+  };
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Page Title & Navigation Header */}
@@ -108,19 +143,22 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
-            <Link href="/sales">
-              <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>Sales Ledger</span>
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
-            <Link href="/invoices">
-              <FileText className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-              <span>Invoices</span>
-            </Link>
-          </Button>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
+          <CsvExportControl onExport={handleExportCsv} />
+          <div className="flex items-center gap-2">
+            <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
+              <Link href="/sales">
+                <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>Sales Ledger</span>
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
+              <Link href="/invoices">
+                <FileText className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                <span>Invoices</span>
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
 

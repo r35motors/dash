@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
+import { CsvExportControl } from "@/components/ui/csv-export-control";
+import { downloadCsv, isOnOrBeforeDate } from "@/lib/csv";
 import {
   Table,
   TableBody,
@@ -72,6 +74,25 @@ export function VehiclesView({
     }
     setVehicles((prev) => prev.filter((v) => v.id !== deleteTarget.id));
     router.refresh();
+  };
+
+  const handleExportCsv = (tillDate: string) => {
+    const rows = filteredVehicles
+      .filter((v) => isOnOrBeforeDate(v.created_at, tillDate))
+      .map((v) => [
+        v.vehicle_name,
+        v.registration_number,
+        v.owner_name,
+        Number(v.purchase_price || 0),
+        v.status,
+        formatDate(v.created_at),
+      ]);
+
+    downloadCsv(
+      `r35-vehicles-till-${tillDate}.csv`,
+      ["Vehicle Name", "Registration Number", "Previous Owner", "Purchase Price (INR)", "Status", "Added Date"],
+      rows
+    );
   };
 
   React.useEffect(() => {
@@ -236,24 +257,27 @@ export function VehiclesView({
         </div>
       </div>
 
-      {/* Count Indicator & Status Banner */}
-      <div className="flex items-center justify-between px-1">
-        <div className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>{getCountText()}</span>
+      {/* Count Indicator & Export CSV Row */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+        <div className="flex items-center gap-3">
+          <div className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>{getCountText()}</span>
+          </div>
+          {searchQuery && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSearchQuery("")}
+              className="h-6 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 gap-1 px-2"
+            >
+              <X className="w-3 h-3" />
+              <span>Clear</span>
+            </Button>
+          )}
         </div>
 
-        {searchQuery && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setSearchQuery("")}
-            className="h-6 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 gap-1 px-2"
-          >
-            <X className="w-3 h-3" />
-            <span>Clear search filter</span>
-          </Button>
-        )}
+        <CsvExportControl onExport={handleExportCsv} />
       </div>
 
       {/* Empty State */}

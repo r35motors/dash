@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
+import { CsvExportControl } from "@/components/ui/csv-export-control";
+import { downloadCsv, isOnOrBeforeDate } from "@/lib/csv";
 import {
   Table,
   TableBody,
@@ -329,6 +331,43 @@ export function InvoicesView({
     });
   }, [invoices, searchQuery]);
 
+  const handleExportCsv = (tillDate: string) => {
+    const rows = filteredInvoices
+      .filter((inv) => isOnOrBeforeDate(inv.invoice_date, tillDate))
+      .map((inv) => {
+        const snap = inv.invoice_snapshot;
+        const buyerName =
+          snap?.buyer?.name ||
+          snap?.buyer_name ||
+          inv.sale?.buyer_name ||
+          "Valued Buyer";
+        const vehicleName =
+          snap?.vehicle?.vehicle_name ||
+          snap?.vehicle_name ||
+          inv.vehicle?.vehicle_name ||
+          "Vehicle";
+        const regNumber =
+          snap?.vehicle?.registration_number ||
+          snap?.registration_number ||
+          inv.vehicle?.registration_number ||
+          "-";
+        return [
+          inv.invoice_number,
+          formatDate(inv.invoice_date),
+          buyerName,
+          vehicleName,
+          regNumber,
+          Number(inv.invoice_total || 0),
+        ];
+      });
+
+    downloadCsv(
+      `r35-invoices-till-${tillDate}.csv`,
+      ["Invoice Number", "Issue Date", "Buyer Name", "Vehicle Name", "Registration Number", "Total Amount (INR)"],
+      rows
+    );
+  };
+
   // Metrics
   const totalInvoicedAmount = invoices.reduce(
     (acc, inv) => acc + (parseFloat(String(inv.invoice_total)) || 0),
@@ -349,10 +388,11 @@ export function InvoicesView({
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 w-full md:w-auto">
+          <CsvExportControl onExport={handleExportCsv} />
           <Button
             onClick={() => setIsCreateOpen(true)}
-            className="gap-2 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs font-semibold cursor-pointer rounded-xl h-9.5 px-4 active:scale-95"
+            className="w-full sm:w-auto gap-2 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs font-semibold cursor-pointer rounded-xl min-h-[44px] sm:min-h-0 sm:h-9.5 px-4 active:scale-95"
           >
             <Plus className="w-4 h-4" />
             <span>Generate New Invoice</span>

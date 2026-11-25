@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
+import { CsvExportControl } from "@/components/ui/csv-export-control";
+import { downloadCsv, isOnOrBeforeDate } from "@/lib/csv";
 import {
   Table,
   TableBody,
@@ -164,6 +166,43 @@ export function SalesView({
       ? ((totalRealizedMargin / totalAcquisitionCost) * 100).toFixed(1)
       : "0.0";
 
+  const handleExportCsv = (tillDate: string) => {
+    const rows = filteredSales
+      .filter((sale) => isOnOrBeforeDate(sale.sale_date, tillDate))
+      .map((sale) => {
+        const purchase =
+          parseFloat(String(sale.vehicle?.purchase_price || "0")) || 0;
+        const selling = parseFloat(String(sale.selling_price)) || 0;
+        const profit =
+          sale.profit !== undefined ? sale.profit : selling - purchase;
+        return [
+          sale.vehicle?.vehicle_name || "Vehicle",
+          sale.vehicle?.registration_number || "-",
+          sale.vehicle?.owner_name || "-",
+          sale.buyer_name,
+          formatDate(sale.sale_date),
+          purchase,
+          selling,
+          profit,
+        ];
+      });
+
+    downloadCsv(
+      `r35-sales-till-${tillDate}.csv`,
+      [
+        "Vehicle Name",
+        "Registration Number",
+        "Previous Owner",
+        "Buyer Name",
+        "Sale Date",
+        "Purchase Cost (INR)",
+        "Selling Price (INR)",
+        "Profit (INR)",
+      ],
+      rows
+    );
+  };
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Top Header & Record New Sale Button */}
@@ -178,7 +217,8 @@ export function SalesView({
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 w-full md:w-auto">
+          <CsvExportControl onExport={handleExportCsv} />
           <AddSaleDialog
             open={isAddOpen}
             onOpenChange={setIsAddOpen}
