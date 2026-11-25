@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { dealershipDb } from "@/lib/db";
 import React from "react";
 import { pdf } from "@react-pdf/renderer";
@@ -62,5 +63,35 @@ export async function GET(request: Request, { params }: RouteParams) {
   } catch (err: any) {
     console.error("[API] Failed to get invoice:", err);
     return NextResponse.json({ error: err.message || "Internal server error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(_request: Request, { params }: RouteParams) {
+  try {
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json({ error: "Invoice ID is required" }, { status: 400 });
+    }
+
+    const deleted = await dealershipDb.invoices.delete(id);
+    if (!deleted) {
+      return NextResponse.json({ error: "Invalid invoice ID" }, { status: 400 });
+    }
+
+    try {
+      revalidatePath("/");
+      revalidatePath("/invoices");
+      revalidatePath("/analytics");
+    } catch {
+      // Ignore revalidatePath failures outside request context
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (err: any) {
+    console.error("[API] Failed to delete invoice:", err);
+    return NextResponse.json(
+      { error: err.message || "Failed to delete invoice" },
+      { status: 500 }
+    );
   }
 }

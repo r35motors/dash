@@ -2,10 +2,12 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
 import {
   Table,
   TableBody,
@@ -24,6 +26,7 @@ import {
   Sparkles,
   ArrowRight,
   Plus,
+  Trash2,
 } from "lucide-react";
 import { AddVehicleDialog } from "./add-vehicle-dialog";
 
@@ -51,10 +54,25 @@ export function VehiclesView({
   initialSearch = "",
   initialOpenAdd = false,
 }: VehiclesViewProps) {
+  const router = useRouter();
   const [vehicles, setVehicles] = React.useState<VehicleRecord[]>(initialVehicles);
   const [statusTab, setStatusTab] = React.useState<string>(initialStatus);
   const [searchQuery, setSearchQuery] = React.useState<string>(initialSearch);
   const [isAddOpen, setIsAddOpen] = React.useState(Boolean(initialOpenAdd));
+  const [deleteTarget, setDeleteTarget] = React.useState<VehicleRecord | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const res = await fetch(`/api/vehicles/${deleteTarget.id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to delete vehicle.");
+    }
+    setVehicles((prev) => prev.filter((v) => v.id !== deleteTarget.id));
+    router.refresh();
+  };
 
   React.useEffect(() => {
     if (initialOpenAdd) {
@@ -324,23 +342,36 @@ export function VehiclesView({
                             {vehicle.status}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-right py-3.5">
-                          {isAvailable ? (
+                        <TableCell className="text-right py-3.5 whitespace-nowrap">
+                          <div className="flex items-center justify-end gap-1.5">
+                            {isAvailable ? (
+                              <Button
+                                asChild
+                                size="sm"
+                                className="h-8 rounded-xl px-3.5 text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
+                              >
+                                <Link href={`/sales?vehicleId=${vehicle.id}`} prefetch={false}>
+                                  <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
+                                  <span>Sell vehicle</span>
+                                </Link>
+                              </Button>
+                            ) : (
+                              <span className="text-xs text-slate-400 font-medium px-2 py-1">
+                                Delivered
+                              </span>
+                            )}
                             <Button
-                              asChild
+                              type="button"
+                              variant="outline"
                               size="sm"
-                              className="h-8 rounded-xl px-3.5 text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
+                              onClick={() => setDeleteTarget(vehicle)}
+                              aria-label={`Delete ${vehicle.vehicle_name}`}
+                              title="Delete vehicle"
+                              className="h-8 w-8 p-0 rounded-xl border-slate-200 dark:border-slate-800 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-800/60 active:scale-95"
                             >
-                              <Link href={`/sales?vehicleId=${vehicle.id}`}>
-                                <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
-                                <span>Sell vehicle</span>
-                              </Link>
+                              <Trash2 className="w-3.5 h-3.5" />
                             </Button>
-                          ) : (
-                            <span className="text-xs text-slate-400 font-medium px-2 py-1">
-                              Delivered
-                            </span>
-                          )}
+                          </div>
                         </TableCell>
                       </TableRow>
                     );
@@ -390,23 +421,32 @@ export function VehiclesView({
                     </div>
                   </div>
 
-                  {/* Quick Action Button */}
-                  <div className="pt-2">
+                  {/* Quick Action Buttons */}
+                  <div className="pt-2 flex items-center gap-2">
                     {isAvailable ? (
                       <Button
                         asChild
-                        className="w-full h-8.5 rounded-xl text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
+                        className="flex-1 min-h-[44px] sm:min-h-0 rounded-xl text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
                       >
-                        <Link href={`/sales?vehicleId=${vehicle.id}`}>
+                        <Link href={`/sales?vehicleId=${vehicle.id}`} prefetch={false}>
                           <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
                           <span>Sell this vehicle</span>
                         </Link>
                       </Button>
                     ) : (
-                      <div className="w-full text-center py-1.5 text-xs text-slate-400 font-medium">
+                      <div className="flex-1 text-center py-2 text-xs text-slate-400 font-medium">
                         Vehicle delivered
                       </div>
                     )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setDeleteTarget(vehicle)}
+                      aria-label={`Delete ${vehicle.vehicle_name}`}
+                      className="min-h-[44px] min-w-[44px] px-3 rounded-xl border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 active:scale-95"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
               );
@@ -414,6 +454,21 @@ export function VehiclesView({
           </div>
         </>
       )}
+
+      <ConfirmDeleteDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        title="Delete Vehicle"
+        description="This will permanently remove this vehicle from inventory along with any linked sale or invoice records."
+        itemName={
+          deleteTarget
+            ? `${deleteTarget.vehicle_name} (${deleteTarget.registration_number})`
+            : undefined
+        }
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

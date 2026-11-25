@@ -177,9 +177,12 @@ export const dealershipDb = {
     },
 
     async delete(id: string) {
+      if (!isValidUuid(id)) return false;
       const db = getDb();
       await db.delete(schema.vehicles).where(eq(schema.vehicles.id, id));
       dbCache.invalidate("vehicles");
+      dbCache.invalidate("sales");
+      dbCache.invalidate("invoices");
       dbCache.invalidate("analytics");
       return true;
     },
@@ -367,9 +370,24 @@ export const dealershipDb = {
     async delete(id: string) {
       if (!isValidUuid(id)) return false;
       const db = getDb();
+      const existing = await db
+        .select({ vehicle_id: schema.sales.vehicle_id })
+        .from(schema.sales)
+        .where(eq(schema.sales.id, id))
+        .limit(1);
+
       await db.delete(schema.sales).where(eq(schema.sales.id, id));
+
+      if (existing[0]?.vehicle_id) {
+        await db
+          .update(schema.vehicles)
+          .set({ status: "Available", updated_at: new Date() })
+          .where(eq(schema.vehicles.id, existing[0].vehicle_id));
+      }
+
       dbCache.invalidate("sales");
       dbCache.invalidate("vehicles");
+      dbCache.invalidate("invoices");
       dbCache.invalidate("analytics");
       return true;
     },

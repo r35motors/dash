@@ -1,10 +1,12 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
 import {
   Table,
   TableBody,
@@ -29,6 +31,7 @@ import {
   CheckCircle2,
   TrendingUp,
   FileDown,
+  Trash2,
 } from "lucide-react";
 import { CreateInvoiceDialog } from "./create-invoice-dialog";
 import { InvoicePreviewDialog } from "./invoice-preview-dialog";
@@ -85,10 +88,25 @@ export function InvoicesView({
   preselectedSaleId,
   initialCreateOpen = false,
 }: InvoicesViewProps) {
+  const router = useRouter();
   const [invoices, setInvoices] = React.useState<InvoiceListItem[]>(initialInvoices);
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [isCreateOpen, setIsCreateOpen] = React.useState(Boolean(initialCreateOpen));
   const [currentNextNumber, setCurrentNextNumber] = React.useState<string>(nextInvoiceNumber || "");
+  const [deleteTarget, setDeleteTarget] = React.useState<InvoiceListItem | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const res = await fetch(`/api/invoices/${deleteTarget.id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to delete invoice.");
+    }
+    setInvoices((prev) => prev.filter((inv) => inv.id !== deleteTarget.id));
+    router.refresh();
+  };
 
   // Refresh latest auto-assigned sequence number
   const refreshNextNumber = React.useCallback(async () => {
@@ -533,6 +551,19 @@ export function InvoicesView({
                             <Printer className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                             <span>Print</span>
                           </Button>
+
+                          {/* Delete Invoice Action */}
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setDeleteTarget(inv)}
+                            aria-label={`Delete invoice ${inv.invoice_number}`}
+                            title="Delete invoice"
+                            className="h-7.5 w-7.5 p-0 border-slate-200 dark:border-slate-800 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-800/60 rounded-lg active:scale-95"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -627,23 +658,23 @@ export function InvoicesView({
                   </span>
                 </div>
 
-                {/* Action Buttons: 3 equal touch targets */}
-                <div className="grid grid-cols-3 gap-2 pt-1">
+                {/* Action Buttons: Preview, PDF, Print, Delete */}
+                <div className="grid grid-cols-4 gap-1.5 pt-1">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handlePreviewClick(inv)}
-                    className="h-9 text-xs px-2 gap-1.5 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium cursor-pointer rounded-xl active:scale-95"
                   >
                     <Eye className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-                    <span>Preview</span>
+                    <span>View</span>
                   </Button>
 
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleDownloadClick(inv)}
-                    className="h-9 text-xs px-2 gap-1.5 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 dark:bg-emerald-950/50 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 font-medium cursor-pointer rounded-xl active:scale-95"
                   >
                     <Download className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>PDF</span>
@@ -653,10 +684,22 @@ export function InvoicesView({
                     variant="outline"
                     size="sm"
                     onClick={() => handlePrintClick(inv)}
-                    className="h-9 text-xs px-2 gap-1.5 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium cursor-pointer rounded-xl active:scale-95"
                   >
                     <Printer className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                     <span>Print</span>
+                  </Button>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setDeleteTarget(inv)}
+                    aria-label={`Delete invoice ${inv.invoice_number}`}
+                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 font-medium cursor-pointer rounded-xl active:scale-95"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Del</span>
                   </Button>
                 </div>
               </div>
@@ -683,6 +726,21 @@ export function InvoicesView({
         open={isPreviewOpen}
         onOpenChange={setIsPreviewOpen}
         invoiceData={previewInvoice}
+      />
+
+      <ConfirmDeleteDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        title="Delete Invoice"
+        description="This will permanently delete this invoice and its itemized line items from your records."
+        itemName={
+          deleteTarget
+            ? `${deleteTarget.invoice_number} — ${formatCurrency(deleteTarget.invoice_total)}`
+            : undefined
+        }
+        onConfirm={handleConfirmDelete}
       />
     </div>
   );

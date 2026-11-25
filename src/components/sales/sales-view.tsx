@@ -2,10 +2,12 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
 import {
   Table,
   TableBody,
@@ -27,6 +29,7 @@ import {
   Calendar,
   Layers,
   ArrowRight,
+  Trash2,
 } from "lucide-react";
 import { AddSaleDialog, AvailableVehicleOption } from "./add-sale-dialog";
 
@@ -63,12 +66,33 @@ export function SalesView({
   initialSearch = "",
   initialOpenAdd = false,
 }: SalesViewProps) {
+  const router = useRouter();
   const [sales, setSales] = React.useState<SaleRecord[]>(initialSales);
   const [availableVehicles, setAvailableVehicles] = React.useState<AvailableVehicleOption[]>(
     initialAvailableVehicles
   );
   const [searchQuery, setSearchQuery] = React.useState<string>(initialSearch);
   const [isAddOpen, setIsAddOpen] = React.useState(Boolean(preselectedVehicleId || initialOpenAdd));
+  const [deleteTarget, setDeleteTarget] = React.useState<SaleRecord | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const res = await fetch(`/api/sales/${deleteTarget.id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to delete sale.");
+    }
+    setSales((prev) => prev.filter((s) => s.id !== deleteTarget.id));
+    if (deleteTarget.vehicle) {
+      setAvailableVehicles((prev) => [
+        { ...deleteTarget.vehicle!, status: "Available" },
+        ...prev,
+      ]);
+    }
+    router.refresh();
+  };
 
   // Sync state if initial props change
   React.useEffect(() => {
@@ -404,21 +428,35 @@ export function SalesView({
                           {formatDate(sale.sale_date)}
                         </TableCell>
 
-                        {/* Quick Action: Create Invoice */}
-                        <TableCell className="text-right py-3.5">
-                          <Button
-                            asChild
-                            size="sm"
-                            variant="outline"
-                            className="h-8 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
-                          >
-                            <Link
-                              href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
+                        {/* Quick Action: Create Invoice & Delete */}
+                        <TableCell className="text-right py-3 px-2 whitespace-nowrap">
+                          <div className="flex items-center justify-end gap-1">
+                            <Button
+                              asChild
+                              size="sm"
+                              variant="outline"
+                              className="h-7.5 rounded-xl text-[11px] font-semibold px-2.5 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1 active:scale-95"
                             >
-                              <Receipt className="w-3.5 h-3.5 text-blue-600" />
-                              <span>Invoice</span>
-                            </Link>
-                          </Button>
+                              <Link
+                                href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
+                                prefetch={false}
+                              >
+                                <Receipt className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                                <span>Invoice</span>
+                              </Link>
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setDeleteTarget(sale)}
+                              aria-label={`Delete sale for ${sale.buyer_name}`}
+                              title="Delete sale"
+                              className="h-7.5 w-7.5 p-0 rounded-xl border-slate-200 dark:border-slate-800 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:border-rose-200 dark:hover:border-rose-800/60 active:scale-95"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </Button>
+                          </div>
                         </TableCell>
                       </TableRow>
                     );
@@ -507,19 +545,31 @@ export function SalesView({
                       <span>{formatDate(sale.sale_date)}</span>
                     </div>
 
-                    <Button
-                      asChild
-                      size="sm"
-                      variant="outline"
-                      className="h-8 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
-                    >
-                      <Link
-                        href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
+                    <div className="flex items-center gap-2">
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="outline"
+                        className="h-9 min-h-[44px] sm:min-h-0 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
                       >
-                        <Receipt className="w-3.5 h-3.5 text-blue-600" />
-                        <span>Create Invoice</span>
-                      </Link>
-                    </Button>
+                        <Link
+                          href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
+                          prefetch={false}
+                        >
+                          <Receipt className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                          <span>Create Invoice</span>
+                        </Link>
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setDeleteTarget(sale)}
+                        aria-label={`Delete sale for ${sale.buyer_name}`}
+                        className="min-h-[44px] min-w-[44px] px-3 rounded-xl border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 active:scale-95"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               );
@@ -527,6 +577,21 @@ export function SalesView({
           </div>
         </>
       )}
+
+      <ConfirmDeleteDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+        title="Delete Sale Record"
+        description="This will delete the sale record and return the vehicle back to Available inventory."
+        itemName={
+          deleteTarget
+            ? `${deleteTarget.vehicle?.vehicle_name || "Vehicle"} — Buyer: ${deleteTarget.buyer_name}`
+            : undefined
+        }
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }
