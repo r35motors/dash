@@ -117,23 +117,23 @@ export function VehiclesView({
     <div className="space-y-6">
       {/* Top Controls: Filter Tabs, Real-Time Search, Add Vehicle Button */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-        {/* Fleet Status Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+        {/* Apple HIG Segmented Control Filter Tabs */}
+        <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 overflow-x-auto select-none">
           <button
             type="button"
             onClick={() => setStatusTab("Available")}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "available"
-                ? "bg-[#0F172A] text-white border-[#0F172A] shadow-xs"
-                : "bg-white text-slate-600 border-[#E2E8F0] hover:bg-slate-50"
+                ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
             }`}
           >
             <span>Available</span>
             <span
-              className={`text-[11px] px-1.5 py-0.2 rounded-full font-bold ${
+              className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 statusTab.toLowerCase() === "available"
-                  ? "bg-white/20 text-white"
-                  : "bg-emerald-100 text-emerald-800"
+                  ? "bg-emerald-100 text-emerald-800"
+                  : "bg-slate-200 text-slate-700"
               }`}
             >
               {availableCount}
@@ -143,18 +143,18 @@ export function VehiclesView({
           <button
             type="button"
             onClick={() => setStatusTab("all")}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab === "all"
-                ? "bg-[#0F172A] text-white border-[#0F172A] shadow-xs"
-                : "bg-white text-slate-600 border-[#E2E8F0] hover:bg-slate-50"
+                ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
             }`}
           >
             <span>All Fleet</span>
             <span
-              className={`text-[11px] px-1.5 py-0.2 rounded-full ${
+              className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab === "all"
-                  ? "bg-white/20 text-white"
-                  : "bg-slate-100 text-slate-600"
+                  ? "bg-slate-900 text-white"
+                  : "bg-slate-200 text-slate-700"
               }`}
             >
               {totalCount}
@@ -164,18 +164,18 @@ export function VehiclesView({
           <button
             type="button"
             onClick={() => setStatusTab("Sold")}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "sold"
-                ? "bg-[#0F172A] text-white border-[#0F172A] shadow-xs"
-                : "bg-white text-slate-600 border-[#E2E8F0] hover:bg-slate-50"
+                ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
             }`}
           >
             <span>Sold</span>
             <span
-              className={`text-[11px] px-1.5 py-0.2 rounded-full ${
+              className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab.toLowerCase() === "sold"
-                  ? "bg-white/20 text-white"
-                  : "bg-slate-100 text-slate-600"
+                  ? "bg-slate-200 text-slate-800"
+                  : "bg-slate-200 text-slate-700"
               }`}
             >
               {soldCount}
@@ -184,16 +184,16 @@ export function VehiclesView({
         </div>
 
         {/* Real-time Search and Add Action */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          {/* Real-Time Search Box */}
+        <div className="flex items-center gap-2.5 w-full md:w-auto">
+          {/* Real-Time Search Box with Inset Lens */}
           <div className="relative flex-1 md:w-80">
             <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search fleet or reg..."
-              className="w-full pl-9 pr-8 py-1.5 rounded-lg border border-[#E2E8F0] text-xs text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F172A] bg-white transition-all placeholder:text-slate-400"
+              placeholder="Search fleet or registration..."
+              className="w-full pl-9 pr-8 py-2 rounded-xl border border-slate-200 bg-slate-50/60 text-xs text-[#0F172A] focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400"
             />
             {/* Clear Search Button */}
             {searchQuery && (
@@ -282,73 +282,71 @@ export function VehiclesView({
         <>
           {/* Desktop Table View (Hidden on mobile) */}
           <div className="hidden md:block">
-            <Card className="border border-[#E2E8F0] shadow-xs overflow-hidden">
-              <CardContent className="p-0">
-                <Table>
-                  <TableHeader className="bg-slate-50/75">
-                    <TableRow>
-                      <TableHead className="font-semibold text-slate-700">Vehicle Name</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Registration</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Previous Owner</TableHead>
-                      <TableHead className="text-right font-semibold text-slate-700">Purchase Price</TableHead>
-                      <TableHead className="font-semibold text-slate-700">Status</TableHead>
-                      <TableHead className="text-right font-semibold text-slate-700">Quick Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredVehicles.map((vehicle) => {
-                      const isAvailable = vehicle.status === "Available";
-                      return (
-                        <TableRow key={vehicle.id} className="hover:bg-slate-50/50 transition-colors">
-                          <TableCell className="font-semibold text-[#0F172A]">
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">{vehicle.vehicle_name}</span>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-800 font-semibold border border-slate-200">
-                              {vehicle.registration_number}
+            <div className="rounded-2xl border border-slate-200/80 bg-white shadow-premium overflow-hidden">
+              <Table>
+                <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
+                  <TableRow>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Vehicle Details</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Registration</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Previous Owner</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Purchase Price</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Status</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Quick Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredVehicles.map((vehicle) => {
+                    const isAvailable = vehicle.status === "Available";
+                    return (
+                      <TableRow key={vehicle.id} className="hover:bg-slate-50/80 transition-colors">
+                        <TableCell className="font-semibold text-[#0F172A] py-3.5">
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-sm">{vehicle.vehicle_name}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="py-3.5">
+                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                            {vehicle.registration_number}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-slate-600 text-xs py-3.5">
+                          <div className="flex items-center gap-1.5">
+                            <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <span className="font-medium text-slate-700">{vehicle.owner_name}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right font-bold text-[#0F172A] text-sm py-3.5">
+                          {formatCurrency(vehicle.purchase_price)}
+                        </TableCell>
+                        <TableCell className="py-3.5">
+                          <Badge variant={isAvailable ? "available" : "sold"}>
+                            {vehicle.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right py-3.5">
+                          {isAvailable ? (
+                            <Button
+                              asChild
+                              size="sm"
+                              className="h-8 rounded-xl px-3.5 text-xs font-semibold bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs gap-1.5 active:scale-95"
+                            >
+                              <Link href={`/sales?vehicleId=${vehicle.id}`}>
+                                <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
+                                <span>Sell vehicle</span>
+                              </Link>
+                            </Button>
+                          ) : (
+                            <span className="text-xs text-slate-400 font-medium px-2 py-1">
+                              Delivered
                             </span>
-                          </TableCell>
-                          <TableCell className="text-slate-600 text-xs">
-                            <div className="flex items-center gap-1.5">
-                              <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                              <span>{vehicle.owner_name}</span>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-right font-bold text-[#0F172A] text-sm">
-                            {formatCurrency(vehicle.purchase_price)}
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant={isAvailable ? "available" : "sold"}>
-                              {vehicle.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {isAvailable ? (
-                              <Button
-                                asChild
-                                size="sm"
-                                className="h-8 text-xs font-semibold bg-[#1E3A8A] hover:bg-[#1D4ED8] text-white shadow-xs gap-1.5"
-                              >
-                                <Link href={`/sales?vehicleId=${vehicle.id}`}>
-                                  <BadgeDollarSign className="w-3.5 h-3.5" />
-                                  <span>Sell this vehicle</span>
-                                </Link>
-                              </Button>
-                            ) : (
-                              <span className="text-xs text-slate-400 font-medium px-2 py-1">
-                                Already Sold
-                              </span>
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
           </div>
 
           {/* Mobile Cards View (Visible on mobile, hidden on md+) */}
@@ -356,62 +354,60 @@ export function VehiclesView({
             {filteredVehicles.map((vehicle) => {
               const isAvailable = vehicle.status === "Available";
               return (
-                <Card
+                <div
                   key={vehicle.id}
-                  className="border border-[#E2E8F0] shadow-xs hover:border-slate-300 transition-all overflow-hidden"
+                  className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-premium hover:border-slate-300 transition-all space-y-3"
                 >
-                  <CardContent className="p-4 space-y-3">
-                    {/* Top Row: Vehicle Name & Status */}
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h4 className="font-bold text-sm text-[#0F172A] leading-snug">
-                          {vehicle.vehicle_name}
-                        </h4>
-                        <span className="inline-block mt-1 font-mono text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-800 font-semibold border border-slate-200">
-                          {vehicle.registration_number}
-                        </span>
-                      </div>
-                      <Badge variant={isAvailable ? "available" : "sold"}>
-                        {vehicle.status}
-                      </Badge>
+                  {/* Top Row: Vehicle Name & Status */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h4 className="font-bold text-sm text-[#0F172A] leading-snug">
+                        {vehicle.vehicle_name}
+                      </h4>
+                      <span className="inline-block mt-1.5 font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                        {vehicle.registration_number}
+                      </span>
                     </div>
+                    <Badge variant={isAvailable ? "available" : "sold"}>
+                      {vehicle.status}
+                    </Badge>
+                  </div>
 
-                    {/* Meta Info: Owner & Purchase Price */}
-                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E2E8F0] text-xs">
-                      <div>
-                        <span className="text-slate-400 text-[11px] block">Previous Owner</span>
-                        <span className="font-medium text-slate-700 truncate block mt-0.5">
-                          {vehicle.owner_name}
-                        </span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-slate-400 text-[11px] block">Purchase Price</span>
-                        <span className="font-bold text-[#0F172A] text-sm block mt-0.5">
-                          {formatCurrency(vehicle.purchase_price)}
-                        </span>
-                      </div>
+                  {/* Meta Info: Owner & Purchase Price */}
+                  <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 text-xs">
+                    <div>
+                      <span className="text-slate-400 text-[11px] block">Previous Owner</span>
+                      <span className="font-medium text-slate-700 truncate block mt-0.5">
+                        {vehicle.owner_name}
+                      </span>
                     </div>
+                    <div className="text-right">
+                      <span className="text-slate-400 text-[11px] block">Purchase Price</span>
+                      <span className="font-bold text-[#0F172A] text-sm block mt-0.5">
+                        {formatCurrency(vehicle.purchase_price)}
+                      </span>
+                    </div>
+                  </div>
 
-                    {/* Quick Action Button */}
-                    <div className="pt-2">
-                      {isAvailable ? (
-                        <Button
-                          asChild
-                          className="w-full h-8 text-xs font-semibold bg-[#1E3A8A] hover:bg-[#1D4ED8] text-white shadow-xs gap-1.5"
-                        >
-                          <Link href={`/sales?vehicleId=${vehicle.id}`}>
-                            <BadgeDollarSign className="w-3.5 h-3.5" />
-                            <span>Sell this vehicle</span>
-                          </Link>
-                        </Button>
-                      ) : (
-                        <div className="w-full text-center py-1 text-xs text-slate-400 font-medium">
-                          Vehicle already sold
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                  {/* Quick Action Button */}
+                  <div className="pt-2">
+                    {isAvailable ? (
+                      <Button
+                        asChild
+                        className="w-full h-8.5 rounded-xl text-xs font-semibold bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs gap-1.5 active:scale-95"
+                      >
+                        <Link href={`/sales?vehicleId=${vehicle.id}`}>
+                          <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>Sell this vehicle</span>
+                        </Link>
+                      </Button>
+                    ) : (
+                      <div className="w-full text-center py-1.5 text-xs text-slate-400 font-medium">
+                        Vehicle delivered
+                      </div>
+                    )}
+                  </div>
+                </div>
               );
             })}
           </div>

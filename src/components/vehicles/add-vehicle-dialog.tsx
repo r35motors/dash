@@ -301,14 +301,14 @@ export function AddVehicleDialog({
               variant="outline"
               disabled={loading}
               onClick={() => handleOpenChange(false)}
-              className="text-xs h-9"
+              className="text-xs h-9 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 active:scale-[0.98]"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={loading}
-              className="text-xs h-9 bg-[#0F172A] hover:bg-[#1E293B] gap-2"
+              className="text-xs h-9 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 active:scale-[0.98]"
             >
               {loading ? (
                 <>

@@ -1,9 +1,8 @@
 export const dynamic = "force-dynamic";
 
-import { Suspense } from "react";
 import { dealershipDb } from "@/lib/db";
 import { SettingsForm } from "@/components/settings/settings-form";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Settings, Database } from "lucide-react";
 
 export default async function SettingsPage() {
@@ -12,53 +11,68 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Page Header */}
-      <div className="pb-4 border-b border-[#E2E8F0]">
-        <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] flex items-center gap-2">
-          <Settings className="w-6 h-6 text-[#1E3A8A]" />
-          System Settings
-        </h1>
-        <p className="text-sm text-slate-500 mt-1">
-          Configure dealership branding, invoice prefixes, and database connectivity.
+      <div className="pb-4 border-b border-slate-200/80">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xs">
+            <Settings className="w-4 h-4" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A]">
+            Dealership Settings
+          </h1>
+        </div>
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          Configure dealership branding, invoice prefixes, and verify database connectivity.
         </p>
       </div>
 
       {/* Database Connection Status Card */}
-      <Card>
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Database className="w-5 h-5 text-[#1E3A8A]" />
-              <CardTitle className="text-base font-bold text-[#0F172A]">
+      <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+              <Database className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-[#0F172A]">
                 Database Architecture Status
-              </CardTitle>
-            </div>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-200">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>Supabase PostgreSQL Active</span>
-            </div>
-          </div>
-          <CardDescription>
-            All application data is stored exclusively in Supabase PostgreSQL via Drizzle ORM.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3 pt-0">
-          <div className="p-3 bg-slate-50 rounded-lg text-xs space-y-2 border border-[#E2E8F0]">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-500">Database Driver:</span>
-              <span className="font-mono text-slate-800 font-semibold">
-                Drizzle ORM (postgres.js)
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-500">DDL Migration:</span>
-              <span className="font-mono text-slate-800">supabase-schema.sql</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-500">Seed Command:</span>
-              <span className="font-mono text-slate-800">npm run db:seed</span>
+              </h2>
+              <p className="text-xs text-slate-500">
+                All application data is stored in Supabase PostgreSQL via Drizzle ORM.
+              </p>
             </div>
           </div>
-        </CardContent>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Supabase Active</span>
+          </div>
+        </div>
+
+        <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              Database Driver
+            </div>
+            <div className="font-mono text-xs font-semibold text-slate-800 mt-0.5">
+              Drizzle (postgres.js)
+            </div>
+          </div>
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              DDL Schema
+            </div>
+            <div className="font-mono text-xs font-semibold text-slate-800 mt-0.5">
+              supabase-schema.sql
+            </div>
+          </div>
+          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              Location / Region
+            </div>
+            <div className="font-mono text-xs font-semibold text-slate-800 mt-0.5">
+              ap-south-1 (Mumbai)
+            </div>
+          </div>
+        </div>
       </Card>
 
       {/* Dealership Info Form */}

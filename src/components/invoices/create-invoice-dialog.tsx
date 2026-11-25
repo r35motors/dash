@@ -351,11 +351,11 @@ export function CreateInvoiceDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-3xl w-[95vw] max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-white">
+        <DialogContent className="max-w-3xl w-[95vw] max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-white rounded-2xl border border-slate-200/80 shadow-2xl">
           {/* Header */}
-          <div className="p-5 border-b border-slate-200 bg-slate-50/75 shrink-0">
+          <div className="p-5 border-b border-slate-200/80 bg-slate-50/70 shrink-0">
             <DialogTitle className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
-              <Receipt className="w-5 h-5 text-[#1E3A8A]" />
+              <Receipt className="w-5 h-5 text-slate-700" />
               <span>Create Official Tax Invoice</span>
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500 mt-1">
@@ -673,13 +673,13 @@ export function CreateInvoiceDialog({
           </div>
 
           {/* Modal Footer Controls */}
-          <div className="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+          <div className="p-3.5 sm:p-4 bg-slate-50/70 border-t border-slate-200/80 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => onOpenChange(false)}
-              className="text-xs w-full sm:w-auto h-9 cursor-pointer"
+              className="text-xs w-full sm:w-auto h-9 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 cursor-pointer active:scale-[0.98]"
             >
               Cancel
             </Button>
@@ -691,9 +691,9 @@ export function CreateInvoiceDialog({
                 size="sm"
                 onClick={() => setPreviewOpen(true)}
                 disabled={!selectedVehicleId || invoiceTotal <= 0}
-                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 border-slate-300 text-slate-800 hover:bg-slate-100 cursor-pointer"
+                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 rounded-xl border-slate-200/80 bg-white text-slate-700 hover:bg-slate-50 cursor-pointer active:scale-[0.98]"
               >
-                <Eye className="w-4 h-4 text-[#1E3A8A]" />
+                <Eye className="w-4 h-4 text-slate-600" />
                 <span>Preview PDF</span>
               </Button>
 
@@ -702,7 +702,7 @@ export function CreateInvoiceDialog({
                 size="sm"
                 onClick={handleSaveInvoice}
                 disabled={isSubmitting || !selectedVehicleId || invoiceTotal <= 0}
-                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 bg-[#1E3A8A] hover:bg-[#1E293B] text-white cursor-pointer"
+                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white cursor-pointer active:scale-[0.98]"
               >
                 {isSubmitting ? (
                   <span>Saving...</span>

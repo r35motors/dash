@@ -5,16 +5,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
-import {
-  Check,
   CheckCircle2,
   Loader2,
   Save,
@@ -25,6 +17,7 @@ import {
   Hash,
   MapPin,
   X,
+  FileText,
 } from "lucide-react";
 
 interface SettingsFormProps {
@@ -203,7 +196,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Success Notification Alert Banner */}
       {successMessage && (
-        <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start justify-between gap-3 shadow-xs animate-in fade-in">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-500/20 text-emerald-800 flex items-start justify-between gap-3 shadow-xs animate-in fade-in">
           <div className="flex items-center gap-2.5">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
             <div>
@@ -214,7 +207,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
           <button
             type="button"
             onClick={() => setSuccessMessage(null)}
-            className="text-emerald-500 hover:text-emerald-700 p-1"
+            className="text-emerald-500 hover:text-emerald-700 p-1 rounded-lg"
           >
             <X className="w-4 h-4" />
           </button>
@@ -223,7 +216,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
 
       {/* Error Notification Alert Banner */}
       {errorMessage && (
-        <div className="p-4 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 flex items-start justify-between gap-3 shadow-xs">
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-500/20 text-rose-800 flex items-start justify-between gap-3 shadow-xs">
           <div className="flex items-center gap-2.5">
             <X className="w-5 h-5 text-rose-600 shrink-0" />
             <p className="text-sm font-medium">{errorMessage}</p>
@@ -231,32 +224,35 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="text-rose-500 hover:text-rose-700 p-1"
+            className="text-rose-500 hover:text-rose-700 p-1 rounded-lg"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Dealership Profile Form with Only Exact Fields */}
-      <Card className="border-[#E2E8F0] shadow-xs">
-        <CardHeader className="border-b border-[#E2E8F0] pb-4">
-          <div className="flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-[#1E3A8A]" />
-            <CardTitle className="text-base font-bold text-[#0F172A]">
-              Dealership Profile & Invoice Configuration
-            </CardTitle>
+      {/* Section: Dealership Profile */}
+      <Card className="rounded-2xl border border-slate-200/80 bg-white shadow-premium overflow-hidden">
+        <div className="p-5 border-b border-slate-200/80">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+              <Building2 className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-base font-bold text-[#0F172A]">
+                Dealership Profile & Branding
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Information displayed across printed invoices, sales receipts, and system navigation.
+              </p>
+            </div>
           </div>
-          <CardDescription className="text-xs">
-            Section 8 Dealership Profile: These exact 6 fields brand and identify your business on all generated tax invoices, bill of sales, and headers.
-          </CardDescription>
-        </CardHeader>
+        </div>
 
-        <CardContent className="space-y-5 pt-5">
-          {/* Exact Field 1: Dealership name (business_name) */}
+        <div className="p-5 sm:p-6 space-y-6">
+          {/* Field 1: Dealership name (business_name) */}
           <div className="space-y-1.5">
             <Label htmlFor="business_name" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-              <Building2 className="w-3.5 h-3.5 text-slate-400" />
               <span>Dealership Name</span>
               <span className="text-rose-500">*</span>
             </Label>
@@ -272,8 +268,8 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             />
           </div>
 
-          {/* Exact Field 2: Dealership logo (logo_path - support URL or image upload/preset) */}
-          <div className="space-y-2 p-4 bg-slate-50/70 border border-[#E2E8F0] rounded-lg">
+          {/* Field 2: Dealership logo */}
+          <div className="space-y-2 p-4 bg-slate-50/70 border border-slate-200/80 rounded-2xl">
             <div className="flex items-center justify-between">
               <Label htmlFor="logo_path" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
                 <ImageIcon className="w-3.5 h-3.5 text-slate-400" />
@@ -282,9 +278,9 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               </Label>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center pt-1">
               {/* Live Logo Preview Box */}
-              <div className="w-20 h-20 rounded-lg border border-slate-200 bg-white flex items-center justify-center p-2 shrink-0 overflow-hidden shadow-2xs">
+              <div className="w-20 h-20 rounded-xl border border-slate-200/80 bg-white flex items-center justify-center p-2 shrink-0 overflow-hidden shadow-2xs">
                 {formData.logo_path ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -297,7 +293,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                   />
                 ) : (
                   <div className="text-center text-slate-400">
-                    <ImageIcon className="w-6 h-6 mx-auto mb-1 stroke-1" />
+                    <ImageIcon className="w-5 h-5 mx-auto mb-1 stroke-1 text-slate-400" />
                     <span className="text-[9px] uppercase font-bold tracking-wider">No Logo</span>
                   </div>
                 )}
@@ -312,11 +308,10 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                     setFormData({ ...formData, logo_path: e.target.value })
                   }
                   placeholder="https://... or /dealership-logo.svg or upload an image"
-                  className="text-xs bg-white"
+                  className="text-xs bg-white font-mono"
                 />
 
                 <div className="flex flex-wrap items-center gap-2">
-                  {/* File Upload Button */}
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -329,19 +324,18 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
-                    className="text-xs h-7 gap-1 border-slate-300 bg-white hover:bg-slate-50"
+                    className="text-xs h-7.5 gap-1.5 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 active:scale-[0.98]"
                   >
-                    <Upload className="w-3 h-3 text-[#1E3A8A]" />
+                    <Upload className="w-3 h-3 text-slate-600" />
                     <span>Upload Image</span>
                   </Button>
 
-                  {/* Preset Buttons */}
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => handlePresetLogo("/dealership-logo.svg")}
-                    className="text-xs h-7 border-slate-300 bg-white hover:bg-slate-50"
+                    className="text-xs h-7.5 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 active:scale-[0.98]"
                   >
                     Preset: SVG Crest
                   </Button>
@@ -350,7 +344,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => handlePresetLogo("/logo.png")}
-                    className="text-xs h-7 border-slate-300 bg-white hover:bg-slate-50"
+                    className="text-xs h-7.5 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 active:scale-[0.98]"
                   >
                     Preset: PNG Shield
                   </Button>
@@ -361,7 +355,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
                       variant="ghost"
                       size="sm"
                       onClick={() => setFormData((prev) => ({ ...prev, logo_path: "" }))}
-                      className="text-xs h-7 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                      className="text-xs h-7.5 text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-xl"
                     >
                       Clear
                     </Button>
@@ -371,7 +365,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             </div>
           </div>
 
-          {/* Exact Field 3: Address (address) */}
+          {/* Field 3: Address */}
           <div className="space-y-1.5">
             <Label htmlFor="address" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-slate-400" />
@@ -390,12 +384,12 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             />
           </div>
 
-          {/* Exact Fields 4 & 5: First Contact Number & Second Contact Number */}
+          {/* Fields 4 & 5: First Contact & Second Contact */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="contact_number_1" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
                 <Phone className="w-3.5 h-3.5 text-slate-400" />
-                <span>First Contact Number</span>
+                <span>Primary Contact Phone</span>
                 <span className="text-rose-500">*</span>
               </Label>
               <Input
@@ -413,7 +407,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             <div className="space-y-1.5">
               <Label htmlFor="contact_number_2" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
                 <Phone className="w-3.5 h-3.5 text-slate-400" />
-                <span>Second Contact Number</span>
+                <span>Secondary Contact Phone</span>
                 <span className="text-slate-400 font-normal">(Optional)</span>
               </Label>
               <Input
@@ -428,11 +422,11 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             </div>
           </div>
 
-          {/* Exact Field 6: Invoice prefix (invoice_prefix) */}
+          {/* Field 6: Invoice prefix */}
           <div className="space-y-1.5 max-w-sm">
             <Label htmlFor="invoice_prefix" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
               <Hash className="w-3.5 h-3.5 text-slate-400" />
-              <span>Invoice Prefix</span>
+              <span>Invoice Prefix Sequence</span>
               <span className="text-rose-500">*</span>
             </Label>
             <Input
@@ -449,20 +443,21 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               className="font-mono uppercase text-sm"
             />
             <p className="text-[11px] text-slate-500">
-              Generated invoices will format as: <span className="font-mono font-semibold text-slate-700">{formData.invoice_prefix || "INV"}-{currentYear}-0001</span>
+              Next invoice generated will be formatted as: <span className="font-mono font-semibold text-slate-900">{formData.invoice_prefix || "INV"}-{currentYear}-0001</span>
             </p>
           </div>
-        </CardContent>
+        </div>
 
-        <CardFooter className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3 border-t border-[#E2E8F0] pt-4">
+        {/* Footer with instant action */}
+        <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3 p-5 bg-slate-50/70 border-t border-slate-200/80">
           <span className="text-xs text-slate-400 text-center sm:text-left">
-            Changes persist to database and propagate to invoices instantly.
+            Changes persist directly to Supabase and update invoices across the app.
           </span>
 
           <Button
             type="submit"
             disabled={saving}
-            className="w-full sm:w-auto bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 shadow-xs cursor-pointer h-10 sm:h-9"
+            className="w-full sm:w-auto bg-[#0F172A] hover:bg-[#1E293B] text-white gap-2 shadow-xs cursor-pointer h-9.5 px-5 rounded-xl active:scale-[0.98] transition-all"
           >
             {saving ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -471,7 +466,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
             )}
             <span>Save Settings</span>
           </Button>
-        </CardFooter>
+        </div>
       </Card>
     </form>
   );

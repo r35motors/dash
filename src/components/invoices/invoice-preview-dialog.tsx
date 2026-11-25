@@ -127,12 +127,12 @@ export function InvoicePreviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[95dvh] sm:h-[92vh] max-h-[96dvh] sm:max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 rounded-xl">
+      <DialogContent className="w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[95dvh] sm:h-[92vh] max-h-[96dvh] sm:max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 rounded-2xl border border-slate-200/80 shadow-2xl">
         {/* Modal Header */}
-        <div className="p-3 sm:p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+        <div className="p-3.5 sm:p-4 bg-white border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
           <div className="pr-6 sm:pr-0">
-            <DialogTitle className="text-sm sm:text-lg font-bold text-[#14213D] flex items-center gap-1.5 sm:gap-2">
-              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#14213D] shrink-0" />
+            <DialogTitle className="text-sm sm:text-lg font-bold text-[#0F172A] flex items-center gap-1.5 sm:gap-2">
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 shrink-0" />
               <span className="truncate">Invoice Preview: {invoiceNumber}</span>
             </DialogTitle>
             <DialogDescription className="text-[11px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1 sm:line-clamp-none">
@@ -145,7 +145,7 @@ export function InvoicePreviewDialog({
               variant="outline"
               size="sm"
               onClick={handlePrint}
-              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 border-slate-300 hover:bg-slate-50 cursor-pointer"
+              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 cursor-pointer active:scale-[0.98]"
             >
               <Printer className="w-3.5 h-3.5 text-slate-700" />
               <span>Print PDF</span>
@@ -154,7 +154,7 @@ export function InvoicePreviewDialog({
             <Button
               size="sm"
               onClick={handleDownload}
-              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 bg-[#14213D] hover:bg-[#1E293B] text-white cursor-pointer"
+              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white cursor-pointer active:scale-[0.98]"
             >
               {isGenerating ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

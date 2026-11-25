@@ -4,6 +4,12 @@
   :root {
     --background: #FFFFFF;
     --foreground: #0F172A;
+    --surface: #F8FAFC;
+    --surface-elevated: #FFFFFF;
+    --border-subtle: rgba(0, 0, 0, 0.07);
+    --border-divider: rgba(0, 0, 0, 0.05);
+    
+    /* Apple HIG & SaaS Slate System Tokens */
     --navy-primary: #0F172A;
     --navy-secondary: #1E3A8A;
     --navy-dark: #0A0F1D;
@@ -18,48 +24,38 @@
   body {
     background-color: #FFFFFF;
     color: #0F172A;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1, "cv02" 1, "cv03" 1, "cv04" 1, "cv11" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.011em;
   }
 }
 
-/* Custom utility classes matching the design requirements */
-.bg-navy {
-  background-color: #0F172A;
+/* Subtle, natural elevation inspired by Apple & Untitled UI */
+.shadow-premium {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 4px 16px 0 rgba(0, 0, 0, 0.025);
 }
 
-.bg-navy-secondary {
-  background-color: #1E3A8A;
-}
-
-.text-navy {
-  color: #0F172A;
-}
-
-.text-navy-secondary {
-  color: #1E3A8A;
-}
-
-.border-dealership {
-  border-color: #E2E8F0;
+.shadow-card-hover {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 8px 24px 0 rgba(0, 0, 0, 0.04);
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8FAFC;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 3px;
+  background: #E2E8F0;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #CBD5E1;
 }
