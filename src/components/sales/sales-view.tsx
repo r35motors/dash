@@ -319,15 +319,15 @@ export function SalesView({
               <Table>
                 <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
                   <TableRow>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Vehicle Details</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Registration</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Previous Owner</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Client Buyer</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Purchase Cost</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Selling Price</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Profit Realized</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Delivered</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Invoice</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Registration</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Client Buyer</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Purchase Cost</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Selling Price</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Profit Realized</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Delivered</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Invoice</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -351,8 +351,8 @@ export function SalesView({
                         </TableCell>
 
                         {/* 2. Registration Number (monospace badge) */}
-                        <TableCell className="py-3.5">
-                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                        <TableCell className="py-3.5 whitespace-nowrap">
+                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
                             {sale.vehicle?.registration_number || "-"}
                           </span>
                         </TableCell>

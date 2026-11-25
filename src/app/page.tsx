@@ -164,8 +164,8 @@ export default async function DashboardPage() {
         {/* Card 4: Total Fleet Value */}
         <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-premium transition hover:border-slate-300">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider truncate">
-              Total Fleet Value
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              Fleet Value
             </span>
             <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0">
               <TrendingUp className="w-4 h-4" />
@@ -175,8 +175,8 @@ export default async function DashboardPage() {
             <div className="text-[17px] sm:text-2xl md:text-3xl font-bold tracking-tight text-[#0F172A] leading-tight">
               {formatCurrency(totalVehicleValue)}
             </div>
-            <div className="mt-2.5 flex items-center gap-1.5 text-xs text-slate-500 truncate">
-              <span>Combined acquisition value</span>
+            <div className="mt-2.5 flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500">
+              <span>Acquisition cost</span>
             </div>
           </div>
         </div>

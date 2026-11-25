@@ -24,6 +24,7 @@ export function formatDate(date: string | Date | null | undefined): string {
     day: "2-digit",
     month: "short",
     year: "numeric",
+    timeZone: "UTC",
   }).format(d);
 }
 

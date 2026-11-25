@@ -413,13 +413,13 @@ export function InvoicesView({
           <Table>
             <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
               <TableRow>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Invoice #</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Issue Date</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Client Buyer</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Vehicle Description</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Registration</TableHead>
-                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Total Amount</TableHead>
-                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Document Actions</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Invoice #</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Issue Date</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Client Buyer</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Vehicle Description</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Registration</TableHead>
+                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Total Amount</TableHead>
+                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Document Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -466,8 +466,8 @@ export function InvoicesView({
                   return (
                     <TableRow key={inv.id} className="hover:bg-slate-50/80 transition-colors">
                       {/* Invoice Number */}
-                      <TableCell className="font-mono font-bold text-[#1E3A8A] text-xs py-3.5">
-                        <span className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-800 border border-blue-200/60 font-semibold">
+                      <TableCell className="font-mono font-bold text-xs py-3.5 whitespace-nowrap">
+                        <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200/60 font-semibold whitespace-nowrap inline-block">
                           {inv.invoice_number}
                         </span>
                       </TableCell>
@@ -495,19 +495,19 @@ export function InvoicesView({
                       </TableCell>
 
                       {/* Registration Number */}
-                      <TableCell className="py-3.5">
-                        <span className="font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                      <TableCell className="py-3.5 whitespace-nowrap">
+                        <span className="font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
                           {regNumber}
                         </span>
                       </TableCell>
 
                       {/* Total Amount */}
-                      <TableCell className="text-right font-bold text-[#0F172A] text-sm py-3.5">
+                      <TableCell className="text-right font-bold text-[#0F172A] text-sm py-3.5 whitespace-nowrap">
                         {formatCurrency(inv.invoice_total)}
                       </TableCell>
 
                       {/* Actions: Preview, Download PDF, Print PDF */}
-                      <TableCell className="text-right py-3.5">
+                      <TableCell className="text-right py-3.5 whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
                           {/* Preview Action */}
                           <Button

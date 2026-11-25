@@ -286,12 +286,12 @@ export function VehiclesView({
               <Table>
                 <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
                   <TableRow>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Vehicle Details</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Registration</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Previous Owner</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Purchase Price</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Status</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5">Quick Actions</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Registration</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Purchase Price</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Status</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Quick Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -304,8 +304,8 @@ export function VehiclesView({
                             <span className="font-semibold text-sm">{vehicle.vehicle_name}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="py-3.5">
-                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                        <TableCell className="py-3.5 whitespace-nowrap">
+                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
                             {vehicle.registration_number}
                           </span>
                         </TableCell>
