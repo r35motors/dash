@@ -157,11 +157,11 @@ export function VehiclesView({
       {/* Top Controls: Filter Tabs, Real-Time Search, Add Vehicle Button */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Apple HIG Segmented Control Filter Tabs */}
-        <div className="inline-flex shrink-0 items-center gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 overflow-x-auto select-none">
+        <div className="grid grid-cols-3 w-full sm:w-auto sm:inline-flex shrink-0 items-center gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 select-none">
           <button
             type="button"
             onClick={() => setStatusTab("Available")}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
+            className={`min-h-[40px] sm:min-h-0 px-2 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "available"
                 ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
@@ -171,7 +171,7 @@ export function VehiclesView({
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 statusTab.toLowerCase() === "available"
-                  ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800"
+                  ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300"
                   : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
               }`}
             >
@@ -182,7 +182,7 @@ export function VehiclesView({
           <button
             type="button"
             onClick={() => setStatusTab("all")}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
+            className={`min-h-[40px] sm:min-h-0 px-2 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5 active:scale-95 ${
               statusTab === "all"
                 ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
@@ -192,7 +192,7 @@ export function VehiclesView({
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab === "all"
-                  ? "bg-slate-900 dark:bg-slate-800 text-white border border-transparent dark:border-slate-700"
+                  ? "bg-slate-900 dark:bg-slate-700 text-white border border-transparent dark:border-slate-600"
                   : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
               }`}
             >
@@ -203,7 +203,7 @@ export function VehiclesView({
           <button
             type="button"
             onClick={() => setStatusTab("Sold")}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
+            className={`min-h-[40px] sm:min-h-0 px-2 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "sold"
                 ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
@@ -223,7 +223,7 @@ export function VehiclesView({
         </div>
 
         {/* Real-time Search and Add Action */}
-        <div className="flex items-center gap-2.5 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full md:w-auto">
           {/* Real-Time Search Box with Inset Lens */}
           <div className="relative flex-1 md:w-80">
             <Search className="w-4 h-4 absolute left-3 top-3 sm:top-2.5 text-slate-400 pointer-events-none" />

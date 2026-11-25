@@ -203,7 +203,7 @@ export function AddSaleDialog({
         <DialogTrigger asChild>{trigger}</DialogTrigger>
       ) : (
         <DialogTrigger asChild>
-          <Button className="gap-2 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 shadow-sm">
+          <Button className="w-full sm:w-auto min-h-[44px] sm:min-h-0 sm:h-9.5 px-4 rounded-xl gap-2 bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-sm active:scale-95">
             <Plus className="w-4 h-4" />
             <span>Record New Sale</span>
           </Button>

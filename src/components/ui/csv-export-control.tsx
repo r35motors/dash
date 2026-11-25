@@ -26,8 +26,8 @@ export function CsvExportControl({
 
   return (
     <div className="flex items-center gap-2 w-full sm:w-auto">
-      <div className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 min-h-[44px] sm:min-h-0 sm:h-9.5 shadow-xs flex-1 sm:flex-initial">
-        <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap">
+      <div className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 min-h-[44px] sm:min-h-0 sm:h-9.5 shadow-xs flex-1 sm:flex-initial min-w-0">
+        <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap shrink-0">
           Till:
         </span>
         <input
@@ -35,7 +35,7 @@ export function CsvExportControl({
           aria-label="Export data till date"
           value={tillDate}
           onChange={(e) => setTillDate(e.target.value)}
-          className="bg-transparent text-xs font-medium text-[#0F172A] dark:text-slate-100 focus:outline-none cursor-pointer w-full sm:w-auto"
+          className="bg-transparent text-xs font-medium text-[#0F172A] dark:text-slate-100 focus:outline-none cursor-pointer w-full min-w-0 sm:w-auto"
         />
       </div>
 

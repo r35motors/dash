@@ -346,7 +346,7 @@ export function AppShell({ children }: AppShellProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 sm:p-6 md:p-8 bg-[#F8FAFC] dark:bg-[#020617] overflow-y-auto pb-24 md:pb-10 transition-colors duration-200">
+        <main className="flex-1 p-3.5 sm:p-6 md:p-8 bg-[#F8FAFC] dark:bg-[#020617] overflow-y-auto pb-24 md:pb-10 transition-colors duration-200">
           {children}
         </main>
 

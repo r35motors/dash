@@ -164,58 +164,56 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
 
       {/* Main Tabs: Lifetime Analytics & Monthly Analytics */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <TabsList className="inline-flex p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 h-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <TabsList className="grid grid-cols-2 w-full sm:w-auto sm:inline-flex p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 h-auto">
             <TabsTrigger
               value="lifetime"
-              className="px-4 py-1.5 text-xs font-semibold rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-900 data-[state=active]:text-[#0F172A] dark:data-[state=active]:text-slate-50 data-[state=active]:shadow-xs transition-all"
+              className="min-h-[40px] sm:min-h-0 px-4 py-1.5 text-xs font-semibold rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-900 data-[state=active]:text-[#0F172A] dark:data-[state=active]:text-slate-50 data-[state=active]:shadow-xs transition-all"
             >
               Lifetime Analytics
             </TabsTrigger>
             <TabsTrigger
               value="monthly"
-              className="px-4 py-1.5 text-xs font-semibold rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-900 data-[state=active]:text-[#0F172A] dark:data-[state=active]:text-slate-50 data-[state=active]:shadow-xs transition-all"
+              className="min-h-[40px] sm:min-h-0 px-4 py-1.5 text-xs font-semibold rounded-xl data-[state=active]:bg-white dark:data-[state=active]:bg-slate-900 data-[state=active]:text-[#0F172A] dark:data-[state=active]:text-slate-50 data-[state=active]:shadow-xs transition-all"
             >
               Monthly Analytics
             </TabsTrigger>
           </TabsList>
 
           {activeTab === "monthly" && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               {isLoadingMonthly && (
-                <span className="flex items-center gap-1 text-xs text-slate-400 font-medium">
-                  <RefreshCw className="w-3 h-3 animate-spin text-slate-600 dark:text-slate-400" /> Updating...
+                <span className="flex items-center gap-1 text-xs text-slate-400 font-medium shrink-0">
+                  <RefreshCw className="w-3 h-3 animate-spin text-slate-600 dark:text-slate-400" />
                 </span>
               )}
-              {/* Month Selector */}
-              <div className="w-36">
-                <Select
-                  value={selectedMonth}
-                  onChange={handleMonthChange}
-                  className="h-8.5 text-xs font-medium"
-                >
-                  {MONTH_NAMES.map((name, index) => (
-                    <option key={name} value={index + 1}>
-                      {name}
-                    </option>
-                  ))}
-                </Select>
-              </div>
+              <Select
+                aria-label="Select month"
+                value={selectedMonth}
+                onChange={handleMonthChange}
+                wrapperClassName="flex-1 sm:w-36"
+                className="h-9.5 sm:h-9 text-xs font-medium"
+              >
+                {MONTH_NAMES.map((name, index) => (
+                  <option key={name} value={index + 1}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
 
-              {/* Year Selector */}
-              <div className="w-28">
-                <Select
-                  value={selectedYear}
-                  onChange={handleYearChange}
-                  className="h-8.5 text-xs font-medium"
-                >
-                  {availableYears.map((yr) => (
-                    <option key={yr} value={yr}>
-                      {yr}
-                    </option>
-                  ))}
-                </Select>
-              </div>
+              <Select
+                aria-label="Select year"
+                value={selectedYear}
+                onChange={handleYearChange}
+                wrapperClassName="w-28"
+                className="h-9.5 sm:h-9 text-xs font-medium"
+              >
+                {availableYears.map((yr) => (
+                  <option key={yr} value={yr}>
+                    {yr}
+                  </option>
+                ))}
+              </Select>
             </div>
           )}
         </div>
@@ -225,7 +223,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
         {/* ========================================================================= */}
         <TabsContent value="lifetime" className="space-y-6 m-0">
           {/* 5 Primary Lifetime Metric Cards (Section 7) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
             {/* 1. Total Purchase Value */}
             <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
               <div className="flex items-center justify-between gap-2 pb-3">
@@ -299,7 +297,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </Card>
 
             {/* 5. Vehicles Sold */}
-            <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-premium hover:shadow-card-hover transition-all">
+            <Card className="col-span-2 lg:col-span-1 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all">
               <div className="flex items-center justify-between pb-3">
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Vehicles Sold
@@ -398,7 +396,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
           </div>
 
           {/* 5 Primary Monthly Metric Cards (Section 7) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
             {/* 1. Monthly Purchase Value */}
             <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
               <div className="flex items-center justify-between gap-2 pb-3">
@@ -472,7 +470,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </Card>
 
             {/* 5. Vehicles Sold That Month */}
-            <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-premium hover:shadow-card-hover transition-all">
+            <Card className="col-span-2 lg:col-span-1 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all">
               <div className="flex items-center justify-between pb-3">
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Vehicles Sold
@@ -511,60 +509,123 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                   No sales recorded in {MONTH_NAMES[selectedMonth - 1]} {selectedYear}.
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3 px-4">Vehicle Details</th>
-                        <th className="py-3 px-4">Buyer</th>
-                        <th className="py-3 px-4">Sale Date</th>
-                        <th className="py-3 px-4 text-right">Purchase Price</th>
-                        <th className="py-3 px-4 text-right">Sales Value</th>
-                        <th className="py-3 px-4 text-right">Profit</th>
-                        <th className="py-3 px-4 text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-200/80 dark:divide-slate-800">
-                      {monthly.salesList.map((item) => (
-                        <tr key={item.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition-colors">
-                          <td className="py-3.5 px-4">
-                            <div className="font-semibold text-slate-900 dark:text-slate-50">
-                              {item.vehicle_name}
-                            </div>
-                            <span className="inline-block mt-0.5 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60 whitespace-nowrap">
-                              {item.registration_number}
-                            </span>
-                          </td>
-                          <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300 font-medium">{item.buyer_name}</td>
-                          <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap">
-                            {formatDate(item.sale_date)}
-                          </td>
-                          <td className="py-3.5 px-4 text-right text-slate-600 dark:text-slate-400 font-medium">
-                            {formatCurrency(item.purchase_price)}
-                          </td>
-                          <td className="py-3.5 px-4 text-right font-bold text-slate-900 dark:text-slate-50">
-                            {formatCurrency(item.sales_value)}
-                          </td>
-                          <td className="py-3.5 px-4 text-right font-bold text-emerald-600 dark:text-emerald-400">
-                            +{formatCurrency(item.profit)}
-                          </td>
-                          <td className="py-3.5 px-4 text-center">
-                            <Link href={`/invoices?saleId=${item.id}`}>
+                <>
+                  {/* Desktop Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                        <tr>
+                          <th className="py-3 px-4">Vehicle Details</th>
+                          <th className="py-3 px-4">Buyer</th>
+                          <th className="py-3 px-4">Sale Date</th>
+                          <th className="py-3 px-4 text-right">Purchase Price</th>
+                          <th className="py-3 px-4 text-right">Sales Value</th>
+                          <th className="py-3 px-4 text-right">Profit</th>
+                          <th className="py-3 px-4 text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200/80 dark:divide-slate-800">
+                        {monthly.salesList.map((item) => (
+                          <tr key={item.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition-colors">
+                            <td className="py-3.5 px-4">
+                              <div className="font-semibold text-slate-900 dark:text-slate-50">
+                                {item.vehicle_name}
+                              </div>
+                              <span className="inline-block mt-0.5 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60 whitespace-nowrap">
+                                {item.registration_number}
+                              </span>
+                            </td>
+                            <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300 font-medium">{item.buyer_name}</td>
+                            <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap tabular-nums">
+                              {formatDate(item.sale_date)}
+                            </td>
+                            <td className="py-3.5 px-4 text-right text-slate-600 dark:text-slate-400 font-medium tabular-nums">
+                              {formatCurrency(item.purchase_price)}
+                            </td>
+                            <td className="py-3.5 px-4 text-right font-bold text-slate-900 dark:text-slate-50 tabular-nums">
+                              {formatCurrency(item.sales_value)}
+                            </td>
+                            <td className="py-3.5 px-4 text-right font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                              +{formatCurrency(item.profit)}
+                            </td>
+                            <td className="py-3.5 px-4 text-center">
                               <Button
+                                asChild
                                 size="sm"
                                 variant="outline"
                                 className="h-7 px-2.5 text-[11px] gap-1 rounded-xl border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-[0.98]"
                               >
-                                <FileText className="w-3 h-3 text-slate-600 dark:text-slate-400" />
-                                <span>Invoice</span>
+                                <Link href={`/invoices?saleId=${item.id}`} prefetch={false}>
+                                  <FileText className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                                  <span>Invoice</span>
+                                </Link>
                               </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Cards */}
+                  <div className="divide-y divide-slate-200/80 dark:divide-slate-800 md:hidden">
+                    {monthly.salesList.map((item) => (
+                      <div key={item.id} className="p-4 space-y-2.5">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <div className="font-semibold text-sm text-[#0F172A] dark:text-slate-50 truncate">
+                              {item.vehicle_name}
+                            </div>
+                            <span className="inline-block mt-1 px-2 py-0.5 text-[11px] font-mono font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap">
+                              {item.registration_number}
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                            {formatDate(item.sale_date)}
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-800 text-xs">
+                          <div>
+                            <span className="text-[10px] text-slate-400 block">Cost</span>
+                            <span className="font-medium text-slate-700 dark:text-slate-300 tabular-nums">
+                              {formatCurrency(item.purchase_price)}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block">Sold</span>
+                            <span className="font-bold text-[#0F172A] dark:text-slate-50 tabular-nums">
+                              {formatCurrency(item.sales_value)}
+                            </span>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-[10px] text-slate-400 block">Profit</span>
+                            <span className="font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                              +{formatCurrency(item.profit)}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 pt-0.5">
+                          <span className="text-xs text-slate-600 dark:text-slate-400 truncate">
+                            Buyer: <strong className="text-[#0F172A] dark:text-slate-100">{item.buyer_name}</strong>
+                          </span>
+                          <Button
+                            asChild
+                            size="sm"
+                            variant="outline"
+                            className="min-h-[40px] px-3 text-xs gap-1.5 rounded-xl border-slate-200/80 dark:border-slate-800 shrink-0"
+                          >
+                            <Link href={`/invoices?saleId=${item.id}`} prefetch={false}>
+                              <FileText className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                              <span>Invoice</span>
                             </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </Card>

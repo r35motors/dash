@@ -53,7 +53,7 @@ export const dealershipDb = {
             return [];
           }
         },
-        15
+        60
       );
     },
 
@@ -234,7 +234,7 @@ export const dealershipDb = {
             return [];
           }
         },
-        15
+        60
       );
     },
 
@@ -436,41 +436,76 @@ export const dealershipDb = {
             return [];
           }
         },
-        15
+        60
+      );
+    },
+
+    async getSummaries() {
+      return dbCache.getOrSet(
+        "invoices_summaries",
+        async () => {
+          try {
+            const db = getDb();
+            const rows = await db
+              .select({
+                id: schema.invoices.id,
+                invoice_number: schema.invoices.invoice_number,
+                vehicle_id: schema.invoices.vehicle_id,
+                sale_id: schema.invoices.sale_id,
+                invoice_date: schema.invoices.invoice_date,
+                invoice_total: schema.invoices.invoice_total,
+              })
+              .from(schema.invoices)
+              .orderBy(desc(schema.invoices.created_at));
+
+            return rows.map((r) => ({
+              id: r.id,
+              invoice_number: r.invoice_number,
+              vehicle_id: r.vehicle_id,
+              sale_id: r.sale_id,
+              invoice_date:
+                r.invoice_date instanceof Date && !isNaN(r.invoice_date.getTime())
+                  ? r.invoice_date.toISOString()
+                  : new Date().toISOString(),
+              invoice_total: r.invoice_total,
+            }));
+          } catch (err) {
+            console.warn("[DB] Failed to fetch invoice summaries:", err);
+            return [];
+          }
+        },
+        60
       );
     },
 
     async getById(id: string) {
       if (!isValidUuid(id)) return null;
       const db = getDb();
-      const invoiceRows = await db
-        .select({
-          id: schema.invoices.id,
-          invoice_number: schema.invoices.invoice_number,
-          vehicle_id: schema.invoices.vehicle_id,
-          sale_id: schema.invoices.sale_id,
-          invoice_date: schema.invoices.invoice_date,
-          invoice_total: schema.invoices.invoice_total,
-          invoice_snapshot: schema.invoices.invoice_snapshot,
-          created_at: schema.invoices.created_at,
-          vehicle: schema.vehicles,
-        })
-        .from(schema.invoices)
-        .leftJoin(schema.vehicles, eq(schema.invoices.vehicle_id, schema.vehicles.id))
-        .where(eq(schema.invoices.id, id))
-        .limit(1);
+      const [invoiceRows, items, settingsRows] = await Promise.all([
+        db
+          .select({
+            id: schema.invoices.id,
+            invoice_number: schema.invoices.invoice_number,
+            vehicle_id: schema.invoices.vehicle_id,
+            sale_id: schema.invoices.sale_id,
+            invoice_date: schema.invoices.invoice_date,
+            invoice_total: schema.invoices.invoice_total,
+            invoice_snapshot: schema.invoices.invoice_snapshot,
+            created_at: schema.invoices.created_at,
+            vehicle: schema.vehicles,
+          })
+          .from(schema.invoices)
+          .leftJoin(schema.vehicles, eq(schema.invoices.vehicle_id, schema.vehicles.id))
+          .where(eq(schema.invoices.id, id))
+          .limit(1),
+        db
+          .select()
+          .from(schema.invoiceItems)
+          .where(eq(schema.invoiceItems.invoice_id, id)),
+        db.select().from(schema.businessSettings).limit(1),
+      ]);
 
       if (!invoiceRows[0]) return null;
-
-      const items = await db
-        .select()
-        .from(schema.invoiceItems)
-        .where(eq(schema.invoiceItems.invoice_id, id));
-
-      const settingsRows = await db
-        .select()
-        .from(schema.businessSettings)
-        .limit(1);
 
       const r = invoiceRows[0];
       return {
@@ -710,7 +745,7 @@ export const dealershipDb = {
           const [vehicles, sales, invoices] = await Promise.all([
             dealershipDb.vehicles.getAll(),
             dealershipDb.sales.getAll(),
-            dealershipDb.invoices.getAll(),
+            dealershipDb.invoices.getSummaries(),
           ]);
           const currentYear = year || new Date().getFullYear();
           const currentMonth = month || new Date().getMonth() + 1;
@@ -756,7 +791,7 @@ export const dealershipDb = {
             })),
           };
         },
-        15
+        60
       );
     },
 
