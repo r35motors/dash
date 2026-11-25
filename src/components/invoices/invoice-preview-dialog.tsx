@@ -127,7 +127,7 @@ export function InvoicePreviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[95dvh] sm:h-[92vh] max-h-[96dvh] sm:max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl">
+      <DialogContent className="w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[92dvh] sm:h-[92vh] max-h-[92dvh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl">
         {/* Modal Header */}
         <div className="p-3.5 sm:p-4 bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
           <div className="pr-6 sm:pr-0">
@@ -167,12 +167,12 @@ export function InvoicePreviewDialog({
         </div>
 
         {/* Modal Body / Instant Responsive HTML Preview Frame */}
-        <div className="flex-1 w-full relative overflow-y-auto overflow-x-hidden bg-slate-100 dark:bg-slate-800 flex items-start justify-center p-0 sm:p-4">
+        <div className="flex-1 w-full min-w-0 relative overflow-y-auto overflow-x-auto bg-slate-100 dark:bg-slate-800 flex items-start justify-center p-2 sm:p-4">
           {htmlContent ? (
             <iframe
               srcDoc={htmlContent}
               title={`Invoice Preview - ${invoiceNumber}`}
-              className="w-full sm:max-w-[215mm] min-h-[500px] sm:h-[297mm] sm:min-h-[297mm] rounded-none sm:rounded-sm sm:shadow-xl sm:border border-slate-300 bg-white dark:bg-slate-900 shrink-0 sm:my-2"
+              className="w-full max-w-full sm:max-w-[215mm] min-h-[500px] sm:h-[297mm] sm:min-h-[297mm] rounded-lg sm:rounded-sm sm:shadow-xl sm:border border-slate-300 bg-white shrink-0 sm:my-2"
             />
           ) : (
             <div className="flex flex-col items-center justify-center gap-2 text-slate-600 dark:text-slate-400 p-8">

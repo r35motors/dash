@@ -29,13 +29,12 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
 
   if (!isMounted) {
     return (
-      <div className="h-80 flex items-center justify-center text-slate-400 text-sm">
+      <div className="h-72 sm:h-80 flex items-center justify-center text-slate-400 text-sm">
         Loading comparison chart...
       </div>
     );
   }
 
-  // Format axis in Lakhs or Crores for clean readability
   const formatYAxis = (val: number) => {
     if (Math.abs(val) >= 10000000) {
       return `₹${(val / 10000000).toFixed(1)}Cr`;
@@ -47,90 +46,92 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
   };
 
   return (
-    <div className="w-full overflow-x-auto pb-2">
-      <div className="min-w-[540px] sm:min-w-full h-80 pt-2">
+    <div className="w-full overflow-hidden">
+      <div className="w-full h-72 sm:h-80 pt-1">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
-            margin={{ top: 12, right: 16, left: 10, bottom: 6 }}
-            barGap={4}
+            margin={{ top: 8, right: 6, left: -12, bottom: 4 }}
+            barGap={2}
           >
-          <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200/70 dark:text-slate-800" vertical={false} />
-          <XAxis
-            dataKey="month"
-            stroke="#94A3B8"
-            fontSize={12}
-            tickLine={false}
-            tickMargin={8}
-          />
-          <YAxis
-            stroke="#94A3B8"
-            fontSize={11}
-            tickLine={false}
-            tickFormatter={formatYAxis}
-            width={65}
-          />
-          <Tooltip
-            formatter={(value: any, name: any) => {
-              const labelMap: Record<string, string> = {
-                purchases: "Acquisitions (Purchases)",
-                sales: "Sales Value (Revenue)",
-                profit: "Gross Profit",
-              };
-              return [formatCurrency(Number(value) || 0), labelMap[name] || name];
-            }}
-            labelFormatter={(label) => `Month: ${label}`}
-            contentStyle={{
-              backgroundColor: "#0F172A",
-              color: "#FFFFFF",
-              borderRadius: "8px",
-              border: "1px solid #1E293B",
-              fontSize: "12px",
-              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-            }}
-          />
-          <Legend
-            verticalAlign="top"
-            height={36}
-            iconType="circle"
-            formatter={(val) => {
-              const labelMap: Record<string, string> = {
-                purchases: "Purchases (Fleet Acquisition)",
-                sales: "Sales Value (Completed Invoices)",
-                profit: "Gross Profit",
-              };
-              return (
-                <span className="text-xs font-medium text-slate-700 dark:text-slate-300 mr-4">
-                  {labelMap[val] || val}
-                </span>
-              );
-            }}
-          />
-          {/* 3 Metric Bars: Purchases, Sales, Gross Profit */}
-          <Bar
-            dataKey="purchases"
-            name="purchases"
-            fill="#2563EB"
-            radius={[3, 3, 0, 0]}
-            maxBarSize={28}
-          />
-          <Bar
-            dataKey="sales"
-            name="sales"
-            fill={theme === "dark" ? "#818CF8" : "#0F172A"}
-            radius={[3, 3, 0, 0]}
-            maxBarSize={28}
-          />
-          <Bar
-            dataKey="profit"
-            name="profit"
-            fill="#10B981"
-            radius={[3, 3, 0, 0]}
-            maxBarSize={28}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+            <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200/70 dark:text-slate-800" vertical={false} />
+            <XAxis
+              dataKey="month"
+              stroke="#94A3B8"
+              fontSize={10}
+              interval={0}
+              tickLine={false}
+              tickMargin={6}
+              tickFormatter={(val: string) => val.slice(0, 3)}
+            />
+            <YAxis
+              stroke="#94A3B8"
+              fontSize={10}
+              tickLine={false}
+              tickFormatter={formatYAxis}
+              width={56}
+            />
+            <Tooltip
+              formatter={(value: any, name: any) => {
+                const labelMap: Record<string, string> = {
+                  purchases: "Acquisitions (Purchases)",
+                  sales: "Sales Value (Revenue)",
+                  profit: "Gross Profit",
+                };
+                return [formatCurrency(Number(value) || 0), labelMap[name] || name];
+              }}
+              labelFormatter={(label) => `Month: ${label}`}
+              contentStyle={{
+                backgroundColor: "#0F172A",
+                color: "#FFFFFF",
+                borderRadius: "10px",
+                border: "1px solid #1E293B",
+                fontSize: "12px",
+                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.25)",
+              }}
+            />
+            <Legend
+              verticalAlign="top"
+              wrapperStyle={{ paddingBottom: "12px", fontSize: "11px" }}
+              iconType="circle"
+              iconSize={8}
+              formatter={(val) => {
+                const labelMap: Record<string, string> = {
+                  purchases: "Purchases",
+                  sales: "Sales Value",
+                  profit: "Gross Profit",
+                };
+                return (
+                  <span className="text-[11px] sm:text-xs font-medium text-slate-700 dark:text-slate-300 mr-2 sm:mr-4">
+                    {labelMap[val] || val}
+                  </span>
+                );
+              }}
+            />
+            <Bar
+              dataKey="purchases"
+              name="purchases"
+              fill="#2563EB"
+              radius={[3, 3, 0, 0]}
+              maxBarSize={26}
+            />
+            <Bar
+              dataKey="sales"
+              name="sales"
+              fill={theme === "dark" ? "#818CF8" : "#0F172A"}
+              radius={[3, 3, 0, 0]}
+              maxBarSize={26}
+            />
+            <Bar
+              dataKey="profit"
+              name="profit"
+              fill="#10B981"
+              radius={[3, 3, 0, 0]}
+              maxBarSize={26}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
-  </div>
   );
 }

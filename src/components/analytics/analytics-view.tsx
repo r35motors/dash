@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import {
   BarChart3,
   TrendingUp,
@@ -22,18 +21,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-const ComparisonChart = dynamic(
-  () => import("./comparison-chart").then((mod) => mod.ComparisonChart),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-80 w-full rounded-xl bg-slate-100/80 animate-pulse flex items-center justify-center text-xs text-slate-400">
-        Loading financial comparison chart...
-      </div>
-    ),
-  }
-);
+import { ComparisonChart } from "./comparison-chart";
 import {
   LifetimeAnalyticsResult,
   MonthlyAnalyticsResult,
@@ -121,18 +109,18 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link href="/sales">
-            <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
+          <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
+            <Link href="/sales">
               <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Sales Ledger</span>
-            </Button>
-          </Link>
-          <Link href="/invoices">
-            <Button variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#0F172A] dark:text-slate-50 shadow-xs">
+            <Link href="/invoices">
               <FileText className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span>Invoices</span>
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
 
@@ -505,7 +493,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                             <div className="font-semibold text-slate-900 dark:text-slate-50">
                               {item.vehicle_name}
                             </div>
-                            <span className="inline-block mt-0.5 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
+                            <span className="inline-block mt-0.5 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60 whitespace-nowrap">
                               {item.registration_number}
                             </span>
                           </td>
@@ -568,7 +556,8 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
               aria-label="Select comparison year"
               value={selectedYear}
               onChange={handleYearChange}
-              className="h-9 w-24 text-xs font-semibold"
+              wrapperClassName="w-24"
+              className="h-9 text-xs font-semibold"
             >
               {availableYears.map((yr) => (
                 <option key={yr} value={yr}>

@@ -173,9 +173,9 @@ export function SalesView({
             <span>Units Delivered</span>
             <Car className="w-4 h-4 text-slate-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] dark:text-slate-50 mt-2.5">{totalUnitsSold}</div>
+          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] dark:text-slate-50 mt-2.5 tabular-nums">{totalUnitsSold}</div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-            {availableVehicles.length} vehicles in active stock
+            Successfully sold &amp; delivered
           </p>
         </div>
 
@@ -320,15 +320,15 @@ export function SalesView({
               <Table>
                 <TableHeader className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800">
                   <TableRow>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Vehicle</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Registration</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Prev. Owner</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Client Buyer</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Cost</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Sold For</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Profit</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Date</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2.5 whitespace-nowrap">Invoice</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Vehicle</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Reg #</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Prev. Owner</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Buyer</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Cost</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Sold For</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Profit</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Date</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3 px-2 whitespace-nowrap">Invoice</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -345,51 +345,48 @@ export function SalesView({
                         className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors"
                       >
                         {/* 1. Vehicle Name */}
-                        <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3 px-2.5 max-w-[140px]">
-                          <div className="truncate font-semibold text-xs xl:text-sm" title={sale.vehicle?.vehicle_name || "Vehicle"}>
+                        <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3 px-2 max-w-[125px]">
+                          <div className="truncate font-semibold text-xs" title={sale.vehicle?.vehicle_name || "Vehicle"}>
                             {sale.vehicle?.vehicle_name || "Vehicle"}
                           </div>
                         </TableCell>
 
                         {/* 2. Registration Number (monospace badge) */}
-                        <TableCell className="py-3 px-2.5 whitespace-nowrap">
-                          <span className="font-mono text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap inline-block">
+                        <TableCell className="py-3 px-2 whitespace-nowrap">
+                          <span className="font-mono text-[11px] px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap inline-block">
                             {sale.vehicle?.registration_number || "-"}
                           </span>
                         </TableCell>
 
                         {/* 3. Previous Owner's Name */}
-                        <TableCell className="text-slate-600 dark:text-slate-400 text-xs py-3 px-2.5">
-                          <div className="flex items-center gap-1">
-                            <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                            <span className="truncate max-w-[100px] font-medium text-slate-700 dark:text-slate-300" title={sale.vehicle?.owner_name || "-"}>
-                              {sale.vehicle?.owner_name || "-"}
-                            </span>
-                          </div>
+                        <TableCell className="text-slate-600 dark:text-slate-400 text-xs py-3 px-2">
+                          <span className="truncate block max-w-[88px] font-medium text-slate-700 dark:text-slate-300" title={sale.vehicle?.owner_name || "-"}>
+                            {sale.vehicle?.owner_name || "-"}
+                          </span>
                         </TableCell>
 
                         {/* 4. Buyer Name */}
-                        <TableCell className="text-slate-900 dark:text-slate-50 font-medium text-xs py-3 px-2.5">
-                          <div className="flex items-center gap-1.5">
+                        <TableCell className="text-slate-900 dark:text-slate-50 font-medium text-xs py-3 px-2">
+                          <div className="flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>
-                            <span className="truncate max-w-[105px] font-semibold text-slate-900 dark:text-slate-50" title={sale.buyer_name}>
+                            <span className="truncate max-w-[92px] font-semibold text-slate-900 dark:text-slate-50" title={sale.buyer_name}>
                               {sale.buyer_name}
                             </span>
                           </div>
                         </TableCell>
 
                         {/* 5. Purchase Price (₹ INR formatted) */}
-                        <TableCell className="text-right text-slate-500 dark:text-slate-400 text-xs py-3 px-2.5 whitespace-nowrap tabular-nums">
+                        <TableCell className="text-right text-slate-500 dark:text-slate-400 text-xs py-3 px-2 whitespace-nowrap tabular-nums">
                           {formatCurrency(purchase)}
                         </TableCell>
 
                         {/* 6. Selling Price (₹ INR formatted) */}
-                        <TableCell className="text-right font-bold text-[#0F172A] dark:text-slate-50 text-xs xl:text-sm py-3 px-2.5 whitespace-nowrap tabular-nums">
+                        <TableCell className="text-right font-bold text-[#0F172A] dark:text-slate-50 text-xs py-3 px-2 whitespace-nowrap tabular-nums">
                           {formatCurrency(selling)}
                         </TableCell>
 
                         {/* 7. Profit (₹ INR formatted with green positive indicator) */}
-                        <TableCell className="text-right py-3 px-2.5 whitespace-nowrap tabular-nums">
+                        <TableCell className="text-right py-3 px-2 whitespace-nowrap tabular-nums">
                           <span
                             className={`inline-flex items-center gap-1 font-bold text-[11px] px-2 py-0.5 rounded-full ${
                               isProfitPositive

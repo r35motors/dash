@@ -364,7 +364,7 @@ export function CreateInvoiceDialog({
           </div>
 
           {/* Form Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+          <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 pb-8 space-y-6">
             {errorMessage && (
               <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
@@ -451,7 +451,8 @@ export function CreateInvoiceDialog({
                     id="vehicle_select"
                     value={selectedVehicleId}
                     onChange={(e) => setSelectedVehicleId(e.target.value)}
-                    className="w-full mt-1 h-9.5 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0F172A] dark:focus:ring-sky-400/30"
+                    style={{ appearance: "none", WebkitAppearance: "none", MozAppearance: "none" }}
+                    className="no-native-arrow w-full mt-1 h-9.5 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0F172A] dark:focus:ring-sky-400/30"
                   >
                     <option value="">-- Choose Vehicle --</option>
                     {vehicles.map((v) => (
@@ -673,7 +674,7 @@ export function CreateInvoiceDialog({
           </div>
 
           {/* Modal Footer Controls */}
-          <div className="p-3.5 sm:p-4 bg-slate-50/70 dark:bg-slate-800/60 border-t border-slate-200/80 dark:border-slate-800 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+          <div className="relative z-10 p-3.5 sm:p-4 bg-slate-50/95 dark:bg-slate-900 border-t border-slate-200/80 dark:border-slate-800 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
             <Button
               type="button"
               variant="outline"

@@ -78,9 +78,6 @@ export function AppShell({ children }: AppShellProps) {
   };
 
   const isItemActive = (href: string) => {
-    if (navigatingTo) {
-      return href === "/" ? navigatingTo === "/" : navigatingTo.startsWith(href);
-    }
     return href === "/" ? pathname === "/" : pathname.startsWith(href);
   };
 
@@ -228,7 +225,7 @@ export function AppShell({ children }: AppShellProps) {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 active:scale-95 transition-transform cursor-pointer"
-            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -250,7 +247,7 @@ export function AppShell({ children }: AppShellProps) {
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#0F172A] dark:bg-slate-800 flex items-center justify-center p-1 shadow-xs">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo-white.png" alt="R35 MOTORS Logo" className="w-full h-full object-contain" />
+                  <img src="/logo-white.png" alt="R35 MOTORS Logo" width={24} height={24} className="w-6 h-6 object-contain" />
                 </div>
                 <span className="font-bold text-sm text-[#0F172A] dark:text-slate-50">R35 MOTORS</span>
               </div>

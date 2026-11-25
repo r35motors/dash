@@ -303,7 +303,8 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               <div className="flex-1 space-y-2 w-full">
                 <Input
                   id="logo_path"
-                  value={formData.logo_path}
+                  value={formData.logo_path.startsWith("data:") ? "Uploaded custom logo (PNG stored)" : formData.logo_path}
+                  readOnly={formData.logo_path.startsWith("data:")}
                   onChange={(e) =>
                     setFormData({ ...formData, logo_path: e.target.value })
                   }
