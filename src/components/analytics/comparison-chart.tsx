@@ -13,12 +13,14 @@ import {
 } from "recharts";
 import { formatCurrency } from "@/lib/utils";
 import { MonthlyChartPoint } from "@/lib/analytics";
+import { useTheme } from "@/components/theme-provider";
 
 interface ComparisonChartProps {
   data: MonthlyChartPoint[];
 }
 
 export function ComparisonChart({ data }: ComparisonChartProps) {
+  const { theme } = useTheme();
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -115,7 +117,7 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
           <Bar
             dataKey="sales"
             name="sales"
-            fill="#0F172A"
+            fill={theme === "dark" ? "#F8FAFC" : "#0F172A"}
             radius={[3, 3, 0, 0]}
             maxBarSize={28}
           />

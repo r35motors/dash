@@ -114,11 +114,11 @@ export function VehiclesView({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full min-w-0">
       {/* Top Controls: Filter Tabs, Real-Time Search, Add Vehicle Button */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Apple HIG Segmented Control Filter Tabs */}
-        <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 overflow-x-auto select-none">
+        <div className="inline-flex shrink-0 items-center gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 overflow-x-auto select-none">
           <button
             type="button"
             onClick={() => setStatusTab("Available")}

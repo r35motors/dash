@@ -306,7 +306,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                     Gross profit as percentage of sales revenue
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400 flex items-center justify-center">
                   <Percent className="w-5 h-5" />
                 </div>
               </div>
@@ -327,7 +327,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                     Across {lifetime.vehiclesSold} sold vehicles
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-200/80 text-slate-800 dark:text-slate-200 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">
                   <TrendingUp className="w-5 h-5" />
                 </div>
               </div>
@@ -346,7 +346,7 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
                     Available showroom fleet
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-200/80 text-slate-800 dark:text-slate-200 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center">
                   <Car className="w-5 h-5" />
                 </div>
               </div>

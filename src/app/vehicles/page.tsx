@@ -37,17 +37,17 @@ export default async function VehiclesPage({ searchParams }: VehiclesPageProps) 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0] dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#1E3A8A] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-[#1E3A8A] dark:text-blue-400 flex items-center justify-center">
               <Car className="w-4.5 h-4.5" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-[#0F172A]">
-              Fleet Inventory & Available Vehicles
+            <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] dark:text-slate-50">
+              Fleet Inventory &amp; Available Vehicles
             </h1>
           </div>
-          <p className="text-xs md:text-sm text-slate-500 mt-1">
+          <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">
             Manage your dealership vehicle listings, register incoming cars, and review vehicles ready for sale.
           </p>
         </div>
