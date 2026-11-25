@@ -268,6 +268,7 @@ export function AddVehicleDialog({
                 <Input
                   id="purchase_price"
                   type="number"
+                  inputMode="decimal"
                   min="1"
                   step="any"
                   required

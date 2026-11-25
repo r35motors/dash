@@ -394,6 +394,8 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               </Label>
               <Input
                 id="contact_number_1"
+                type="tel"
+                inputMode="tel"
                 value={formData.contact_number_1}
                 onChange={(e) =>
                   setFormData({ ...formData, contact_number_1: e.target.value })
@@ -412,6 +414,8 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
               </Label>
               <Input
                 id="contact_number_2"
+                type="tel"
+                inputMode="tel"
                 value={formData.contact_number_2}
                 onChange={(e) =>
                   setFormData({ ...formData, contact_number_2: e.target.value })

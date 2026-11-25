@@ -54,7 +54,7 @@ export default async function DashboardPage() {
         {/* Top Action Bar with Tactile Shortcuts */}
         <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2.5 w-full lg:w-auto">
           <Link href="/vehicles?add=true" className="w-full sm:w-auto">
-            <Button className="w-full sm:w-auto gap-2 bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs cursor-pointer h-9.5 px-4 rounded-xl active:scale-[0.98]">
+            <Button className="w-full sm:w-auto gap-2 bg-[#0F172A] hover:bg-[#1E293B] text-white shadow-xs cursor-pointer min-h-[44px] sm:min-h-0 sm:h-9.5 px-4 rounded-xl active:scale-[0.98] transition-all duration-150">
               <Plus className="w-4 h-4" />
               <span>Add Vehicle</span>
             </Button>
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
           <Link href="/sales?add=true" className="w-full sm:w-auto">
             <Button
               variant="outline"
-              className="w-full sm:w-auto gap-2 border-slate-200 hover:bg-slate-50 text-slate-800 cursor-pointer h-9.5 px-4 rounded-xl active:scale-[0.98]"
+              className="w-full sm:w-auto gap-2 border-slate-200 bg-white hover:bg-slate-50 text-slate-800 cursor-pointer min-h-[44px] sm:min-h-0 sm:h-9.5 px-4 rounded-xl active:scale-[0.98] transition-all duration-150"
             >
               <BadgeDollarSign className="w-4 h-4 text-emerald-600" />
               <span>Record Sale</span>
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
           <Link href="/invoices?create=true" className="w-full sm:w-auto">
             <Button
               variant="outline"
-              className="w-full sm:w-auto gap-2 border-slate-200 hover:bg-slate-50 text-slate-800 cursor-pointer h-9.5 px-4 rounded-xl active:scale-[0.98]"
+              className="w-full sm:w-auto gap-2 border-slate-200 bg-white hover:bg-slate-50 text-slate-800 cursor-pointer min-h-[44px] sm:min-h-0 sm:h-9.5 px-4 rounded-xl active:scale-[0.98] transition-all duration-150"
             >
               <FileText className="w-4 h-4 text-blue-600" />
               <span>Create Invoice</span>
@@ -93,7 +93,7 @@ export default async function DashboardPage() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0F172A]">
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0F172A] tabular-nums">
               {vehicles.length}
             </div>
             <div className="mt-2.5 flex items-center justify-between text-xs text-slate-500">
@@ -172,7 +172,7 @@ export default async function DashboardPage() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-[17px] sm:text-2xl md:text-3xl font-bold tracking-tight text-[#0F172A] leading-tight">
+            <div className="text-[17px] sm:text-2xl md:text-3xl font-bold tracking-tight text-[#0F172A] leading-tight tabular-nums">
               {formatCurrency(totalVehicleValue)}
             </div>
             <div className="mt-2.5 flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500">

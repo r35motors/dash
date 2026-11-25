@@ -12,9 +12,7 @@ import {
   Settings,
   Menu,
   X,
-  ShieldCheck,
   ChevronRight,
-  Sparkles,
   Database,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -56,12 +54,14 @@ const navItems = [
   },
 ];
 
+// UI/UX Pro Max: Keep bottom navigation to <= 5 primary items for 44x44px+ touch comfort
+const mobileBottomNavItems = navItems.slice(0, 5);
+
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [navigatingTo, setNavigatingTo] = React.useState<string | null>(null);
 
-  // Clear navigating state and close mobile menu when pathname updates
   React.useEffect(() => {
     setNavigatingTo(null);
     setMobileMenuOpen(false);
@@ -85,9 +85,10 @@ export function AppShell({ children }: AppShellProps) {
   );
 
   return (
-    <div className="min-h-screen bg-white text-[#0F172A] flex flex-col md:flex-row antialiased">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col md:flex-row antialiased">
       {/* Sleek Top Navigation Progress Bar for 0ms Perceived Response */}
       <div
+        aria-hidden="true"
         className={cn(
           "fixed top-0 left-0 right-0 h-[2.5px] z-50 transition-opacity duration-200 pointer-events-none",
           navigatingTo ? "opacity-100" : "opacity-0"
@@ -95,34 +96,34 @@ export function AppShell({ children }: AppShellProps) {
       >
         <div
           className={cn(
-            "h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-400 transition-all duration-300 ease-out",
+            "h-full bg-gradient-to-r from-emerald-500 via-blue-600 to-slate-900 transition-all duration-300 ease-out",
             navigatingTo ? "w-3/4 animate-pulse" : "w-full"
           )}
         />
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:w-64 flex-col border-r border-slate-200/80 bg-[#FAFAFB] h-screen sticky top-0 z-30 select-none">
+      <aside className="hidden md:flex md:w-64 flex-col border-r border-slate-200/90 bg-white h-screen sticky top-0 z-30 select-none shrink-0">
         {/* Dealership Brand Header */}
         <div className="h-16 flex items-center px-5 border-b border-slate-200/80 bg-white gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#0F172A] flex items-center justify-center p-1.5 shadow-xs">
+          <div className="w-9 h-9 rounded-xl bg-[#0F172A] flex items-center justify-center p-1.5 shadow-xs shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-white.png" alt="R35 MOTORS" className="w-full h-full object-contain" />
+            <img src="/logo-white.png" alt="R35 MOTORS Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="font-bold text-[14px] tracking-tight text-[#0F172A] truncate">
+            <span className="font-bold text-[15px] tracking-tight text-[#0F172A] truncate">
               R35 MOTORS
             </span>
-            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest truncate">
+            <span className="font-mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest truncate">
               Dealership ERP
             </span>
           </div>
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <nav aria-label="Main Navigation" className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           <div className="px-3 pb-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-            Management
+            Operations
           </div>
           {navItems.map((item) => {
             const isActive = isItemActive(item.href);
@@ -133,19 +134,20 @@ export function AppShell({ children }: AppShellProps) {
                 key={item.href}
                 href={item.href}
                 prefetch={true}
+                aria-current={isActive ? "page" : undefined}
                 onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all group cursor-pointer active:scale-[0.98]",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-150 group cursor-pointer active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F172A]",
                   isActive
                     ? "bg-[#0F172A] text-white shadow-xs font-semibold"
-                    : "text-slate-600 hover:text-[#0F172A] hover:bg-slate-200/60"
+                    : "text-slate-600 hover:text-[#0F172A] hover:bg-slate-100"
                 )}
               >
                 <Icon
                   className={cn(
                     "w-4 h-4 transition-colors shrink-0",
                     isActive
-                      ? "text-white"
+                      ? "text-emerald-400"
                       : "text-slate-400 group-hover:text-[#0F172A]"
                   )}
                 />
@@ -159,40 +161,66 @@ export function AppShell({ children }: AppShellProps) {
         </nav>
 
         {/* Database & System Info Footer */}
-        <div className="p-3.5 border-t border-slate-200/80 bg-white/90">
+        <div className="p-3.5 border-t border-slate-200/80 bg-slate-50/60">
           <div className="flex items-center gap-2.5 px-1 py-0.5">
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                <Database className="w-3 h-3 text-slate-500" /> Supabase PostgreSQL
+              <span className="text-xs font-semibold text-slate-800 flex items-center gap-1.5 truncate">
+                <Database className="w-3 h-3 text-slate-500 shrink-0" />
+                <span>Supabase PostgreSQL</span>
               </span>
-              <span className="text-[10px] text-slate-400">
-                Connected & Fast Cache Active
+              <span className="font-mono text-[10px] text-slate-500 truncate">
+                Connected &amp; Fast Cache
               </span>
             </div>
           </div>
         </div>
       </aside>
 
-      {/* Mobile Header */}
-      <div className="md:hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 h-14 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center p-1 shadow-xs">
+      {/* Mobile Header (Frosted Glass, >= 44px touch targets) */}
+      <div className="md:hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-3 h-14 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5 min-h-[44px] px-1 cursor-pointer">
+          <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center p-1 shadow-xs shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-white.png" alt="R35 MOTORS" className="w-full h-full object-contain" />
+            <img src="/logo-white.png" alt="R35 MOTORS Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="font-bold text-sm text-[#0F172A]">R35 MOTORS</span>
+          <div className="flex flex-col">
+            <span className="font-bold text-sm text-[#0F172A] leading-tight">R35 MOTORS</span>
+            <span className="text-[10px] font-medium text-slate-500 leading-tight">
+              {currentPage?.name || "Dashboard"}
+            </span>
+          </div>
+        </Link>
+
+        <div className="flex items-center gap-1">
+          <Link
+            href="/settings"
+            prefetch={true}
+            onClick={() => handleNavClick("/settings")}
+            aria-label="Dealership Settings"
+            className={cn(
+              "min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl transition-colors cursor-pointer active:scale-95",
+              isItemActive("/settings")
+                ? "bg-[#0F172A] text-white"
+                : "text-slate-600 hover:bg-slate-100"
+            )}
+          >
+            <Settings className="w-5 h-5" />
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-slate-100 text-slate-700 active:scale-95 transition-transform cursor-pointer"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 rounded-lg hover:bg-slate-100 text-slate-700 active:scale-95 transition-transform"
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
       </div>
 
       {/* Mobile Navigation Drawer */}
@@ -202,26 +230,27 @@ export function AppShell({ children }: AppShellProps) {
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl flex flex-col p-4 animate-in slide-in-from-left duration-200"
+            className="fixed inset-y-0 left-0 w-72 bg-white shadow-2xl flex flex-col p-4 animate-in slide-in-from-left duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200/80">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#0F172A] flex items-center justify-center p-1 shadow-xs">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo-white.png" alt="R35 MOTORS" className="w-full h-full object-contain" />
+                  <img src="/logo-white.png" alt="R35 MOTORS Logo" className="w-full h-full object-contain" />
                 </div>
                 <span className="font-bold text-sm text-[#0F172A]">R35 MOTORS</span>
               </div>
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1 rounded-md hover:bg-slate-100 text-slate-500"
-                aria-label="Close menu"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-slate-100 text-slate-500 cursor-pointer"
+                aria-label="Close navigation menu"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <nav className="flex-1 py-4 space-y-1">
+            <nav aria-label="Mobile Drawer Navigation" className="flex-1 py-4 space-y-1.5">
               {navItems.map((item) => {
                 const isActive = isItemActive(item.href);
                 const Icon = item.icon;
@@ -231,26 +260,27 @@ export function AppShell({ children }: AppShellProps) {
                     key={item.href}
                     href={item.href}
                     prefetch={true}
+                    aria-current={isActive ? "page" : undefined}
                     onClick={() => {
                       handleNavClick(item.href);
                       setMobileMenuOpen(false);
                     }}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all active:scale-[0.98]",
+                      "flex items-center gap-3 px-3.5 min-h-[44px] rounded-xl text-sm font-medium transition-all active:scale-[0.98] cursor-pointer",
                       isActive
                         ? "bg-[#0F172A] text-white shadow-xs font-semibold"
                         : "text-slate-600 hover:text-[#0F172A] hover:bg-slate-100"
                     )}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className={cn("w-4 h-4", isActive ? "text-emerald-400" : "text-slate-400")} />
                     <span>{item.name}</span>
                   </Link>
                 );
               })}
             </nav>
-            <div className="pt-4 border-t border-[#E2E8F0] text-xs text-slate-500 flex items-center gap-2">
+            <div className="pt-4 border-t border-slate-200/80 text-xs text-slate-500 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>R35 MOTORS</span>
+              <span className="font-medium text-slate-700">Supabase Connected</span>
             </div>
           </div>
         </div>
@@ -259,16 +289,16 @@ export function AppShell({ children }: AppShellProps) {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 min-h-screen">
         {/* Top Header Bar with Frosted Glass Layer */}
-        <header className="hidden md:flex h-16 border-b border-slate-200/80 bg-white/80 backdrop-blur-md items-center justify-between px-8 sticky top-0 z-20">
+        <header className="hidden md:flex h-16 border-b border-slate-200/80 bg-white/85 backdrop-blur-md items-center justify-between px-8 sticky top-0 z-20">
           <div className="flex items-center gap-2 text-xs">
-            <span className="font-medium text-slate-400">R35 MOTORS</span>
+            <span className="font-semibold text-slate-400 tracking-wide">R35 MOTORS</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-            <span className="font-semibold text-slate-900 text-[13px]">
+            <span className="font-semibold text-[#0F172A] text-[13px]">
               {currentPage?.name || "Management"}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200/60">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/70">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Live Dealership
             </span>
@@ -276,13 +306,16 @@ export function AppShell({ children }: AppShellProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 sm:p-6 md:p-8 bg-[#FFFFFF] overflow-y-auto pb-24 md:pb-10">
+        <main className="flex-1 p-4 sm:p-6 md:p-8 bg-[#F8FAFC] overflow-y-auto pb-24 md:pb-10">
           {children}
         </main>
 
-        {/* Mobile Bottom Navigation Bar with iOS safe area and clear active states */}
-        <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/90 backdrop-blur-xl border-t border-slate-200/80 flex items-center justify-around px-2 pt-1.5 pb-[calc(0.4rem+env(safe-area-inset-bottom,0px))] h-[calc(3.85rem+env(safe-area-inset-bottom,0px))] shadow-[0_-4px_20px_rgba(0,0,0,0.03)] select-none">
-          {navItems.map((item) => {
+        {/* Mobile Bottom Navigation Bar (Strictly <= 5 primary items per UI/UX Pro Max guidelines) */}
+        <nav
+          aria-label="Bottom Navigation"
+          className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-xl border-t border-slate-200/80 flex items-center justify-around px-2 pt-1.5 pb-[calc(0.45rem+env(safe-area-inset-bottom,0px))] h-[calc(4.15rem+env(safe-area-inset-bottom,0px))] shadow-[0_-4px_20px_rgba(15,23,42,0.05)] select-none"
+        >
+          {mobileBottomNavItems.map((item) => {
             const isActive = isItemActive(item.href);
             const Icon = item.icon;
 
@@ -291,25 +324,26 @@ export function AppShell({ children }: AppShellProps) {
                 key={item.href}
                 href={item.href}
                 prefetch={true}
+                aria-current={isActive ? "page" : undefined}
                 onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "flex flex-col items-center justify-center flex-1 py-1 px-0.5 rounded-xl text-[10px] font-medium transition-all relative active:scale-95",
+                  "flex flex-col items-center justify-center flex-1 min-h-[44px] py-1 px-1 rounded-xl text-[11px] font-medium transition-all relative active:scale-95 cursor-pointer",
                   isActive
-                    ? "text-slate-950 font-bold"
-                    : "text-slate-500 hover:text-slate-900"
+                    ? "text-[#0F172A] font-semibold"
+                    : "text-slate-500 hover:text-[#0F172A]"
                 )}
               >
                 <div
                   className={cn(
-                    "px-3 py-1 rounded-xl transition-all duration-150 flex items-center justify-center",
+                    "px-3.5 py-1 rounded-full transition-all duration-150 flex items-center justify-center",
                     isActive
                       ? "bg-[#0F172A] text-white shadow-xs"
-                      : "text-slate-500 hover:bg-slate-100"
+                      : "text-slate-500"
                   )}
                 >
-                  <Icon className={cn("w-4 h-4", isActive ? "text-white" : "text-slate-500")} />
+                  <Icon className={cn("w-4 h-4", isActive ? "text-emerald-400" : "text-slate-500")} />
                 </div>
-                <span className={cn("truncate tracking-tight mt-0.5", isActive ? "font-semibold text-slate-950" : "text-slate-500")}>
+                <span className={cn("truncate tracking-tight mt-0.5", isActive ? "font-semibold text-[#0F172A]" : "text-slate-500")}>
                   {item.name}
                 </span>
               </Link>

@@ -371,6 +371,7 @@ export function AddSaleDialog({
                 <Input
                   id="selling_price"
                   type="number"
+                  inputMode="decimal"
                   min="1"
                   step="any"
                   required

@@ -381,19 +381,21 @@ export function InvoicesView({
       {/* Search & Filter */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
         <div className="relative flex-1 sm:max-w-md">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400 pointer-events-none" />
+          <Search className="w-4 h-4 absolute left-3 top-3 sm:top-2.5 text-slate-400 pointer-events-none" />
           <input
             type="text"
+            aria-label="Search invoice number, vehicle, or buyer"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search invoice #, vehicle, buyer..."
-            className="w-full pl-9 pr-8 py-2 rounded-xl border border-slate-200 bg-slate-50/60 text-xs text-[#0F172A] focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400"
+            className="w-full pl-9 pr-9 py-2.5 sm:py-2 rounded-xl border border-slate-200 bg-white text-xs text-[#0F172A] focus:outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400 min-h-[44px] sm:min-h-0"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+              aria-label="Clear search"
+              className="absolute right-1.5 top-1.5 sm:top-1 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors cursor-pointer rounded-lg"
             >
               <X className="w-4 h-4" />
             </button>

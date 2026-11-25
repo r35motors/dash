@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   BarChart3,
   TrendingUp,
@@ -21,7 +22,18 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ComparisonChart } from "./comparison-chart";
+
+const ComparisonChart = dynamic(
+  () => import("./comparison-chart").then((mod) => mod.ComparisonChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-80 w-full rounded-xl bg-slate-100/80 animate-pulse flex items-center justify-center text-xs text-slate-400">
+        Loading financial comparison chart...
+      </div>
+    ),
+  }
+);
 import {
   LifetimeAnalyticsResult,
   MonthlyAnalyticsResult,
