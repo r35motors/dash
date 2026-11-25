@@ -84,11 +84,11 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
         {/* Card 1: Total Vehicles */}
         <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-premium transition hover:border-slate-300">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Total Vehicles
             </span>
-            <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
               <Car className="w-4 h-4" />
             </div>
           </div>
@@ -117,11 +117,11 @@ export default async function DashboardPage() {
 
         {/* Card 2: Available Vehicles */}
         <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-premium transition hover:border-slate-300">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Available Stock
             </span>
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
               <Tag className="w-4 h-4" />
             </div>
           </div>

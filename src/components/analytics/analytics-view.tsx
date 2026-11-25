@@ -201,16 +201,16 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
           {/* 5 Primary Lifetime Metric Cards (Section 7) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* 1. Total Purchase Value */}
-            <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium hover:shadow-card-hover transition-all">
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <Card className="rounded-2xl border border-slate-200/80 bg-white p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   Total Purchases
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
                   <Car className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-[#0F172A] tracking-tight">
+              <div className="text-lg xl:text-xl font-bold text-[#0F172A] tracking-tight tabular-nums">
                 {formatCurrency(lifetime.totalPurchaseValue)}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
@@ -219,16 +219,16 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </Card>
 
             {/* 2. Total Sales Value */}
-            <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium hover:shadow-card-hover transition-all">
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <Card className="rounded-2xl border border-slate-200/80 bg-white p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   Total Sales Value
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
                   <BadgeDollarSign className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-[#0F172A] tracking-tight">
+              <div className="text-lg xl:text-xl font-bold text-[#0F172A] tracking-tight tabular-nums">
                 {formatCurrency(lifetime.totalSalesValue)}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
@@ -237,16 +237,16 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </Card>
 
             {/* 3. Total Profit */}
-            <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium hover:shadow-card-hover transition-all">
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <Card className="rounded-2xl border border-slate-200/80 bg-white p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   Total Gross Profit
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
                   <TrendingUp className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-emerald-600 tracking-tight">
+              <div className="text-lg xl:text-xl font-bold text-emerald-600 tracking-tight tabular-nums">
                 {formatCurrency(lifetime.totalProfit)}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
@@ -374,16 +374,16 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
           {/* 5 Primary Monthly Metric Cards (Section 7) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* 1. Monthly Purchase Value */}
-            <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium hover:shadow-card-hover transition-all">
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <Card className="rounded-2xl border border-slate-200/80 bg-white p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   Monthly Purchases
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
                   <Car className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-[#0F172A] tracking-tight">
+              <div className="text-lg xl:text-xl font-bold text-[#0F172A] tracking-tight tabular-nums">
                 {formatCurrency(monthly.monthlyPurchaseValue)}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
@@ -392,16 +392,16 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </Card>
 
             {/* 2. Monthly Sales Value */}
-            <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium hover:shadow-card-hover transition-all">
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <Card className="rounded-2xl border border-slate-200/80 bg-white p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   Monthly Sales Value
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
                   <BadgeDollarSign className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-[#0F172A] tracking-tight">
+              <div className="text-lg xl:text-xl font-bold text-[#0F172A] tracking-tight tabular-nums">
                 {formatCurrency(monthly.monthlySalesValue)}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
@@ -410,16 +410,16 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </Card>
 
             {/* 3. Monthly Profit */}
-            <Card className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-premium hover:shadow-card-hover transition-all">
-              <div className="flex items-center justify-between pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <Card className="rounded-2xl border border-slate-200/80 bg-white p-4 xl:p-5 shadow-premium hover:shadow-card-hover transition-all min-w-0">
+              <div className="flex items-center justify-between gap-2 pb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
                   Monthly Gross Profit
                 </span>
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
                   <TrendingUp className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-emerald-600 tracking-tight">
+              <div className="text-lg xl:text-xl font-bold text-emerald-600 tracking-tight tabular-nums">
                 {formatCurrency(monthly.monthlyProfit)}
               </div>
               <p className="text-[11px] text-slate-500 mt-1">
@@ -562,19 +562,20 @@ export function AnalyticsView({ initialData }: AnalyticsViewProps) {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <span className="text-xs text-slate-500 font-medium">Year:</span>
-            <select
+            <Select
+              aria-label="Select comparison year"
               value={selectedYear}
               onChange={handleYearChange}
-              className="h-8.5 rounded-xl border border-slate-200/80 bg-white px-3 text-xs font-semibold text-[#0F172A] shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/10"
+              className="h-9 w-24 text-xs font-semibold"
             >
               {availableYears.map((yr) => (
                 <option key={yr} value={yr}>
                   {yr}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
 

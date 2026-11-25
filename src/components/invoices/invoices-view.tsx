@@ -353,12 +353,12 @@ export function InvoicesView({
           <p className="text-[11px] text-slate-500 mt-1">Official bills of sale logged</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-premium hover:border-slate-300 transition">
-          <div className="text-xs uppercase text-slate-500 font-bold tracking-wider flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-premium hover:border-slate-300 transition min-w-0">
+          <div className="text-xs uppercase text-slate-500 font-bold tracking-wider flex items-center justify-between gap-2">
             <span>Total Invoiced Volume</span>
-            <Receipt className="w-4 h-4 text-blue-600" />
+            <Receipt className="w-4 h-4 text-blue-600 shrink-0" />
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] mt-2.5">
+          <div className="text-xl lg:text-2xl xl:text-3xl font-bold text-[#0F172A] mt-2.5 tabular-nums truncate">
             {formatCurrency(totalInvoicedAmount)}
           </div>
           <p className="text-[11px] text-slate-500 mt-1">Sum of vehicle and custom line charges</p>
@@ -415,13 +415,13 @@ export function InvoicesView({
           <Table>
             <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
               <TableRow>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Invoice #</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Issue Date</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Client Buyer</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Vehicle Description</TableHead>
-                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Registration</TableHead>
-                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Total Amount</TableHead>
-                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Document Actions</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Invoice #</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Date</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Client Buyer</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Vehicle</TableHead>
+                <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Registration</TableHead>
+                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Amount</TableHead>
+                <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3 px-3 whitespace-nowrap">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -468,59 +468,59 @@ export function InvoicesView({
                   return (
                     <TableRow key={inv.id} className="hover:bg-slate-50/80 transition-colors">
                       {/* Invoice Number */}
-                      <TableCell className="font-mono font-bold text-xs py-3.5 whitespace-nowrap">
-                        <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200/60 font-semibold whitespace-nowrap inline-block">
+                      <TableCell className="font-mono font-bold text-xs py-3 px-3 whitespace-nowrap">
+                        <span className="px-2 py-0.5 rounded-lg bg-blue-50 text-blue-800 border border-blue-200/60 font-semibold whitespace-nowrap inline-block">
                           {inv.invoice_number}
                         </span>
                       </TableCell>
 
                       {/* Date */}
-                      <TableCell className="text-slate-600 text-xs py-3.5 whitespace-nowrap">
+                      <TableCell className="text-slate-600 text-xs py-3 px-3 whitespace-nowrap tabular-nums">
                         {formatDate(inv.invoice_date)}
                       </TableCell>
 
                       {/* Buyer Name */}
-                      <TableCell className="font-medium text-[#0F172A] text-xs py-3.5">
+                      <TableCell className="font-medium text-[#0F172A] text-xs py-3 px-3">
                         <div className="flex items-center gap-1.5">
                           <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                          <span className="truncate max-w-[140px] font-semibold" title={buyerName}>
+                          <span className="truncate max-w-[115px] font-semibold" title={buyerName}>
                             {buyerName}
                           </span>
                         </div>
                       </TableCell>
 
                       {/* Vehicle Name */}
-                      <TableCell className="font-medium text-[#0F172A] text-xs py-3.5 max-w-[220px]">
+                      <TableCell className="font-medium text-[#0F172A] text-xs py-3 px-3 max-w-[155px]">
                         <div className="truncate font-medium" title={vehicleName}>
                           {vehicleName}
                         </div>
                       </TableCell>
 
                       {/* Registration Number */}
-                      <TableCell className="py-3.5 whitespace-nowrap">
-                        <span className="font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
+                      <TableCell className="py-3 px-3 whitespace-nowrap">
+                        <span className="font-mono text-xs px-2 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
                           {regNumber}
                         </span>
                       </TableCell>
 
                       {/* Total Amount */}
-                      <TableCell className="text-right font-bold text-[#0F172A] text-sm py-3.5 whitespace-nowrap">
+                      <TableCell className="text-right font-bold text-[#0F172A] text-xs xl:text-sm py-3 px-3 whitespace-nowrap tabular-nums">
                         {formatCurrency(inv.invoice_total)}
                       </TableCell>
 
                       {/* Actions: Preview, Download PDF, Print PDF */}
-                      <TableCell className="text-right py-3.5 whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1.5">
+                      <TableCell className="text-right py-3 px-3 whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1">
                           {/* Preview Action */}
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => handlePreviewClick(inv)}
-                            className="h-8 text-xs px-2.5 gap-1.5 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-xl active:scale-95"
+                            className="h-7.5 text-[11px] px-2 gap-1 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg active:scale-95"
                             title="Interactive PDF Preview"
                           >
                             <Eye className="w-3.5 h-3.5 text-slate-600" />
-                            <span className="hidden sm:inline">Preview</span>
+                            <span>Preview</span>
                           </Button>
 
                           {/* Download PDF Action */}
@@ -528,11 +528,11 @@ export function InvoicesView({
                             variant="outline"
                             size="sm"
                             onClick={() => handleDownloadClick(inv)}
-                            className="h-8 text-xs px-2.5 gap-1.5 border-slate-200 text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl active:scale-95"
+                            className="h-7.5 text-[11px] px-2 gap-1 border-slate-200 text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg active:scale-95"
                             title="Download PDF"
                           >
                             <Download className="w-3.5 h-3.5 text-emerald-600" />
-                            <span className="hidden sm:inline">Download</span>
+                            <span>PDF</span>
                           </Button>
 
                           {/* Print PDF Action */}
@@ -540,11 +540,11 @@ export function InvoicesView({
                             variant="outline"
                             size="sm"
                             onClick={() => handlePrintClick(inv)}
-                            className="h-8 text-xs px-2.5 gap-1.5 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-xl active:scale-95"
+                            className="h-7.5 text-[11px] px-2 gap-1 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg active:scale-95"
                             title="Print PDF"
                           >
                             <Printer className="w-3.5 h-3.5 text-slate-600" />
-                            <span className="hidden sm:inline">Print</span>
+                            <span>Print</span>
                           </Button>
                         </div>
                       </TableCell>
