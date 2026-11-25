@@ -530,17 +530,27 @@ export const dealershipDb = {
       let prefix = prefetchedPrefix;
       let allInvoices = prefetchedInvoices;
 
-      if (!prefix) {
-        const db = getDb();
-        const settings = await db.select().from(schema.businessSettings).limit(1);
-        prefix = settings[0]?.invoice_prefix || "R35";
-      }
-
-      if (!allInvoices) {
-        const db = getDb();
-        allInvoices = await db
-          .select({ invoice_number: schema.invoices.invoice_number })
-          .from(schema.invoices);
+      try {
+        if (!prefix && !allInvoices) {
+          const [settingsData, summaryInvoices] = await Promise.all([
+            dealershipDb.settings.get(),
+            dealershipDb.invoices.getSummaries(),
+          ]);
+          prefix = settingsData?.invoice_prefix || "R35";
+          allInvoices = summaryInvoices;
+        } else {
+          if (!prefix) {
+            const settingsData = await dealershipDb.settings.get();
+            prefix = settingsData?.invoice_prefix || "R35";
+          }
+          if (!allInvoices) {
+            allInvoices = await dealershipDb.invoices.getSummaries();
+          }
+        }
+      } catch (err) {
+        console.warn("[DB] Fallback in getNextNumber:", err);
+        prefix = prefix || "R35";
+        allInvoices = allInvoices || [];
       }
 
       const year = new Date().getFullYear();
