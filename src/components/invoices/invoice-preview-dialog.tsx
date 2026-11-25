@@ -127,15 +127,15 @@ export function InvoicePreviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[95dvh] sm:h-[92vh] max-h-[96dvh] sm:max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 rounded-2xl border border-slate-200/80 shadow-2xl">
+      <DialogContent className="w-[calc(100vw-1rem)] sm:w-[94vw] sm:max-w-4xl h-[95dvh] sm:h-[92vh] max-h-[96dvh] sm:max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl">
         {/* Modal Header */}
-        <div className="p-3.5 sm:p-4 bg-white border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+        <div className="p-3.5 sm:p-4 bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
           <div className="pr-6 sm:pr-0">
-            <DialogTitle className="text-sm sm:text-lg font-bold text-[#0F172A] flex items-center gap-1.5 sm:gap-2">
-              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 shrink-0" />
+            <DialogTitle className="text-sm sm:text-lg font-bold text-[#0F172A] dark:text-slate-50 flex items-center gap-1.5 sm:gap-2">
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-300 shrink-0" />
               <span className="truncate">Invoice Preview: {invoiceNumber}</span>
             </DialogTitle>
-            <DialogDescription className="text-[11px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1 sm:line-clamp-none">
+            <DialogDescription className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1 sm:line-clamp-none">
               Review document layout, line items, and totals.
             </DialogDescription>
           </div>
@@ -145,9 +145,9 @@ export function InvoicePreviewDialog({
               variant="outline"
               size="sm"
               onClick={handlePrint}
-              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 cursor-pointer active:scale-[0.98]"
+              className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-8 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 cursor-pointer active:scale-[0.98]"
             >
-              <Printer className="w-3.5 h-3.5 text-slate-700" />
+              <Printer className="w-3.5 h-3.5 text-slate-700 dark:text-slate-300" />
               <span>Print PDF</span>
             </Button>
 
@@ -167,15 +167,15 @@ export function InvoicePreviewDialog({
         </div>
 
         {/* Modal Body / Instant Responsive HTML Preview Frame */}
-        <div className="flex-1 w-full relative overflow-y-auto overflow-x-hidden bg-slate-100 flex items-start justify-center p-0 sm:p-4">
+        <div className="flex-1 w-full relative overflow-y-auto overflow-x-hidden bg-slate-100 dark:bg-slate-800 flex items-start justify-center p-0 sm:p-4">
           {htmlContent ? (
             <iframe
               srcDoc={htmlContent}
               title={`Invoice Preview - ${invoiceNumber}`}
-              className="w-full sm:max-w-[215mm] min-h-[500px] sm:h-[297mm] sm:min-h-[297mm] rounded-none sm:rounded-sm sm:shadow-xl sm:border border-slate-300 bg-white shrink-0 sm:my-2"
+              className="w-full sm:max-w-[215mm] min-h-[500px] sm:h-[297mm] sm:min-h-[297mm] rounded-none sm:rounded-sm sm:shadow-xl sm:border border-slate-300 bg-white dark:bg-slate-900 shrink-0 sm:my-2"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center gap-2 text-slate-600 p-8">
+            <div className="flex flex-col items-center justify-center gap-2 text-slate-600 dark:text-slate-400 p-8">
               <Loader2 className="w-8 h-8 animate-spin text-[#14213D]" />
               <p className="text-xs font-medium">Preparing document preview...</p>
             </div>

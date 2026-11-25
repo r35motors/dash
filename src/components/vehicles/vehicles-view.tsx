@@ -118,14 +118,14 @@ export function VehiclesView({
       {/* Top Controls: Filter Tabs, Real-Time Search, Add Vehicle Button */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Apple HIG Segmented Control Filter Tabs */}
-        <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 overflow-x-auto select-none">
+        <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/70 dark:border-slate-700/70 overflow-x-auto select-none">
           <button
             type="button"
             onClick={() => setStatusTab("Available")}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "available"
-                ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
+                ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50"
             }`}
           >
             <span>Available</span>
@@ -133,7 +133,7 @@ export function VehiclesView({
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
                 statusTab.toLowerCase() === "available"
                   ? "bg-emerald-100 text-emerald-800"
-                  : "bg-slate-200 text-slate-700"
+                  : "bg-slate-200 text-slate-700 dark:text-slate-300"
               }`}
             >
               {availableCount}
@@ -145,8 +145,8 @@ export function VehiclesView({
             onClick={() => setStatusTab("all")}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab === "all"
-                ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
+                ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50"
             }`}
           >
             <span>All Fleet</span>
@@ -154,7 +154,7 @@ export function VehiclesView({
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab === "all"
                   ? "bg-slate-900 text-white"
-                  : "bg-slate-200 text-slate-700"
+                  : "bg-slate-200 text-slate-700 dark:text-slate-300"
               }`}
             >
               {totalCount}
@@ -166,16 +166,16 @@ export function VehiclesView({
             onClick={() => setStatusTab("Sold")}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 active:scale-95 ${
               statusTab.toLowerCase() === "sold"
-                ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
+                ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 shadow-xs border border-slate-200/60 dark:border-slate-700/60"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-200/50"
             }`}
           >
             <span>Sold</span>
             <span
               className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
                 statusTab.toLowerCase() === "sold"
-                  ? "bg-slate-200 text-slate-800"
-                  : "bg-slate-200 text-slate-700"
+                  ? "bg-slate-200 text-slate-800 dark:text-slate-200"
+                  : "bg-slate-200 text-slate-700 dark:text-slate-300"
               }`}
             >
               {soldCount}
@@ -194,14 +194,14 @@ export function VehiclesView({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search fleet or registration..."
-              className="w-full pl-9 pr-9 py-2.5 sm:py-2 rounded-xl border border-slate-200 bg-white text-xs text-[#0F172A] focus:outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400 min-h-[44px] sm:min-h-0"
+              className="w-full pl-9 pr-9 py-2.5 sm:py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-[#0F172A] dark:text-slate-50 focus:outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400 min-h-[44px] sm:min-h-0"
             />
             {/* Clear Search Button */}
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-1.5 top-1.5 sm:top-1 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors cursor-pointer rounded-lg"
+                className="absolute right-1.5 top-1.5 sm:top-1 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer rounded-lg"
                 title="Clear search"
                 aria-label="Clear search"
               >
@@ -220,7 +220,7 @@ export function VehiclesView({
 
       {/* Count Indicator & Status Banner */}
       <div className="flex items-center justify-between px-1">
-        <div className="text-xs font-medium text-slate-600 flex items-center gap-2">
+        <div className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>{getCountText()}</span>
         </div>
@@ -230,7 +230,7 @@ export function VehiclesView({
             variant="ghost"
             size="sm"
             onClick={() => setSearchQuery("")}
-            className="h-6 text-xs text-slate-500 hover:text-slate-800 gap-1 px-2"
+            className="h-6 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 gap-1 px-2"
           >
             <X className="w-3 h-3" />
             <span>Clear search filter</span>
@@ -240,19 +240,19 @@ export function VehiclesView({
 
       {/* Empty State */}
       {filteredVehicles.length === 0 ? (
-        <Card className="border border-dashed border-[#CBD5E1] bg-slate-50/50">
+        <Card className="border border-dashed border-[#CBD5E1] bg-slate-50/50 dark:bg-slate-900/50">
           <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-3">
               <Car className="w-6 h-6" />
             </div>
-            <h3 className="text-sm font-semibold text-[#0F172A]">
+            <h3 className="text-sm font-semibold text-[#0F172A] dark:text-slate-50">
               {searchQuery
                 ? `No vehicles found matching "${searchQuery}"`
                 : statusTab.toLowerCase() === "available"
                 ? "No available vehicles in stock"
                 : "No vehicles in this fleet category"}
             </h3>
-            <p className="text-xs text-slate-500 max-w-sm mt-1 mb-4">
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mt-1 mb-4">
               {searchQuery
                 ? "Try searching by a different vehicle model or registration number."
                 : "Register a vehicle to start managing pricing, inventory, and customer sales."}
@@ -283,40 +283,40 @@ export function VehiclesView({
         <>
           {/* Desktop Table View (Hidden on mobile) */}
           <div className="hidden md:block">
-            <div className="rounded-2xl border border-slate-200/80 bg-white shadow-premium overflow-hidden">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-premium overflow-hidden">
               <Table>
-                <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
+                <TableHeader className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800">
                   <TableRow>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Registration</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Purchase Price</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Status</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Quick Actions</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Registration</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Purchase Price</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Status</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Quick Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredVehicles.map((vehicle) => {
                     const isAvailable = vehicle.status === "Available";
                     return (
-                      <TableRow key={vehicle.id} className="hover:bg-slate-50/80 transition-colors">
-                        <TableCell className="font-semibold text-[#0F172A] py-3.5">
+                      <TableRow key={vehicle.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors">
+                        <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3.5">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-sm">{vehicle.vehicle_name}</span>
                           </div>
                         </TableCell>
                         <TableCell className="py-3.5 whitespace-nowrap">
-                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
+                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap inline-block">
                             {vehicle.registration_number}
                           </span>
                         </TableCell>
-                        <TableCell className="text-slate-600 text-xs py-3.5">
+                        <TableCell className="text-slate-600 dark:text-slate-400 text-xs py-3.5">
                           <div className="flex items-center gap-1.5">
                             <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                            <span className="font-medium text-slate-700">{vehicle.owner_name}</span>
+                            <span className="font-medium text-slate-700 dark:text-slate-300">{vehicle.owner_name}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="text-right font-bold text-[#0F172A] text-sm py-3.5">
+                        <TableCell className="text-right font-bold text-[#0F172A] dark:text-slate-50 text-sm py-3.5">
                           {formatCurrency(vehicle.purchase_price)}
                         </TableCell>
                         <TableCell className="py-3.5">
@@ -357,15 +357,15 @@ export function VehiclesView({
               return (
                 <div
                   key={vehicle.id}
-                  className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-premium hover:border-slate-300 transition-all space-y-3"
+                  className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-3"
                 >
                   {/* Top Row: Vehicle Name & Status */}
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h4 className="font-bold text-sm text-[#0F172A] leading-snug">
+                      <h4 className="font-bold text-sm text-[#0F172A] dark:text-slate-50 leading-snug">
                         {vehicle.vehicle_name}
                       </h4>
-                      <span className="inline-block mt-1.5 font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                      <span className="inline-block mt-1.5 font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70">
                         {vehicle.registration_number}
                       </span>
                     </div>
@@ -378,13 +378,13 @@ export function VehiclesView({
                   <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 text-xs">
                     <div>
                       <span className="text-slate-400 text-[11px] block">Previous Owner</span>
-                      <span className="font-medium text-slate-700 truncate block mt-0.5">
+                      <span className="font-medium text-slate-700 dark:text-slate-300 truncate block mt-0.5">
                         {vehicle.owner_name}
                       </span>
                     </div>
                     <div className="text-right">
                       <span className="text-slate-400 text-[11px] block">Purchase Price</span>
-                      <span className="font-bold text-[#0F172A] text-sm block mt-0.5">
+                      <span className="font-bold text-[#0F172A] dark:text-slate-50 text-sm block mt-0.5">
                         {formatCurrency(vehicle.purchase_price)}
                       </span>
                     </div>

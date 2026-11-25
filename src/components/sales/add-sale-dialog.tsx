@@ -214,14 +214,14 @@ export function AddSaleDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader className="space-y-2">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 flex items-center justify-center">
                 <BadgeDollarSign className="w-4 h-4" />
               </div>
-              <DialogTitle className="text-xl font-bold text-[#0F172A]">
+              <DialogTitle className="text-xl font-bold text-[#0F172A] dark:text-slate-50">
                 Record Vehicle Sale
               </DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
               Select an available vehicle from inventory, assign the buyer, and record the finalized selling price.
             </DialogDescription>
           </DialogHeader>
@@ -236,7 +236,7 @@ export function AddSaleDialog({
 
           {/* Success Alert */}
           {successMessage && (
-            <div className="my-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
+            <div className="my-4 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <div className="font-medium">{successMessage}</div>
             </div>
@@ -246,10 +246,10 @@ export function AddSaleDialog({
             {/* 1. Vehicle Selection Dropdown */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <Label htmlFor="vehicle_select" className="text-xs font-semibold text-slate-700">
+                <Label htmlFor="vehicle_select" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Select Available Vehicle <span className="text-red-500">*</span>
                 </Label>
-                <span className="text-[11px] text-slate-500">
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
                   {availableVehicles.length} available in stock
                 </span>
               </div>
@@ -282,11 +282,11 @@ export function AddSaleDialog({
 
             {/* Automatically Displayed Vehicle Details */}
             {selectedVehicle ? (
-              <div className="p-3.5 bg-slate-50 border border-[#E2E8F0] rounded-xl space-y-3 animate-in fade-in">
-                <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-2">
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-[#E2E8F0] dark:border-slate-800 rounded-xl space-y-3 animate-in fade-in">
+                <div className="flex items-center justify-between border-b border-[#E2E8F0] dark:border-slate-800 pb-2">
                   <div className="flex items-center gap-2">
                     <Car className="w-4 h-4 text-[#1E3A8A]" />
-                    <span className="font-semibold text-xs text-[#0F172A]">
+                    <span className="font-semibold text-xs text-[#0F172A] dark:text-slate-50">
                       {selectedVehicle.vehicle_name}
                     </span>
                   </div>
@@ -298,20 +298,20 @@ export function AddSaleDialog({
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                   {/* Registration Number */}
                   <div>
-                    <span className="text-[11px] text-slate-500 block mb-1">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1">
                       Registration Number
                     </span>
-                    <span className="font-mono text-xs px-2.5 py-1 rounded bg-white text-slate-800 font-semibold border border-slate-200 inline-block">
+                    <span className="font-mono text-xs px-2.5 py-1 rounded bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200 dark:border-slate-800 inline-block">
                       {selectedVehicle.registration_number}
                     </span>
                   </div>
 
                   {/* Previous Owner's Name */}
                   <div>
-                    <span className="text-[11px] text-slate-500 block mb-1">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1">
                       Previous Owner
                     </span>
-                    <div className="flex items-center gap-1.5 font-medium text-slate-700 mt-1">
+                    <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 mt-1">
                       <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       <span className="truncate">{selectedVehicle.owner_name}</span>
                     </div>
@@ -319,17 +319,17 @@ export function AddSaleDialog({
 
                   {/* Purchase Price */}
                   <div>
-                    <span className="text-[11px] text-slate-500 block mb-1">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1">
                       Purchase Price (Cost)
                     </span>
-                    <span className="font-bold text-slate-900 text-sm block mt-0.5">
+                    <span className="font-bold text-slate-900 dark:text-slate-50 text-sm block mt-0.5">
                       {formatCurrency(selectedVehicle.purchase_price)}
                     </span>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="p-3 border border-dashed border-slate-200 rounded-lg text-center text-xs text-slate-400">
+              <div className="p-3 border border-dashed border-slate-200 dark:border-slate-800 rounded-lg text-center text-xs text-slate-400">
                 Select a vehicle above to preview its registration, acquisition cost, and previous owner details.
               </div>
             )}
@@ -338,7 +338,7 @@ export function AddSaleDialog({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Buyer Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="buyer_name" className="text-xs font-semibold text-slate-700">
+                <Label htmlFor="buyer_name" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Buyer Name <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -359,7 +359,7 @@ export function AddSaleDialog({
               {/* Selling Price */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="selling_price" className="text-xs font-semibold text-slate-700">
+                  <Label htmlFor="selling_price" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Selling Price (₹) <span className="text-red-500">*</span>
                   </Label>
                   {formattedSellingPreview && (
@@ -394,7 +394,7 @@ export function AddSaleDialog({
                   profitStats.isPositive
                     ? "bg-emerald-50/80 border-emerald-200 text-emerald-900"
                     : profitStats.isBreakEven
-                    ? "bg-slate-50 border-slate-200 text-slate-800"
+                    ? "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200"
                     : "bg-red-50/80 border-red-200 text-red-900"
                 }`}
               >
@@ -404,7 +404,7 @@ export function AddSaleDialog({
                       profitStats.isPositive
                         ? "bg-emerald-100 text-emerald-700"
                         : profitStats.isBreakEven
-                        ? "bg-slate-200 text-slate-700"
+                        ? "bg-slate-200 text-slate-700 dark:text-slate-300"
                         : "bg-red-100 text-red-700"
                     }`}
                   >
@@ -433,7 +433,7 @@ export function AddSaleDialog({
                       profitStats.isPositive
                         ? "bg-emerald-200/80 text-emerald-800"
                         : profitStats.isBreakEven
-                        ? "bg-slate-200 text-slate-700"
+                        ? "bg-slate-200 text-slate-700 dark:text-slate-300"
                         : "bg-red-200/80 text-red-800"
                     }`}
                   >
@@ -450,7 +450,7 @@ export function AddSaleDialog({
             {/* Sale Date */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <Label htmlFor="sale_date" className="text-xs font-semibold text-slate-700">
+                <Label htmlFor="sale_date" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Sale Date
                 </Label>
                 <span className="text-[11px] text-slate-400">Defaults to today</span>
@@ -474,7 +474,7 @@ export function AddSaleDialog({
               variant="outline"
               disabled={loading}
               onClick={() => handleOpenChange(false)}
-              className="text-xs h-9 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 active:scale-[0.98]"
+              className="text-xs h-9 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 active:scale-[0.98]"
             >
               Cancel
             </Button>

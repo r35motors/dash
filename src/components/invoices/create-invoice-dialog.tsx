@@ -351,14 +351,14 @@ export function CreateInvoiceDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-3xl w-[95vw] max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-white rounded-2xl border border-slate-200/80 shadow-2xl">
+        <DialogContent className="max-w-3xl w-[95vw] max-h-[92vh] flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xl">
           {/* Header */}
-          <div className="p-5 border-b border-slate-200/80 bg-slate-50/70 shrink-0">
-            <DialogTitle className="text-xl font-bold text-[#0F172A] flex items-center gap-2">
-              <Receipt className="w-5 h-5 text-slate-700" />
+          <div className="p-5 border-b border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/60 shrink-0">
+            <DialogTitle className="text-xl font-bold text-[#0F172A] dark:text-slate-50 flex items-center gap-2">
+              <Receipt className="w-5 h-5 text-slate-700 dark:text-slate-300" />
               <span>Create Official Tax Invoice</span>
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-500 mt-1">
+            <DialogDescription className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Generate a legally compliant tax invoice and bill of sale with itemized charges and frozen snapshot.
             </DialogDescription>
           </div>
@@ -377,10 +377,10 @@ export function CreateInvoiceDialog({
               <div className="flex items-center gap-2.5">
                 <Building2 className="w-4 h-4 text-[#1E3A8A]" />
                 <div>
-                  <span className="font-semibold text-[#0F172A]">
+                  <span className="font-semibold text-[#0F172A] dark:text-slate-50">
                     {settings?.business_name || "Dealership"}
                   </span>
-                  <span className="text-slate-500 block text-[11px]">
+                  <span className="text-slate-500 dark:text-slate-400 block text-[11px]">
                     {settings?.address || "Configured Dealership Address"} &bull; {settings?.contact_number_1}
                   </span>
                 </div>
@@ -394,10 +394,10 @@ export function CreateInvoiceDialog({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="invoice_number" className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                  <Label htmlFor="invoice_number" className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                     Invoice Number <span className="text-red-500">*</span>
                   </Label>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-200">
                     <Lock className="w-2.5 h-2.5" />
                     Auto Numbering
                   </span>
@@ -409,19 +409,19 @@ export function CreateInvoiceDialog({
                     readOnly
                     disabled
                     tabIndex={-1}
-                    className="font-mono text-xs font-bold bg-slate-100/90 text-slate-800 border-slate-300 cursor-not-allowed select-none pr-8"
+                    className="font-mono text-xs font-bold bg-slate-100/90 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 border-slate-300 cursor-not-allowed select-none pr-8"
                   />
                   <div className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400">
                     <Lock className="w-3.5 h-3.5" />
                   </div>
                 </div>
-                <span className="text-[10px] text-slate-500 mt-1 block font-medium">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block font-medium">
                   Automatically generated sequential numbering (manual editing disabled).
                 </span>
               </div>
 
               <div>
-                <Label htmlFor="invoice_date" className="text-xs font-semibold text-slate-700">
+                <Label htmlFor="invoice_date" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Invoice Date <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -435,7 +435,7 @@ export function CreateInvoiceDialog({
             </div>
 
             {/* Section 2: Vehicle Selection & Buyer Info */}
-            <div className="space-y-4 pt-2 border-t border-slate-200">
+            <div className="space-y-4 pt-2 border-t border-slate-200 dark:border-slate-800">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A] flex items-center gap-1.5">
                 <Car className="w-3.5 h-3.5" />
                 <span>Vehicle & Client Particulars</span>
@@ -444,14 +444,14 @@ export function CreateInvoiceDialog({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Vehicle Selection dropdown */}
                 <div>
-                  <Label htmlFor="vehicle_select" className="text-xs font-semibold text-slate-700">
+                  <Label htmlFor="vehicle_select" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Select Inventory Vehicle <span className="text-red-500">*</span>
                   </Label>
                   <select
                     id="vehicle_select"
                     value={selectedVehicleId}
                     onChange={(e) => setSelectedVehicleId(e.target.value)}
-                    className="w-full mt-1 h-9 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F172A]"
+                    className="w-full mt-1 h-9 rounded-md border border-slate-300 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0F172A]"
                   >
                     <option value="">-- Choose Vehicle --</option>
                     {vehicles.map((v) => (
@@ -464,7 +464,7 @@ export function CreateInvoiceDialog({
 
                 {/* Buyer Name input */}
                 <div>
-                  <Label htmlFor="buyer_name" className="text-xs font-semibold text-slate-700">
+                  <Label htmlFor="buyer_name" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Buyer Name <span className="text-red-500">*</span>
                   </Label>
                   <Input
@@ -484,10 +484,10 @@ export function CreateInvoiceDialog({
 
               {/* Selected Vehicle Overview Box */}
               {selectedVehicle && (
-                <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+                <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-lg grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
                   <div>
                     <span className="text-slate-400 text-[10px] block uppercase font-medium">Model</span>
-                    <span className="font-semibold text-slate-900 truncate block">
+                    <span className="font-semibold text-slate-900 dark:text-slate-50 truncate block">
                       {selectedVehicle.vehicle_name}
                     </span>
                   </div>
@@ -499,13 +499,13 @@ export function CreateInvoiceDialog({
                   </div>
                   <div>
                     <span className="text-slate-400 text-[10px] block uppercase font-medium">Previous Owner</span>
-                    <span className="text-slate-700 font-medium truncate block">
+                    <span className="text-slate-700 dark:text-slate-300 font-medium truncate block">
                       {selectedVehicle.owner_name}
                     </span>
                   </div>
                   <div>
                     <span className="text-slate-400 text-[10px] block uppercase font-medium">Purchase Cost (Ref)</span>
-                    <span className="text-slate-500 font-medium">
+                    <span className="text-slate-500 dark:text-slate-400 font-medium">
                       {formatCurrency(selectedVehicle.purchase_price)}
                     </span>
                   </div>
@@ -514,7 +514,7 @@ export function CreateInvoiceDialog({
             </div>
 
             {/* Section 3: Itemized Charges & Custom Line Items */}
-            <div className="space-y-3 pt-2 border-t border-slate-200">
+            <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A] flex items-center gap-1.5">
                   <Receipt className="w-3.5 h-3.5" />
@@ -527,7 +527,7 @@ export function CreateInvoiceDialog({
                   <button
                     type="button"
                     onClick={() => handleAddCustomItem("Painting & Body Refurbishment", 15000)}
-                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
                   >
                     <Paintbrush className="w-3 h-3 text-purple-600" />
                     <span>Painting</span>
@@ -535,7 +535,7 @@ export function CreateInvoiceDialog({
                   <button
                     type="button"
                     onClick={() => handleAddCustomItem("Mechanical & Service Repair Work", 12000)}
-                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
                   >
                     <Wrench className="w-3 h-3 text-amber-600" />
                     <span>Repair work</span>
@@ -543,7 +543,7 @@ export function CreateInvoiceDialog({
                   <button
                     type="button"
                     onClick={() => handleAddCustomItem("Comprehensive Insurance Policy Transfer", 18500)}
-                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1 text-[11px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded cursor-pointer transition-colors"
                   >
                     <ShieldCheck className="w-3 h-3 text-blue-600" />
                     <span>Insurance transfer</span>
@@ -552,23 +552,23 @@ export function CreateInvoiceDialog({
               </div>
 
               {/* Items Table */}
-              <div className="border border-slate-200 rounded-lg overflow-hidden">
-                <div className="bg-slate-100/75 px-3 py-2 grid grid-cols-12 gap-2 text-[11px] font-semibold text-slate-600 uppercase">
+              <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
+                <div className="bg-slate-100/75 px-3 py-2 grid grid-cols-12 gap-2 text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase">
                   <span className="col-span-1 text-center">#</span>
                   <span className="col-span-7">Description</span>
                   <span className="col-span-3 text-right">Amount (INR)</span>
                   <span className="col-span-1 text-right">Action</span>
                 </div>
 
-                <div className="divide-y divide-slate-100 bg-white">
+                <div className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900">
                   {/* Default First Item: Vehicle Selling Price */}
                   <div className="p-3 grid grid-cols-12 gap-2 items-center bg-blue-50/20">
                     <span className="col-span-1 text-center text-xs font-semibold text-slate-400">1</span>
                     <div className="col-span-7">
-                      <span className="text-xs font-semibold text-[#0F172A] block">
+                      <span className="text-xs font-semibold text-[#0F172A] dark:text-slate-50 block">
                         Vehicle Consideration: {selectedVehicle?.vehicle_name || "Selected Vehicle"}
                       </span>
-                      <span className="text-[11px] font-mono text-slate-500">
+                      <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
                         Registration: {selectedVehicle?.registration_number || "-"}
                       </span>
                     </div>
@@ -580,7 +580,7 @@ export function CreateInvoiceDialog({
                         value={vehicleSellingPrice}
                         onChange={(e) => setVehicleSellingPrice(e.target.value)}
                         placeholder="Selling Price"
-                        className="text-right text-xs font-bold text-[#0F172A] h-8"
+                        className="text-right text-xs font-bold text-[#0F172A] dark:text-slate-50 h-8"
                       />
                     </div>
                     <div className="col-span-1 text-right">
@@ -592,7 +592,7 @@ export function CreateInvoiceDialog({
                   {customItems.map((item, index) => (
                     <div
                       key={item.id}
-                      className="p-2.5 sm:p-3 flex flex-col sm:grid sm:grid-cols-12 gap-2 items-stretch sm:items-center bg-slate-50/50 sm:bg-transparent rounded-lg sm:rounded-none"
+                      className="p-2.5 sm:p-3 flex flex-col sm:grid sm:grid-cols-12 gap-2 items-stretch sm:items-center bg-slate-50/50 dark:bg-slate-900/50 sm:bg-transparent rounded-lg sm:rounded-none"
                     >
                       <div className="flex items-center gap-2 sm:col-span-8">
                         <span className="text-center text-xs font-semibold text-slate-400 w-5 shrink-0 sm:w-auto">
@@ -631,19 +631,19 @@ export function CreateInvoiceDialog({
                 </div>
 
                 {/* Add Item Row Button */}
-                <div className="p-2.5 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
+                <div className="p-2.5 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => handleAddCustomItem()}
-                    className="text-xs h-7 gap-1 border-dashed text-slate-700"
+                    className="text-xs h-7 gap-1 border-dashed text-slate-700 dark:text-slate-300"
                   >
                     <Plus className="w-3 h-3" />
                     <span>Add Custom Item</span>
                   </Button>
 
-                  <span className="text-[11px] text-slate-500">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
                     {customItems.length} custom line {customItems.length === 1 ? "item" : "items"} added
                   </span>
                 </div>
@@ -673,13 +673,13 @@ export function CreateInvoiceDialog({
           </div>
 
           {/* Modal Footer Controls */}
-          <div className="p-3.5 sm:p-4 bg-slate-50/70 border-t border-slate-200/80 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+          <div className="p-3.5 sm:p-4 bg-slate-50/70 dark:bg-slate-800/60 border-t border-slate-200/80 dark:border-slate-800 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => onOpenChange(false)}
-              className="text-xs w-full sm:w-auto h-9 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 cursor-pointer active:scale-[0.98]"
+              className="text-xs w-full sm:w-auto h-9 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 cursor-pointer active:scale-[0.98]"
             >
               Cancel
             </Button>
@@ -691,9 +691,9 @@ export function CreateInvoiceDialog({
                 size="sm"
                 onClick={() => setPreviewOpen(true)}
                 disabled={!selectedVehicleId || invoiceTotal <= 0}
-                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 rounded-xl border-slate-200/80 bg-white text-slate-700 hover:bg-slate-50 cursor-pointer active:scale-[0.98]"
+                className="flex-1 sm:flex-initial gap-1.5 text-xs font-semibold h-9 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer active:scale-[0.98]"
               >
-                <Eye className="w-4 h-4 text-slate-600" />
+                <Eye className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span>Preview PDF</span>
               </Button>
 

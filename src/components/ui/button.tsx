@@ -4,25 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer active:scale-[0.98]",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-sky-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950 disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer active:scale-[0.98]",
   {
     variants: {
       variant: {
         default:
-          "bg-[#0F172A] text-white hover:bg-[#1E293B] shadow-xs active:bg-[#020617]",
+          "bg-[#0F172A] dark:bg-slate-100 text-white dark:text-slate-950 hover:bg-[#1E293B] dark:hover:bg-white shadow-xs active:bg-[#020617]",
         navy:
           "bg-[#1E3A8A] text-white hover:bg-[#1D4ED8] shadow-xs active:bg-[#1E40AF]",
         secondary:
-          "bg-slate-100 text-slate-800 hover:bg-slate-200 active:bg-slate-300",
+          "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 active:bg-slate-300",
         outline:
-          "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300",
+          "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600",
         ghost:
-          "text-slate-700 hover:bg-slate-100 hover:text-slate-900",
+          "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
         destructive:
           "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-xs",
         success:
           "bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 shadow-xs",
-        link: "text-[#0F172A] underline-offset-4 hover:underline",
+        link: "text-[#0F172A] dark:text-slate-100 underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",

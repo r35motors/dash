@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fira_Sans, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const firaSans = Fira_Sans({
   variable: "--font-fira-sans",
@@ -36,8 +37,25 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0F172A",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+  ],
 };
+
+const themeInitScript = `
+(function() {
+  try {
+    var stored = localStorage.getItem('r35-theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (stored === 'dark' || (!stored && prefersDark)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  } catch (e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -47,10 +65,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${firaSans.variable} ${firaCode.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#F8FAFC] text-[#0F172A] overflow-x-hidden">
-        <AppShell>{children}</AppShell>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-full bg-[#F8FAFC] dark:bg-[#020617] text-[#0F172A] dark:text-slate-50 overflow-x-hidden transition-colors duration-200">
+        <ThemeProvider>
+          <AppShell>{children}</AppShell>
+        </ThemeProvider>
       </body>
     </html>
   );

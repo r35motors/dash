@@ -50,7 +50,7 @@ export function TabsList({
   return (
     <div
       className={cn(
-        "inline-flex h-9 items-center justify-center rounded-lg bg-slate-100 p-1 text-slate-500 border border-[#E2E8F0]",
+        "inline-flex h-9 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 p-1 text-slate-500 dark:text-slate-400 border border-[#E2E8F0] dark:border-slate-700",
         className
       )}
     >
@@ -76,12 +76,13 @@ export function TabsTrigger({
   return (
     <button
       type="button"
+      data-state={isSelected ? "active" : "inactive"}
       onClick={() => ctx.onValueChange(value)}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none cursor-pointer",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-white dark:ring-offset-slate-950 transition-all focus-visible:outline-none cursor-pointer",
         isSelected
-          ? "bg-white text-[#0F172A] shadow-xs font-semibold"
-          : "text-slate-600 hover:text-slate-900",
+          ? "bg-white dark:bg-slate-900 text-[#0F172A] dark:text-slate-50 shadow-xs font-semibold"
+          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200",
         className
       )}
     >

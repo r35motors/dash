@@ -53,7 +53,7 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
             margin={{ top: 12, right: 16, left: 10, bottom: 6 }}
             barGap={4}
           >
-          <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200/70 dark:text-slate-800" vertical={false} />
           <XAxis
             dataKey="month"
             stroke="#94A3B8"
@@ -98,7 +98,7 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
                 profit: "Gross Profit",
               };
               return (
-                <span className="text-xs font-medium text-slate-700 mr-4">
+                <span className="text-xs font-medium text-slate-700 dark:text-slate-300 mr-4">
                   {labelMap[val] || val}
                 </span>
               );

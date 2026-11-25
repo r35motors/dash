@@ -160,14 +160,14 @@ export function AddVehicleDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader className="space-y-2">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#1E3A8A] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-[#1E3A8A] flex items-center justify-center">
                 <Car className="w-4 h-4" />
               </div>
-              <DialogTitle className="text-xl font-bold text-[#0F172A]">
+              <DialogTitle className="text-xl font-bold text-[#0F172A] dark:text-slate-50">
                 Add New Vehicle
               </DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
               Register an acquired vehicle into inventory. Duplicate registration numbers are strictly prevented.
             </DialogDescription>
           </DialogHeader>
@@ -182,7 +182,7 @@ export function AddVehicleDialog({
 
           {/* Success Alert */}
           {successMessage && (
-            <div className="my-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
+            <div className="my-4 p-3 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 animate-in fade-in">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <div className="font-medium">{successMessage}</div>
             </div>
@@ -191,7 +191,7 @@ export function AddVehicleDialog({
           <div className="space-y-4 py-3">
             {/* Vehicle Name */}
             <div className="space-y-1.5">
-              <Label htmlFor="vehicle_name" className="text-xs font-semibold text-slate-700">
+              <Label htmlFor="vehicle_name" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 Vehicle Name <span className="text-red-500">*</span>
               </Label>
               <Input
@@ -212,7 +212,7 @@ export function AddVehicleDialog({
             {/* Registration Number */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <Label htmlFor="registration_number" className="text-xs font-semibold text-slate-700">
+                <Label htmlFor="registration_number" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Registration Number <span className="text-red-500">*</span>
                 </Label>
                 <span className="text-[11px] text-slate-400">e.g., DL 01 AB 1234</span>
@@ -225,9 +225,9 @@ export function AddVehicleDialog({
                 placeholder="DL 01 AB 1234"
                 value={registrationNumber}
                 onChange={handleRegChange}
-                className="font-mono text-xs uppercase tracking-wide h-9 bg-slate-50/50"
+                className="font-mono text-xs uppercase tracking-wide h-9 bg-slate-50/50 dark:bg-slate-900/50"
               />
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Auto-uppercased & trimmed. Must be unique across all inventory records.
               </p>
             </div>
@@ -235,7 +235,7 @@ export function AddVehicleDialog({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Previous Owner's Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="owner_name" className="text-xs font-semibold text-slate-700">
+                <Label htmlFor="owner_name" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Previous Owner <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -256,7 +256,7 @@ export function AddVehicleDialog({
               {/* Purchase Price */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="purchase_price" className="text-xs font-semibold text-slate-700">
+                  <Label htmlFor="purchase_price" className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Purchase Price (₹) <span className="text-red-500">*</span>
                   </Label>
                   {formattedPreview && (
@@ -285,8 +285,8 @@ export function AddVehicleDialog({
             </div>
 
             {/* Status Indicator */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-[#E2E8F0] flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs text-slate-600">
+            <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-[#E2E8F0] dark:border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
                 <Shield className="w-3.5 h-3.5 text-[#1E3A8A]" />
                 <span className="font-medium">Initial Fleet Status</span>
               </div>
@@ -302,7 +302,7 @@ export function AddVehicleDialog({
               variant="outline"
               disabled={loading}
               onClick={() => handleOpenChange(false)}
-              className="text-xs h-9 rounded-xl border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 active:scale-[0.98]"
+              className="text-xs h-9 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 active:scale-[0.98]"
             >
               Cancel
             </Button>

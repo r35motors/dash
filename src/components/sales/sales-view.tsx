@@ -143,13 +143,13 @@ export function SalesView({
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Top Header & Record New Sale Button */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] flex items-center gap-2">
-            <BadgeDollarSign className="w-6 h-6 text-slate-800" />
+          <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] dark:text-slate-50 flex items-center gap-2">
+            <BadgeDollarSign className="w-6 h-6 text-slate-800 dark:text-slate-200" />
             Sales Ledger & Vehicle Deliveries
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Track closed vehicle sales, client buyers, realized profit margins, and generate tax invoices.
           </p>
         </div>
@@ -168,55 +168,55 @@ export function SalesView({
       {/* KPI Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Total Units Sold */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-premium hover:border-slate-300 transition">
-          <div className="text-xs uppercase text-slate-500 font-bold tracking-wider flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition">
+          <div className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-wider flex items-center justify-between">
             <span>Units Delivered</span>
             <Car className="w-4 h-4 text-slate-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] mt-2.5">{totalUnitsSold}</div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] dark:text-slate-50 mt-2.5">{totalUnitsSold}</div>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
             {availableVehicles.length} vehicles in active stock
           </p>
         </div>
 
         {/* Total Sales Volume */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-premium hover:border-slate-300 transition">
-          <div className="text-xs uppercase text-slate-500 font-bold tracking-wider flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition">
+          <div className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-wider flex items-center justify-between">
             <span>Total Revenue</span>
             <BadgeDollarSign className="w-4 h-4 text-blue-600" />
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] mt-2.5">
+          <div className="text-2xl sm:text-3xl font-bold text-[#0F172A] dark:text-slate-50 mt-2.5">
             {formatCurrency(totalSalesRevenue)}
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
             Gross transaction throughput
           </p>
         </div>
 
         {/* Realized Gross Margin / Profit */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-premium hover:border-slate-300 transition">
-          <div className="text-xs uppercase text-slate-500 font-bold tracking-wider flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition">
+          <div className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-wider flex items-center justify-between">
             <span>Realized Margin</span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="text-2xl sm:text-3xl font-bold text-emerald-600 flex items-center gap-1.5 mt-2.5">
             <span>+{formatCurrency(totalRealizedMargin)}</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
             +{overallMarginPercentage}% gross margin on inventory
           </p>
         </div>
 
         {/* Total Cost of Sold Fleet */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-premium hover:border-slate-300 transition">
-          <div className="text-xs uppercase text-slate-500 font-bold tracking-wider flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition">
+          <div className="text-xs uppercase text-slate-500 dark:text-slate-400 font-bold tracking-wider flex items-center justify-between">
             <span>Acquisition Cost</span>
             <Layers className="w-4 h-4 text-slate-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-bold text-slate-800 mt-2.5">
+          <div className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-slate-200 mt-2.5">
             {formatCurrency(totalAcquisitionCost)}
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
             Original purchase cost of delivered units
           </p>
         </div>
@@ -233,13 +233,13 @@ export function SalesView({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search vehicle, registration, or buyer..."
-            className="w-full pl-9 pr-9 py-2.5 sm:py-2 rounded-xl border border-slate-200 bg-white text-xs text-[#0F172A] focus:outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400 min-h-[44px] sm:min-h-0"
+            className="w-full pl-9 pr-9 py-2.5 sm:py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs text-[#0F172A] dark:text-slate-50 focus:outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 transition-all placeholder:text-slate-400 min-h-[44px] sm:min-h-0"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-1.5 top-1.5 sm:top-1 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors cursor-pointer rounded-lg"
+              className="absolute right-1.5 top-1.5 sm:top-1 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer rounded-lg"
               title="Clear search"
               aria-label="Clear search"
             >
@@ -249,7 +249,7 @@ export function SalesView({
         </div>
 
         {/* Count Indicator */}
-        <div className="flex items-center justify-between sm:justify-end gap-3 text-xs text-slate-600 font-medium px-1">
+        <div className="flex items-center justify-between sm:justify-end gap-3 text-xs text-slate-600 dark:text-slate-400 font-medium px-1">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>
@@ -264,7 +264,7 @@ export function SalesView({
               variant="ghost"
               size="sm"
               onClick={() => setSearchQuery("")}
-              className="h-6 text-xs text-slate-500 hover:text-slate-800 gap-1 px-2"
+              className="h-6 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 gap-1 px-2"
             >
               <X className="w-3 h-3" />
               <span>Clear</span>
@@ -275,17 +275,17 @@ export function SalesView({
 
       {/* Empty State */}
       {filteredSales.length === 0 ? (
-        <Card className="border border-dashed border-[#CBD5E1] bg-slate-50/50">
+        <Card className="border border-dashed border-[#CBD5E1] bg-slate-50/50 dark:bg-slate-900/50">
           <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-3">
               <BadgeDollarSign className="w-6 h-6" />
             </div>
-            <h3 className="text-sm font-semibold text-[#0F172A]">
+            <h3 className="text-sm font-semibold text-[#0F172A] dark:text-slate-50">
               {searchQuery
                 ? `No sold vehicles matching "${searchQuery}"`
                 : "No vehicle sales recorded yet"}
             </h3>
-            <p className="text-xs text-slate-500 max-w-sm mt-1 mb-4">
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mt-1 mb-4">
               {searchQuery
                 ? "Try searching by a different vehicle model, buyer name, or registration number."
                 : "When you sell an available vehicle, record it here to track realized profits and generate tax invoices."}
@@ -316,19 +316,19 @@ export function SalesView({
         <>
           {/* Desktop Table View (Hidden on mobile) */}
           <div className="hidden md:block">
-            <div className="rounded-2xl border border-slate-200/80 bg-white shadow-premium overflow-hidden">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-premium overflow-hidden">
               <Table>
-                <TableHeader className="bg-slate-50/70 border-b border-slate-200/80">
+                <TableHeader className="bg-slate-50/70 dark:bg-slate-800/60 border-b border-slate-200/80 dark:border-slate-800">
                   <TableRow>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Registration</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Client Buyer</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Purchase Cost</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Selling Price</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Profit Realized</TableHead>
-                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Delivered</TableHead>
-                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 py-3.5 whitespace-nowrap">Invoice</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Vehicle Details</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Registration</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Previous Owner</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Client Buyer</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Purchase Cost</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Selling Price</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Profit Realized</TableHead>
+                    <TableHead className="font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Delivered</TableHead>
+                    <TableHead className="text-right font-bold text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 py-3.5 whitespace-nowrap">Invoice</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -342,10 +342,10 @@ export function SalesView({
                     return (
                       <TableRow
                         key={sale.id}
-                        className="hover:bg-slate-50/80 transition-colors"
+                        className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors"
                       >
                         {/* 1. Vehicle Name */}
-                        <TableCell className="font-semibold text-[#0F172A] py-3.5 max-w-[200px]">
+                        <TableCell className="font-semibold text-[#0F172A] dark:text-slate-50 py-3.5 max-w-[200px]">
                           <div className="truncate font-semibold text-sm" title={sale.vehicle?.vehicle_name || "Vehicle"}>
                             {sale.vehicle?.vehicle_name || "Vehicle"}
                           </div>
@@ -353,38 +353,38 @@ export function SalesView({
 
                         {/* 2. Registration Number (monospace badge) */}
                         <TableCell className="py-3.5 whitespace-nowrap">
-                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70 whitespace-nowrap inline-block">
+                          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70 whitespace-nowrap inline-block">
                             {sale.vehicle?.registration_number || "-"}
                           </span>
                         </TableCell>
 
                         {/* 3. Previous Owner's Name */}
-                        <TableCell className="text-slate-600 text-xs py-3.5">
+                        <TableCell className="text-slate-600 dark:text-slate-400 text-xs py-3.5">
                           <div className="flex items-center gap-1.5">
                             <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                            <span className="truncate max-w-[130px] font-medium text-slate-700" title={sale.vehicle?.owner_name || "-"}>
+                            <span className="truncate max-w-[130px] font-medium text-slate-700 dark:text-slate-300" title={sale.vehicle?.owner_name || "-"}>
                               {sale.vehicle?.owner_name || "-"}
                             </span>
                           </div>
                         </TableCell>
 
                         {/* 4. Buyer Name */}
-                        <TableCell className="text-slate-900 font-medium text-xs py-3.5">
+                        <TableCell className="text-slate-900 dark:text-slate-50 font-medium text-xs py-3.5">
                           <div className="flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>
-                            <span className="truncate max-w-[130px] font-semibold text-slate-900" title={sale.buyer_name}>
+                            <span className="truncate max-w-[130px] font-semibold text-slate-900 dark:text-slate-50" title={sale.buyer_name}>
                               {sale.buyer_name}
                             </span>
                           </div>
                         </TableCell>
 
                         {/* 5. Purchase Price (₹ INR formatted) */}
-                        <TableCell className="text-right text-slate-500 text-xs py-3.5">
+                        <TableCell className="text-right text-slate-500 dark:text-slate-400 text-xs py-3.5">
                           {formatCurrency(purchase)}
                         </TableCell>
 
                         {/* 6. Selling Price (₹ INR formatted) */}
-                        <TableCell className="text-right font-bold text-[#0F172A] text-sm py-3.5">
+                        <TableCell className="text-right font-bold text-[#0F172A] dark:text-slate-50 text-sm py-3.5">
                           {formatCurrency(selling)}
                         </TableCell>
 
@@ -393,7 +393,7 @@ export function SalesView({
                           <span
                             className={`inline-flex items-center gap-1 font-bold text-xs px-2.5 py-0.5 rounded-full ${
                               isProfitPositive
-                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60"
+                                ? "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 border border-emerald-200/60"
                                 : "bg-rose-50 text-rose-700 border border-rose-200/60"
                             }`}
                           >
@@ -403,7 +403,7 @@ export function SalesView({
                         </TableCell>
 
                         {/* 8. Sale Date */}
-                        <TableCell className="text-slate-500 text-xs py-3.5 whitespace-nowrap">
+                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs py-3.5 whitespace-nowrap">
                           {formatDate(sale.sale_date)}
                         </TableCell>
 
@@ -413,7 +413,7 @@ export function SalesView({
                             asChild
                             size="sm"
                             variant="outline"
-                            className="h-8 rounded-xl text-xs font-semibold border-slate-200 hover:bg-slate-50 text-slate-800 shadow-2xs gap-1.5 active:scale-95"
+                            className="h-8 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
                           >
                             <Link
                               href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
@@ -443,15 +443,15 @@ export function SalesView({
               return (
                 <div
                   key={sale.id}
-                  className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-premium hover:border-slate-300 transition-all space-y-3"
+                  className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-premium hover:border-slate-300 dark:hover:border-slate-700 transition-all space-y-3"
                 >
                   {/* Top Row: Vehicle Name & Monospace Registration */}
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h4 className="font-bold text-sm text-[#0F172A] leading-snug">
+                      <h4 className="font-bold text-sm text-[#0F172A] dark:text-slate-50 leading-snug">
                         {sale.vehicle?.vehicle_name || "Vehicle"}
                       </h4>
-                      <span className="inline-block mt-1.5 font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-semibold border border-slate-200/70">
+                      <span className="inline-block mt-1.5 font-mono text-xs px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold border border-slate-200/70 dark:border-slate-700/70">
                         {sale.vehicle?.registration_number || "-"}
                       </span>
                     </div>
@@ -464,13 +464,13 @@ export function SalesView({
                   <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100 text-xs">
                     <div>
                       <span className="text-slate-400 text-[11px] block">Buyer</span>
-                      <span className="font-semibold text-slate-900 truncate block mt-0.5">
+                      <span className="font-semibold text-slate-900 dark:text-slate-50 truncate block mt-0.5">
                         {sale.buyer_name}
                       </span>
                     </div>
                     <div>
                       <span className="text-slate-400 text-[11px] block">Previous Owner</span>
-                      <span className="font-medium text-slate-600 truncate block mt-0.5">
+                      <span className="font-medium text-slate-600 dark:text-slate-400 truncate block mt-0.5">
                         {sale.vehicle?.owner_name || "-"}
                       </span>
                     </div>
@@ -480,13 +480,13 @@ export function SalesView({
                   <div className="grid grid-cols-3 gap-2 pt-2.5 border-t border-slate-100 text-xs items-center bg-slate-50/80 -mx-4 px-4 py-2.5">
                     <div>
                       <span className="text-slate-400 text-[10px] block font-medium">Cost</span>
-                      <span className="font-medium text-slate-600 block mt-0.5">
+                      <span className="font-medium text-slate-600 dark:text-slate-400 block mt-0.5">
                         {formatCurrency(purchase)}
                       </span>
                     </div>
                     <div>
                       <span className="text-slate-400 text-[10px] block font-medium">Sold For</span>
-                      <span className="font-bold text-[#0F172A] block mt-0.5">
+                      <span className="font-bold text-[#0F172A] dark:text-slate-50 block mt-0.5">
                         {formatCurrency(selling)}
                       </span>
                     </div>
@@ -505,7 +505,7 @@ export function SalesView({
 
                   {/* Sale Date & Create Invoice Action */}
                   <div className="flex items-center justify-between gap-3 pt-1">
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                       <Calendar className="w-3.5 h-3.5 text-slate-400" />
                       <span>{formatDate(sale.sale_date)}</span>
                     </div>
@@ -514,7 +514,7 @@ export function SalesView({
                       asChild
                       size="sm"
                       variant="outline"
-                      className="h-8 rounded-xl text-xs font-semibold border-slate-200 hover:bg-slate-50 text-slate-800 shadow-2xs gap-1.5 active:scale-95"
+                      className="h-8 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
                     >
                       <Link
                         href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
