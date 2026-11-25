@@ -81,13 +81,13 @@ export function ConfirmDeleteDialog({
           </div>
         )}
 
-        <DialogFooter className="gap-2 sm:gap-2 pt-2">
+        <DialogFooter className="grid grid-cols-2 sm:flex sm:justify-end gap-2.5 pt-2">
           <Button
             type="button"
             variant="outline"
             disabled={isDeleting}
             onClick={() => onOpenChange(false)}
-            className="text-xs h-9 min-h-[44px] sm:min-h-0"
+            className="text-xs min-h-[44px] sm:min-h-0 sm:h-9 w-full sm:w-auto"
           >
             Cancel
           </Button>
@@ -96,7 +96,7 @@ export function ConfirmDeleteDialog({
             variant="destructive"
             disabled={isDeleting}
             onClick={handleConfirm}
-            className="text-xs h-9 min-h-[44px] sm:min-h-0 gap-1.5"
+            className="text-xs min-h-[44px] sm:min-h-0 sm:h-9 w-full sm:w-auto gap-1.5"
           >
             {isDeleting ? (
               <>

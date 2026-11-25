@@ -658,35 +658,35 @@ export function InvoicesView({
                   </span>
                 </div>
 
-                {/* Action Buttons: Preview, PDF, Print, Delete */}
-                <div className="grid grid-cols-4 gap-1.5 pt-1">
+                {/* Action Buttons: 2x2 mobile-friendly touch grid (44px+ height, full labels) */}
+                <div className="grid grid-cols-2 gap-2 pt-1">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handlePreviewClick(inv)}
-                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] text-xs px-3 gap-1.5 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-semibold cursor-pointer rounded-xl active:scale-95"
                   >
-                    <Eye className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-                    <span>View</span>
+                    <Eye className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                    <span>Preview</span>
                   </Button>
 
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleDownloadClick(inv)}
-                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] text-xs px-3 gap-1.5 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 font-semibold cursor-pointer rounded-xl active:scale-95"
                   >
-                    <Download className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span>PDF</span>
+                    <Download className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    <span>Download PDF</span>
                   </Button>
 
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handlePrintClick(inv)}
-                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] text-xs px-3 gap-1.5 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-slate-50 hover:bg-slate-50 dark:hover:bg-slate-800 font-semibold cursor-pointer rounded-xl active:scale-95"
                   >
-                    <Printer className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                    <Printer className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                     <span>Print</span>
                   </Button>
 
@@ -696,10 +696,10 @@ export function InvoicesView({
                     size="sm"
                     onClick={() => setDeleteTarget(inv)}
                     aria-label={`Delete invoice ${inv.invoice_number}`}
-                    className="min-h-[44px] sm:min-h-0 text-xs px-1.5 gap-1 border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 font-medium cursor-pointer rounded-xl active:scale-95"
+                    className="min-h-[44px] text-xs px-3 gap-1.5 border-rose-200/80 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 font-semibold cursor-pointer rounded-xl active:scale-95"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    <span>Del</span>
+                    <Trash2 className="w-4 h-4" />
+                    <span>Delete</span>
                   </Button>
                 </div>
               </div>

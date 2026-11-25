@@ -538,25 +538,25 @@ export function SalesView({
                     </div>
                   </div>
 
-                  {/* Sale Date & Create Invoice Action */}
-                  <div className="flex items-center justify-between gap-3 pt-1">
+                  {/* Sale Date & Mobile-Friendly Action Grid */}
+                  <div className="space-y-2.5 pt-1">
                     <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                       <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{formatDate(sale.sale_date)}</span>
+                      <span>Sold on {formatDate(sale.sale_date)}</span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       <Button
                         asChild
                         size="sm"
                         variant="outline"
-                        className="h-9 min-h-[44px] sm:min-h-0 rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
+                        className="min-h-[44px] rounded-xl text-xs font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 shadow-2xs gap-1.5 active:scale-95"
                       >
                         <Link
                           href={`/invoices?saleId=${sale.id}&vehicleId=${sale.vehicle_id}`}
                           prefetch={false}
                         >
-                          <Receipt className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                          <Receipt className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                           <span>Create Invoice</span>
                         </Link>
                       </Button>
@@ -565,9 +565,10 @@ export function SalesView({
                         variant="outline"
                         onClick={() => setDeleteTarget(sale)}
                         aria-label={`Delete sale for ${sale.buyer_name}`}
-                        className="min-h-[44px] min-w-[44px] px-3 rounded-xl border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 active:scale-95"
+                        className="min-h-[44px] px-3 gap-1.5 rounded-xl border-rose-200/80 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-xs font-semibold active:scale-95"
                       >
                         <Trash2 className="w-4 h-4" />
+                        <span>Delete</span>
                       </Button>
                     </div>
                   </div>

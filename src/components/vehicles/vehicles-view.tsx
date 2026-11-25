@@ -421,21 +421,21 @@ export function VehiclesView({
                     </div>
                   </div>
 
-                  {/* Quick Action Buttons */}
-                  <div className="pt-2 flex items-center gap-2">
+                  {/* Quick Action Buttons (Mobile-friendly 44px+ touch targets) */}
+                  <div className="pt-2 grid grid-cols-2 gap-2">
                     {isAvailable ? (
                       <Button
                         asChild
-                        className="flex-1 min-h-[44px] sm:min-h-0 rounded-xl text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
+                        className="min-h-[44px] rounded-xl text-xs font-semibold bg-[#0F172A] dark:bg-blue-600 hover:bg-[#1E293B] dark:hover:bg-blue-500 text-white shadow-xs gap-1.5 active:scale-95"
                       >
                         <Link href={`/sales?vehicleId=${vehicle.id}`} prefetch={false}>
-                          <BadgeDollarSign className="w-3.5 h-3.5 text-emerald-400" />
-                          <span>Sell this vehicle</span>
+                          <BadgeDollarSign className="w-4 h-4 text-emerald-400" />
+                          <span>Sell Vehicle</span>
                         </Link>
                       </Button>
                     ) : (
-                      <div className="flex-1 text-center py-2 text-xs text-slate-400 font-medium">
-                        Vehicle delivered
+                      <div className="min-h-[44px] flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                        Delivered
                       </div>
                     )}
                     <Button
@@ -443,9 +443,10 @@ export function VehiclesView({
                       variant="outline"
                       onClick={() => setDeleteTarget(vehicle)}
                       aria-label={`Delete ${vehicle.vehicle_name}`}
-                      className="min-h-[44px] min-w-[44px] px-3 rounded-xl border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 active:scale-95"
+                      className="min-h-[44px] px-3 gap-1.5 rounded-xl border-rose-200/80 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-xs font-semibold active:scale-95"
                     >
                       <Trash2 className="w-4 h-4" />
+                      <span>Delete</span>
                     </Button>
                   </div>
                 </div>
